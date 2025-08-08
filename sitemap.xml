@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://atlancia.com/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://atlancia.com/</loc>
+</url>
+<url>
+<loc>https://atlancia.com/building-a-trade-off-mentality.html</loc>
+<lastmod>2025-08-07T12:35:36-04:00</lastmod>
+<image:image>
+<image:loc>https://atlancia.com/media/posts/3/tradeoffpost.jpg</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://atlancia.com/media/posts/3/state-view.webp</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://atlancia.com/media/posts/3/selected-view.webp</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://atlancia.com/changing-requirements-to-be-a-successful-business-analyst.html</loc>
+<lastmod>2025-08-07T12:15:56-04:00</lastmod>
+<image:image>
+<image:loc>https://atlancia.com/media/posts/2/bapost.jpg</image:loc>
+<image:title><![CDATA[]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://atlancia.com/welcome-to-atlancia.html</loc>
+<lastmod>2025-08-07T12:17:08-04:00</lastmod>
+</url>
+</urlset>
