@@ -3,19 +3,19 @@
     <title>Atlancia</title>
     <link href="https://atlancia.com/feed.xml" rel="self" />
     <link href="https://atlancia.com" />
-    <updated>2025-08-18T09:23:03-04:00</updated>
+    <updated>2025-08-23T17:21:27-04:00</updated>
     <author>
         <name>Liam Shaw</name>
     </author>
     <id>https://atlancia.com</id>
 
     <entry>
-        <title>How I learned to see the difference between a boss and a botanist.</title>
+        <title>Seeing the difference between a boss and a botanist.</title>
         <author>
             <name>Liam Shaw</name>
         </author>
-        <link href="https://atlancia.com/leading-from-the-middle-how-direct-leaders-can-shape-innovation-culture.html"/>
-        <id>https://atlancia.com/leading-from-the-middle-how-direct-leaders-can-shape-innovation-culture.html</id>
+        <link href="https://atlancia.com/leaders-gardeners.html"/>
+        <id>https://atlancia.com/leaders-gardeners.html</id>
         <media:content url="https://atlancia.com/media/posts/5/middle-header.webp" medium="image" />
 
         <updated>2025-02-17T00:00:00-05:00</updated>
@@ -73,12 +73,12 @@
         </content>
     </entry>
     <entry>
-        <title>From Shovels to Software: Why Difference Matters When Things Get Complicated</title>
+        <title>From Shovels to Software: Why Difference Matters When Things Get Complex</title>
         <author>
             <name>Liam Shaw</name>
         </author>
-        <link href="https://atlancia.com/diversity-complexity-and-disappointed-optimists.html"/>
-        <id>https://atlancia.com/diversity-complexity-and-disappointed-optimists.html</id>
+        <link href="https://atlancia.com/diversity-complexity.html"/>
+        <id>https://atlancia.com/diversity-complexity.html</id>
         <media:content url="https://atlancia.com/media/posts/4/diverse-header.jpg" medium="image" />
 
         <updated>2023-06-05T00:00:00-04:00</updated>
@@ -185,22 +185,22 @@
         <author>
             <name>Liam Shaw</name>
         </author>
-        <link href="https://atlancia.com/building-a-trade-off-mentality.html"/>
-        <id>https://atlancia.com/building-a-trade-off-mentality.html</id>
+        <link href="https://atlancia.com/trade-off-mentality.html"/>
+        <id>https://atlancia.com/trade-off-mentality.html</id>
         <media:content url="https://atlancia.com/media/posts/3/tradeoffpost.jpg" medium="image" />
 
         <updated>2023-05-06T00:00:00-04:00</updated>
             <summary>
                 <![CDATA[
                         <img src="https://atlancia.com/media/posts/3/tradeoffpost.jpg" alt="" />
-                    If you wish to make an apple pie from scratch, you must first invent the universe. – Carl Sagan Carl Sagan’s famous quote inspires deeper thought of how connected our universe is, that to “make an apple pie from scratch” you can keep going one&hellip;
+                    f you wish to make an apple pie from scratch, you must first invent the universe. – Carl Sagan Carl Sagan’s famous quote inspires deeper thought of how connected our universe is, that to “make an apple pie from scratch” you can keep going one&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
                     <p><img src="https://atlancia.com/media/posts/3/tradeoffpost.jpg" class="type:primaryImage" alt="" /></p>
                 <blockquote class="uy uz va">
-<p id="a616" class="vb vc vd ve b vf vg vh vi vj vk vl vm vn vo vp vq vr vs vt vu vv vw vx vy vz ga bk align-left" data-selectable-paragraph=""><em class="qk">If you wish to make an apple pie from scratch, you must first invent the universe.<br><span class="_97w2Z3njlMm7Og_zyqu4">– </span>Carl Sagan</em></p>
+<p id="a616" class="vb vc vd ve b vf vg vh vi vj vk vl vm vn vo vp vq vr vs vt vu vv vw vx vy vz ga bk align-left" data-selectable-paragraph=""><em class="qk">f you wish to make an apple pie from scratch, you must first invent the universe.<br><span class="_97w2Z3njlMm7Og_zyqu4">– </span>Carl Sagan</em></p>
 </blockquote>
 <p id="f521" class="pw-post-body-paragraph vb vc qk ve b vf vg vh vi vj vk vl vm vn vo vp vq vr vs vt vu vv vw vx vy vz ga bk" data-selectable-paragraph="">Carl Sagan’s famous quote inspires deeper thought of how connected our universe is, that to “make an apple pie from scratch” you can keep going one step backwards until one has to “invent the universe.” What struck me was, that somewhere between the start of the universe and baking the pie, we had to draw a line for what we consider “from scratch.” Why would buying pre-made pie crust feel like “cheating,” yet buying pre-ground flour would not? What lines have we drawn without much thought of how we choose them?</p>
 <p id="34b1" class="pw-post-body-paragraph vb vc qk ve b vf vg vh vi vj vk vl vm vn vo vp vq vr vs vt vu vv vw vx vy vz ga bk" data-selectable-paragraph="">Let’s imagine a manager asking someone to take on a new task. Consider the assumptions that may be at play: the manager assumes the employee can do the task, will listen, will understand, and could do the work without sacrificing their current efforts. What trade-offs are involved? What work might suffer to focus on this new task? How would the manager or the employee differ in their views of what could be dropped to accommodate the new work and what might those different opinions tell us about what each of them values?</p>
@@ -268,8 +268,8 @@
         <author>
             <name>Liam Shaw</name>
         </author>
-        <link href="https://atlancia.com/changing-requirements-to-be-a-successful-business-analyst.html"/>
-        <id>https://atlancia.com/changing-requirements-to-be-a-successful-business-analyst.html</id>
+        <link href="https://atlancia.com/business-analyst-reflection.html"/>
+        <id>https://atlancia.com/business-analyst-reflection.html</id>
         <media:content url="https://atlancia.com/media/posts/2/bapost.jpg" medium="image" />
 
         <updated>2019-06-14T00:00:00-04:00</updated>
