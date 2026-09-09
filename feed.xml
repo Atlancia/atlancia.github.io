@@ -19,7 +19,7 @@
         <media:content url="https://atlancia.com/media/posts/5/middle-header.webp" medium="image" />
 
         <updated>2025-02-17T00:00:00-05:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                         <img src="https://atlancia.com/media/posts/5/middle-header.webp" alt="" />
                     In the sclerosis of corporate hierarchies, middle management often finds itself caricatured as a relic of bygone organizational structures, scar tissue left behind by the Peter Principle. From the bumbling inefficiency of Office Space’s Lumbergh to the clichéd “paper-pusher,” middle managers have been the subject&hellip;
@@ -82,7 +82,7 @@
         <media:content url="https://atlancia.com/media/posts/4/diverse-header.jpg" medium="image" />
 
         <updated>2023-06-05T00:00:00-04:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                         <img src="https://atlancia.com/media/posts/4/diverse-header.jpg" alt="" />
                     In many creative activities the medium of execution is intractable. Lumber splits; paints smear; electrical circuits ring. These physical limitations of the medium constrain the ideas that may be expressed, and they also create unexpected difficulties in the implementation. Implementation, then, takes time and sweat&hellip;
@@ -190,7 +190,7 @@
         <media:content url="https://atlancia.com/media/posts/3/tradeoffpost.jpg" medium="image" />
 
         <updated>2023-05-06T00:00:00-04:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                         <img src="https://atlancia.com/media/posts/3/tradeoffpost.jpg" alt="" />
                     f you wish to make an apple pie from scratch, you must first invent the universe. – Carl Sagan Carl Sagan’s famous quote inspires deeper thought of how connected our universe is, that to “make an apple pie from scratch” you can keep going one&hellip;
@@ -273,7 +273,7 @@
         <media:content url="https://atlancia.com/media/posts/2/bapost.jpg" medium="image" />
 
         <updated>2019-06-14T00:00:00-04:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                         <img src="https://atlancia.com/media/posts/2/bapost.jpg" alt="" />
                     A look into personal experience with business analysis, agile and modern projects. My first exposure to the business analyst role was at the Canadian Food Inspection Agency (CFIA), while working with a team focused on policy. While there, I was fortunate enough to involve myself&hellip;
