@@ -8,10 +8,22 @@
 {{- if not $entry -}}
   {{- $entry = index site.Data.media (path.Base $dest) -}}
 {{- end -}}
-{{- if $entry -}}
-<figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ index $entry "src" }}"{{ with index $entry "srcset" }} srcset="{{ partial "srcset.html" $entry }}"{{ end }}{{ with index $entry "sizes" }} sizes="{{ . }}"{{ end }} loading="lazy"{{ with index $entry "width" }} width="{{ . }}"{{ end }}{{ with index $entry "height" }} height="{{ . }}"{{ end }} alt="{{ .Text }}">{{ if .Title }}<figcaption>{{ .Title }}</figcaption>{{ end }}</figure>
+{{- if not $entry -}}
+  {{- errorf "image not found in the media registry: %s" $dest -}}
+{{- end -}}
+{{- $src := index $entry "src" -}}
+{{- $sizes := index $entry "sizes" -}}
+{{- $width := index $entry "width" -}}
+{{- $height := index $entry "height" -}}
+{{- $nested := false -}}
+{{- with site.Data.figures -}}
+  {{- if index . $key -}}{{- $nested = true -}}{{- end -}}
+{{- end -}}
+{{- if $nested -}}
+{{- /* A few figures were published with a figure inside a figure. */ -}}
+<figure><figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ $src }}" srcset="{{ partial "srcset.html" $entry }}"{{ with $sizes }} sizes="{{ . }}"{{ end }} loading="lazy"{{ with $width }} width="{{ . }}"{{ end }}{{ with $height }} height="{{ . }}"{{ end }} alt="{{ .Text }}"></figure>{{ if .Title }}<figcaption>{{ .Title }}</figcaption>{{ end }}</figure>
+{{- else if .Title -}}
+<figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ $src }}" srcset="{{ partial "srcset.html" $entry }}"{{ with $sizes }} sizes="{{ . }}"{{ end }} loading="lazy"{{ with $width }} width="{{ . }}"{{ end }}{{ with $height }} height="{{ . }}"{{ end }} alt="{{ .Text }}"><figcaption>{{ .Title }}</figcaption></figure>
 {{- else -}}
-{{- /* An image the registry does not know about, for instance one added in
-       the content manager before the next build. */ -}}
-<figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ $dest }}" loading="lazy" alt="{{ .Text }}">{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>
+<img class="post__image post__image--center" src="{{ site.BaseURL }}{{ $src }}"{{ with index $entry "srcset" }} srcset="{{ partial "srcset.html" $entry }}"{{ end }}{{ with $sizes }} sizes="{{ . }}"{{ end }} loading="lazy"{{ with $width }} width="{{ . }}"{{ end }}{{ with $height }} height="{{ . }}"{{ end }} alt="{{ .Text }}">
 {{- end -}}

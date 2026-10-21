@@ -242,12 +242,16 @@ def node_text(node: Node) -> str:
     return "".join(parts)
 
 
-def figure_to_markdown(node: Node) -> str | None:
+def figure_to_markdown(node: Node) -> tuple[str, bool] | None:
     """Turn a figure holding one image and an optional caption into Markdown.
 
     The published theme styles a captioned image as a figure and an
     uncaptioned one as a bare centred image, so the distinction has to survive
     the conversion. The caption becomes the Markdown image title.
+
+    A figure that did not carry the class itself, with the class on the image
+    inside it, was published with a figure nested inside a figure. That shape
+    is recorded so the templates can reproduce it.
     """
     images = [c for c in node.children if isinstance(c, Node) and c.tag == "img"]
     captions = [c for c in node.children if isinstance(c, Node) and c.tag == "figcaption"]
@@ -262,7 +266,9 @@ def figure_to_markdown(node: Node) -> str | None:
     if captions:
         title = re.sub(r"\s+", " ", node_text(captions[0])).strip()
     suffix = f' "{title}"' if title else ""
-    return f"![{alt}]({src}{suffix})"
+    figure_classes = node.attrs.get("class", "").split()
+    nested = "post__image" not in figure_classes and "post__image" in image.attrs.get("class", "").split()
+    return f"![{alt}]({src}{suffix})", (src if nested else "")
 
 
 LIST_MARKER_RE = re.compile(r"^([-*+]|\d+\.)\s")
@@ -279,7 +285,7 @@ def escape_leading_marker(text: str) -> str:
     return text
 
 
-def blocks_to_markdown(nodes: list[Any]) -> str:
+def blocks_to_markdown(nodes: list[Any], nested: list[str] | None = None) -> str:
     blocks: list[str] = []
 
     def add(text: str) -> None:
@@ -317,12 +323,18 @@ def blocks_to_markdown(nodes: list[Any]) -> str:
             elif tag in ("ul", "ol"):
                 add(render_list(child))
             elif tag == "blockquote":
-                inner = blocks_to_markdown(child.children)
+                inner = blocks_to_markdown(child.children, nested)
                 quoted = "\n".join(("> " + line) if line else ">" for line in inner.split("\n"))
                 add(quoted)
             elif tag == "figure":
                 converted = figure_to_markdown(child)
-                add(converted if converted is not None else node_to_html(child))
+                if converted is None:
+                    add(node_to_html(child))
+                else:
+                    markdown, nested_source = converted
+                    if nested_source and nested is not None:
+                        nested.append(nested_source)
+                    add(markdown)
             elif tag == "img":
                 add(inline_to_markdown([child]))
             elif tag in RAW_TAGS:
@@ -545,19 +557,20 @@ def write_post(
     post: sqlite3.Row,
     media_id: int,
     featured: ImageEntry | None,
-) -> None:
+) -> list[str]:
     slug = post["slug"]
     created = post["created_at"] / 1000
     modified = post["modified_at"] / 1000
     flags = [f.strip() for f in (post["status"] or "").split(",") if f.strip()]
 
-    body = post["text"] or ""
+    body = (post["text"] or "").replace("#DOMAIN_NAME#", "")
     tree = parse_html(body)
-    markdown = blocks_to_markdown(tree.children)
+    nested_sources: list[str] = []
+    markdown = blocks_to_markdown(tree.children, nested_sources)
 
-    # Rewrite the Publii media placeholder to a bare filename. The render hook
-    # resolves it back to the published path and responsive set.
-    markdown = re.sub(r"#DOMAIN_NAME#([^\s\"')>]+)", r"\1", markdown)
+    # The images in the body are named by their file name. The render hook
+    # resolves them against the post's own media folder.
+    markdown = markdown
 
     extra = site.additional_data(post["id"])
     core = extra.get("_core", {})
@@ -595,6 +608,7 @@ def write_post(
     target = out_dir / "content" / "posts" / f"{slug}.md"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(front) + markdown + "\n", encoding="utf-8")
+    return [f"media/posts/{media_id}/{source}" for source in nested_sources]
 
 
 def write_site_data(out_dir: Path, site: PubliiSite, registry: dict[str, Any]) -> None:
@@ -815,6 +829,7 @@ def main(argv: list[str] | None = None) -> int:
     write_authors_and_tags(out_dir, site)
     write_home(out_dir, site)
 
+    nested: list[str] = []
     for post in site.posts():
         media_id = int(post["id"])
         featured = None
@@ -830,8 +845,15 @@ def main(argv: list[str] | None = None) -> int:
                 height=entry.get("height", ""),
                 alt=json.loads(image["additional_data"] or "{}").get("alt", ""),
             )
-        write_post(out_dir, site, post, media_id, featured)
+        nested.extend(write_post(out_dir, site, post, media_id, featured))
         print(f"post {post['id']:>3}  {post['slug']}")
+
+    # A few figures were published with a figure nested inside a figure. The
+    # templates need to know which ones, so the shape survives the move.
+    figures = {path: True for path in sorted(set(nested))}
+    (out_dir / "data" / "figures.json").write_text(
+        json.dumps(figures, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
     site.close()
     print(f"extracted to {out_dir}")

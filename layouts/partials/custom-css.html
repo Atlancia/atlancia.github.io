@@ -82,6 +82,35 @@ body {
 }
 
 /*
+ * The theme tightens the space that follows a level two heading. The
+ * headings inside an essay are level two, so the space after them is put
+ * back to what it was when they were level one.
+ */
+.content__entry h2 + p,
+.content__entry h2 + ul,
+.content__entry h2 + ol,
+.content__entry h2 + dl {
+    margin-top: calc(var(--baseline) * 4 + .25vw);
+}
+
+.content__entry h2 + blockquote,
+.content__entry h2 + figure,
+.content__entry h2 + hr,
+.content__entry h2 + pre,
+.content__entry h2 + table {
+    margin-top: calc(var(--baseline) * 6 + .5vw);
+}
+
+.content__entry h2 + h1,
+.content__entry h2 + h2,
+.content__entry h2 + h3,
+.content__entry h2 + h4,
+.content__entry h2 + h5,
+.content__entry h2 + h6 {
+    margin-top: calc(var(--baseline) * 6 + 1vw);
+}
+
+/*
  * An image on a line of its own is a paragraph in Markdown. The browser
  * closes that paragraph before the figure, which leaves an empty paragraph
  * behind it. Taking it out of the flow puts the figure back where the
@@ -89,5 +118,16 @@ body {
  */
 .content__entry p:empty {
     display: none;
+}
+
+/*
+ * Two images in the oldest essay were published inside a figure. They are
+ * marked up as a picture here, which carries no box of its own, so it is
+ * given the same one.
+ */
+.content__entry picture {
+    display: block;
+    margin-top: calc(var(--baseline) * 6 + .5vw);
+    margin-bottom: calc(var(--baseline) * 6 + .5vw);
 }
 </style>
