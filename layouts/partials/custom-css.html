@@ -82,12 +82,12 @@ body {
 }
 
 /*
- * An image on a line of its own is a paragraph in Markdown, and the previous
- * build published it as a direct child of the entry. Letting the paragraph
- * generate no box puts the image back where the theme expects it, with the
- * same space above and below it.
+ * An image on a line of its own is a paragraph in Markdown. The browser
+ * closes that paragraph before the figure, which leaves an empty paragraph
+ * behind it. Taking it out of the flow puts the figure back where the
+ * previous build published it, with the same space above and below it.
  */
-.content__entry p:has(> figure.post__image) {
-    display: contents;
+.content__entry p:empty {
+    display: none;
 }
 </style>
