@@ -1,0 +1,36 @@
+{{- $site := site.Data.site -}}
+{{- $pages := where site.RegularPages "Kind" "page" -}}
+{{- $pages = where $pages "Params.hidden" nil -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $items := slice -}}
+{{- range $pages -}}
+  {{- $item := dict
+    "id" .Permalink
+    "url" .Permalink
+    "title" .Title
+    "summary" (partial "excerpt.html" .)
+    "content_html" (.Content | safeHTML)
+  -}}
+  {{- with .Params.featured_image -}}
+    {{- $item = merge $item (dict "image" (printf "%s%s" site.BaseURL .)) -}}
+  {{- end -}}
+  {{- $item = merge $item (dict
+    "author" (dict "name" "Liam Shaw")
+    "tags" (slice)
+    "date_published" (.Date.Format "2006-01-02T15:04:05-07:00")
+    "date_modified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")
+  ) -}}
+  {{- $items = $items | append $item -}}
+{{- end -}}
+{{- $feed := dict
+  "version" "https://jsonfeed.org/version/1"
+  "title" $site.name
+  "description" $site.description
+  "home_page_url" site.BaseURL
+  "feed_url" (printf "%sfeed.json" site.BaseURL)
+  "user_comment" ""
+  "icon" (printf "%s%s" site.BaseURL $site.logo)
+  "author" (dict "name" "Liam Shaw")
+  "items" $items
+-}}
+{{- $feed | jsonify (dict "indent" "    ") | safeHTML -}}

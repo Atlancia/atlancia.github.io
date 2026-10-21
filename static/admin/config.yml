@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# The content manager for atlancia.com. It edits the Markdown in this
+# repository through the GitHub API and commits each save to main, which
+# triggers the build in .github/workflows/deploy.yml.
+#
+# Signing in uses an access token. Create a fine-grained token with
+# "Contents: read and write" for this repository only, then paste it into the
+# sign-in dialog when it opens. The token stays in the browser.
+backend:
+  name: github
+  repo: Atlancia/atlancia
+  branch: main
+
+media_folder: static/media
+public_folder: /media
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: content/posts
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    summary: "{{title}} on {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Slug, name: slug, widget: string, hint: "The address of the post, without the .html ending." }
+      - { label: Description, name: description, widget: text, required: false, hint: "Left empty, the site writes the first 45 words of the post." }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Hero image, name: featured_image, widget: image, required: false, choose_url: false, hint: "The image at the top of the post." }
+      - { label: Hero image description, name: featured_image_alt, widget: string, required: false }
+      - { label: Author, name: authors, widget: select, multiple: true, default: [liam], options: [liam] }
+      - { label: Hidden, name: hidden, widget: boolean, default: false, required: false, hint: "A hidden post keeps its address but stays out of the listings and the feed." }
+      - { label: Keep off the home page, name: exclude_from_home, widget: boolean, default: false, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: content/pages
+    create: true
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Body, name: body, widget: markdown }

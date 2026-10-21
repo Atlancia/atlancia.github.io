@@ -1,0 +1,12 @@
+{{- /* Renders an image using the media registry so the published markup matches
+       the responsive set the previous build produced. */ -}}
+{{- $src := .src -}}
+{{- $entry := index site.Data.media (strings.TrimPrefix "/" $src) -}}
+{{- if not $entry -}}
+  {{- errorf "image not found in the media registry: %s" $src -}}
+{{- end -}}
+{{- $sizes := .sizes | default (index $entry "sizes") -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $class := .class | default "" -}}
+{{- $alt := .alt | default "" -}}
+<img src="{{ site.BaseURL }}{{ index $entry "src" }}"{{ if $class }} class="{{ $class }}"{{ end }} srcset="{{ partial "srcset.html" $entry }}"{{ if $sizes }} sizes="{{ $sizes }}"{{ end }} loading="{{ $loading }}" width="{{ index $entry "width" }}" height="{{ index $entry "height" }}" alt="{{ $alt }}">

@@ -1,0 +1,29 @@
+{{- $site := site.Data.site -}}
+{{- $comments := $site.comments -}}
+<div class="content__comments">
+    <div class="entry-wrapper">
+        <div class="{{ $comments.wrapper_class }}">
+            <div class="{{ $comments.inner_class }}">
+                <h2 class="{{ $comments.heading_class }}">{{ $comments.header }}</h2>
+                <div id="graphcomment"></div>
+                <noscript>{{ $comments.fallback }}</noscript>
+                <script type="text/javascript">var __semio__params = {
+                            graphcommentId: "{{ $comments.shortname }}",
+                            behaviour: {
+                                uid: "{{ .Params.media_id }}"
+                            }
+                        }
+
+                        function __semio__onload() {
+                            __semio__gc_graphlogin(__semio__params)
+                        }
+
+                        (function() {
+                            var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+                            gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+                        })();</script>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+{{- /* Links in the body. Links that leave the site open in a new tab and
+       carry the same rel values the previous build published. */ -}}
+{{- $url := urls.Parse .Destination -}}
+{{- $external := and $url.Host (ne $url.Host "atlancia.com") -}}
+<a href="{{ .Destination }}"{{ if $external }} rel="noopener ugc nofollow" target="_blank"{{ end }}{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>

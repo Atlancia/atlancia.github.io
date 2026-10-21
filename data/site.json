@@ -1,0 +1,56 @@
+{
+  "name": "Atlancia",
+  "slug": "atlancia",
+  "description": "",
+  "domain": "https://atlancia.com",
+  "logo": "media/website/logo-2.png",
+  "logo_width": 500,
+  "logo_height": 162,
+  "favicon": "media/website/6392889.png",
+  "favicon_extension": "image/png",
+  "hero": "media/website/Hero2.jpg",
+  "hero_alt": "",
+  "hero_caption": "",
+  "hero_text": "<h1>Welcome to the Atlancia home page.</h1>\n<p>Founded by Liam Shaw. See his <a href=\"https://ca.linkedin.com/in/liamshaw3?trk=blog\" target=\"_blank\" rel=\"noopener\">profile</a> or check out his blog below.</p>",
+  "hero_height": "30vh",
+  "align_hero": "left",
+  "align_feed": "center",
+  "feed_read_more": true,
+  "posts_per_page": 5,
+  "excerpt_length": 45,
+  "format_date": "January 2, 2006",
+  "navbar_height": "6rem",
+  "mobile_menu": "sidebar",
+  "mobile_menu_expandable": true,
+  "submenu": "auto",
+  "submenu_width": "240",
+  "back_to_top": true,
+  "color_scheme": "dark",
+  "primary_color": "#D73A42",
+  "primary_dark_color": "#FFC074",
+  "page_background": "#23233d",
+  "copyright_text": "<p>\n<script>\ndocument.addEventListener('DOMContentLoaded', function() {\n    const year = new Date().getFullYear();\n    const footer = document.querySelector('footer, .footer');\n    if (footer) {\n        const copyright = document.createElement('p');\n        copyright.innerHTML = '© ' + year + ' Atlancia. All rights reserved.';\n        copyright.style.cssText = 'text-align: center; font-size: 0.82rem; color: #9D9D9D; margin-top: 1rem';\n        footer.appendChild(copyright);\n    }\n});\n</script>\n</p>",
+  "menu": [
+    {
+      "label": "Blog",
+      "url": "https://atlancia.com/",
+      "target": "_self",
+      "rel": ""
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://ca.linkedin.com/in/liamshaw3?trk=blog",
+      "target": "_self",
+      "rel": ""
+    }
+  ],
+  "comments": {
+    "provider": "graphcomment",
+    "shortname": "atlancia",
+    "wrapper_class": "my-comments-wrapper",
+    "inner_class": "my-comments-inner",
+    "heading_class": "custom-h2",
+    "header": "Comments",
+    "fallback": "Please enable JS to use the comments form."
+  }
+}

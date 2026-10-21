@@ -1,0 +1,18 @@
+{{- /* Plain-text excerpt: the first 45 words of the body.
+
+       The previous build cut the excerpt at exactly the word limit and left
+       the sentence unfinished, so this does the same rather than closing the
+       sentence. A short entry keeps all of its words and takes no ellipsis.
+*/ -}}
+{{- $text := .Content | plainify | htmlUnescape -}}
+{{- $text = replaceRE "\u00a0" " " $text -}}
+{{- $text = replaceRE `\s+` " " $text -}}
+{{- $text = trim $text " " -}}
+{{- $words := split $text " " -}}
+{{- $limit := int site.Data.site.excerpt_length -}}
+{{- $take := first $limit $words -}}
+{{- $excerpt := delimit $take " " -}}
+{{- if gt (len $words) $limit -}}
+  {{- $excerpt = printf "%s…" $excerpt -}}
+{{- end -}}
+{{- $excerpt | safeHTML -}}

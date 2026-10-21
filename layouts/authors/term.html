@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{- $pages := where .Pages "Params.hidden" nil -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+<main class="page page--author">
+    <div class="hero hero--noimage">
+        <header class="hero__content">
+            <div class="wrapper page--author__wrapper">
+                <div>
+                    <h1>{{ .Title }} <sup>({{ len $pages }})</sup></h1>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div class="wrapper feed">
+        {{- range $pages }}
+        {{ partial "feed-item.html" (dict "page" .) }}
+        {{- end }}
+    </div>
+</main>
+{{ end }}

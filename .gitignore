@@ -1,0 +1,8 @@
+public/
+public_*/
+.hugo_build.lock
+*.tmp
+.DS_Store
+
+__pycache__/
+*.pyc

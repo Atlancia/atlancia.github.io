@@ -1,0 +1,19 @@
+{{ define "main" }}
+<main class="page page--tags">
+    <div class="hero hero--noimage">
+        <header class="hero__content">
+            <div class="wrapper">
+                <h1>Tags</h1>
+                <p class="page__desc">Collection of all {{ len site.Taxonomies.tags }} tags</p>
+            </div>
+        </header>
+    </div>
+    <div class="wrapper">
+        <ul class="feed feed--grid">
+            {{- range site.Taxonomies.tags }}
+            <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>
+            {{- end }}
+        </ul>
+    </div>
+</main>
+{{ end }}

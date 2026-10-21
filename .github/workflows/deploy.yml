@@ -1,0 +1,54 @@
+name: Build and publish
+
+# A change to the content or the templates is built here and published to the
+# repository that GitHub Pages serves.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Set up Hugo
+        uses: peaceiris/setup-hugo@v3
+        with:
+          hugo-version: 0.148.2
+          extended: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build the site
+        run: python tools/build.py public
+
+      - name: Check out the published site
+        uses: actions/checkout@v4
+        with:
+          repository: Atlancia/atlancia.github.io
+          ref: master
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: published
+
+      - name: Publish
+        working-directory: published
+        run: |
+          cp -R ../public/. .
+          git config user.name "Liam"
+          git config user.email "liam@atlancia.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "the site has not changed"
+          else
+            git commit -m "Publish the site"
+            git push origin master
+          fi

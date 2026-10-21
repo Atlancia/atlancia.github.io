@@ -1,0 +1,49 @@
+{{- /* Previous and next links, following the published order in time. */ -}}
+{{- $page := . -}}
+{{- $posts := where site.RegularPages "Kind" "page" -}}
+{{- $posts = where $posts "Params.hidden" nil -}}
+{{- $older := "" -}}
+{{- $newer := "" -}}
+{{- range $posts -}}
+  {{- if lt .Date $page.Date -}}
+    {{- if or (not $older) (gt .Date $older.Date) -}}
+      {{- $older = . -}}
+    {{- end -}}
+  {{- else if gt .Date $page.Date -}}
+    {{- if or (not $newer) (lt .Date $newer.Date) -}}
+      {{- $newer = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if or $older $newer -}}
+{{- if not $page.Params.hidden -}}
+<nav class="content__nav">
+    <div class="wrapper">
+        <div class="content__nav-inner">
+            {{- with $older }}
+            <div class="content__nav-prev">
+                <a href="{{ .Permalink }}" class="content__nav-link" rel="prev">
+                    {{ partial "nav-image.html" (dict "page" .) }}
+                    <div>
+                        <span>Previous</span>
+                        {{ .Title }}
+                    </div>
+                </a>
+            </div>
+            {{- end }}
+            {{- with $newer }}
+            <div class="content__nav-next">
+                <a href="{{ .Permalink }}" class="content__nav-link" rel="next">
+                    <div>
+                        <span>Next</span>
+                        {{ .Title }}
+                    </div>
+                    {{ partial "nav-image.html" (dict "page" .) }}
+                </a>
+            </div>
+            {{- end }}
+        </div>
+    </div>
+</nav>
+{{- end -}}
+{{- end -}}

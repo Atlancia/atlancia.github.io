@@ -1,0 +1,8 @@
+{{- $site := site.Data.site -}}
+{{- dict
+  "@context" "http://schema.org"
+  "@type" "Organization"
+  "name" $site.name
+  "logo" (printf "%s%s" site.BaseURL $site.logo)
+  "url" site.BaseURL
+| jsonify -}}

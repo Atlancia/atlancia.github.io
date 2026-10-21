@@ -1,0 +1,9 @@
+{{- /* The hero image, rendered from the media registry. */ -}}
+{{- $path := . -}}
+{{- if $path -}}
+<figure class="hero__image">
+    <div class="hero__image-wrapper">
+        {{ partial "image.html" (dict "src" $path "sizes" "88vw" "loading" "eager" "alt" "") }}
+    </div>
+</figure>
+{{- end -}}

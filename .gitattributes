@@ -1,0 +1,13 @@
+# Keep the working tree and the repository the same, so that the build
+# produces the same output on every machine.
+* text=auto eol=lf
+
+*.woff2 binary
+*.woff binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.tar binary

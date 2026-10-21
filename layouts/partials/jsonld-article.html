@@ -1,0 +1,29 @@
+{{- $site := site.Data.site -}}
+{{- $image := "" -}}
+{{- $imageHeight := $site.logo_height -}}
+{{- $imageWidth := $site.logo_width -}}
+{{- if .Params.featured_image }}
+  {{- $image = printf "%s%s" site.BaseURL .Params.featured_image -}}
+  {{- $entry := index site.Data.media (strings.TrimPrefix "/" .Params.featured_image) -}}
+  {{- if $entry }}
+    {{- $imageHeight = int (index $entry "height") -}}
+    {{- $imageWidth = int (index $entry "width") -}}
+  {{- end }}
+{{- else -}}
+  {{- $image = printf "%s%s" site.BaseURL $site.logo -}}
+{{- end -}}
+{{- $ld := dict
+  "@context" "http://schema.org"
+  "@type" "Article"
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "headline" .Title
+  "datePublished" (.Date.Format "2006-01-02T15:04-07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04-07:00")
+  "description" (partial "excerpt.html" .)
+  "author" (dict "@type" "Person" "name" "Liam Shaw" "url" (printf "%sauthors/liam/" site.BaseURL))
+  "publisher" (dict "@type" "Organization" "name" "Liam Shaw" "logo" (dict "@type" "ImageObject" "url" (printf "%s%s" site.BaseURL $site.logo) "height" $site.logo_height "width" $site.logo_width))
+-}}
+{{- if $image -}}
+  {{- $ld = merge $ld (dict "image" (dict "@type" "ImageObject" "url" $image "height" $imageHeight "width" $imageWidth)) -}}
+{{- end -}}
+{{ $ld | jsonify -}}

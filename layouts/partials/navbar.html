@@ -1,0 +1,22 @@
+{{- $site := site.Data.site -}}
+<header class="top js-header">
+   <a class="logo" href="{{ site.BaseURL }}">
+      <img src="{{ site.BaseURL }}{{ $site.logo }}" alt="{{ $site.name }}" width="{{ $site.logo_width }}" height="{{ $site.logo_height }}">
+   </a>
+   <nav class="navbar js-navbar">
+      <button
+         class="navbar__toggle js-toggle"
+         aria-label="Menu"
+         aria-haspopup="true"
+         aria-expanded="false">
+         <span class="navbar__toggle-box">
+            <span class="navbar__toggle-inner">Menu</span>
+         </span>
+      </button>
+      <ul class="navbar__menu">
+         {{- range $site.menu }}
+         <li><a href="{{ .url }}" target="{{ .target }}">{{ .label }}</a></li>
+         {{- end }}
+      </ul>
+   </nav>
+</header>

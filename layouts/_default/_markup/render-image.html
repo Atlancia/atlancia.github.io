@@ -1,0 +1,17 @@
+{{- $dest := .Destination -}}
+{{- $id := .Page.Params.media_id | default 0 -}}
+{{- $key := $dest -}}
+{{- if not (strings.HasPrefix $dest "media/") -}}
+  {{- $key = printf "media/posts/%v/%s" $id $dest -}}
+{{- end -}}
+{{- $entry := index site.Data.media $key -}}
+{{- if not $entry -}}
+  {{- $entry = index site.Data.media (path.Base $dest) -}}
+{{- end -}}
+{{- if $entry -}}
+<figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ index $entry "src" }}"{{ with index $entry "srcset" }} srcset="{{ partial "srcset.html" $entry }}"{{ end }}{{ with index $entry "sizes" }} sizes="{{ . }}"{{ end }} loading="lazy"{{ with index $entry "width" }} width="{{ . }}"{{ end }}{{ with index $entry "height" }} height="{{ . }}"{{ end }} alt="{{ .Text }}">{{ if .Title }}<figcaption>{{ .Title }}</figcaption>{{ end }}</figure>
+{{- else -}}
+{{- /* An image the registry does not know about, for instance one added in
+       the content manager before the next build. */ -}}
+<figure class="post__image post__image--center"><img src="{{ site.BaseURL }}{{ $dest }}" loading="lazy" alt="{{ .Text }}">{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>
+{{- end -}}

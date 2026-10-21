@@ -1,0 +1,40 @@
+{{- $page := . -}}
+{{- $glued := false -}}
+{{- if reflect.IsMap . -}}
+  {{- $page = .page -}}
+  {{- $glued = .glued -}}
+{{- end -}}
+{{- $site := site.Data.site -}}
+<footer class="footer{{ if $glued }} footer--glued{{ end }}">
+    <div class="wrapper">
+        <div class="footer__copyright">
+            {{ $site.copyright_text | safeHTML }}
+        </div>
+        {{- if $site.back_to_top }}
+        <button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top">
+            <svg width="20" height="20">
+                <use xlink:href="{{ site.BaseURL }}assets/svg/svg-map.svg#toparrow"></use>
+            </svg>
+        </button>
+        {{- end }}
+    </div>
+</footer>
+
+<script defer="defer" src="{{ site.BaseURL }}assets/js/scripts.min.js"></script>
+
+<script>window.publiiThemeMenuConfig={mobileMenuMode:'{{ $site.mobile_menu }}',animationSpeed:300,submenuWidth: '{{ $site.submenu }}',doubleClickTime:500,mobileMenuExpandableSubmenus:{{ $site.mobile_menu_expandable }},relatedContainerForOverlayMenuSelector:'.top'};</script>
+
+<script>
+    var images = document.querySelectorAll('img[loading]');
+    for (var i = 0; i < images.length; i++) {
+        if (images[i].complete) {
+            images[i].classList.add('is-loaded');
+        } else {
+            images[i].addEventListener('load', function () {
+                this.classList.add('is-loaded');
+            }, false);
+        }
+    }
+</script>
+</body>
+</html>

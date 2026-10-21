@@ -1,0 +1,80 @@
+{{- $site := site.Data.site -}}
+{{- $isPost := eq .Type "posts" -}}
+{{- $title := $site.name -}}
+{{- if $isPost -}}
+  {{- $title = printf "%s - %s" .Title $site.name -}}
+{{- else if eq .Kind "404" -}}
+  {{- $title = printf "Error 404 - %s" $site.name -}}
+{{- else if eq .Type "authors" -}}
+  {{- $title = printf "Author: %s - %s" .Title $site.name -}}
+{{- else if eq .Type "tags" -}}
+  {{- $title = printf "All tags - %s" $site.name -}}
+{{- end -}}
+{{- $url := .Permalink -}}
+{{- $description := "" -}}
+{{- $image := "" -}}
+{{- $imageWidth := "" -}}
+{{- $imageHeight := "" -}}
+{{- $ogType := "website" -}}
+{{- $authorName := "Liam Shaw" -}}
+{{- if $isPost }}
+  {{- $description = partial "excerpt.html" . -}}
+  {{- $ogType = "article" -}}
+  {{- if .Params.featured_image }}
+    {{- $image = (printf "%s%s" site.BaseURL .Params.featured_image) -}}
+    {{- $entry := index site.Data.media (strings.TrimPrefix "/" .Params.featured_image) -}}
+    {{- if $entry }}
+      {{- $imageWidth = index $entry "width" -}}
+      {{- $imageHeight = index $entry "height" -}}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ $title }}</title>
+{{- if $description }}
+<meta name="description" content="{{ $description }}">
+{{- end }}
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+<link rel="canonical" href="{{ $url }}">
+<link rel="alternate" type="application/atom+xml" href="{{ site.BaseURL }}feed.xml" title="{{ $site.name }} - RSS">
+<link rel="alternate" type="application/json" href="{{ site.BaseURL }}feed.json" title="{{ $site.name }} - JSON">
+<meta property="og:title" content="{{ cond $isPost .Title $site.name }}">
+{{- if $image }}
+<meta property="og:image" content="{{ $image }}">
+{{- if $imageWidth }}
+<meta property="og:image:width" content="{{ $imageWidth }}">
+{{- end }}
+{{- if $imageHeight }}
+<meta property="og:image:height" content="{{ $imageHeight }}">
+{{- end }}
+{{- else }}
+<meta property="og:image" content="{{ site.BaseURL }}{{ $site.logo }}">
+<meta property="og:image:width" content="{{ $site.logo_width }}">
+<meta property="og:image:height" content="{{ $site.logo_height }}">
+{{- end }}
+<meta property="og:site_name" content="{{ $site.name }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:type" content="{{ $ogType }}">
+{{- with $site.favicon }}
+<link rel="shortcut icon" href="{{ site.BaseURL }}{{ . }}" type="image/{{ $site.favicon_extension }}">
+{{- end }}
+{{- with $site.font_body }}
+<link rel="preload" href="{{ site.BaseURL }}assets/dynamic/fonts/{{ . }}/{{ . }}.woff2" as="font" type="font/woff2" crossorigin>
+{{- end }}
+<link rel="stylesheet" href="{{ site.BaseURL }}assets/css/style.css">
+{{- if $isPost }}
+<script type="application/ld+json">{{ partial "jsonld-article.html" . | safeJS }}</script>
+{{- else }}
+<script type="application/ld+json">{{ partial "jsonld-organization.html" . | safeJS }}</script>
+{{- end }}
+<noscript>
+<style>
+    img[loading] {
+        opacity: 1;
+    }
+</style>
+</noscript>
+{{ partial "custom-css.html" . }}
