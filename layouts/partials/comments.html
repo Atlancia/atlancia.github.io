@@ -10,7 +10,7 @@
                 <script type="text/javascript">var __semio__params = {
                             graphcommentId: "{{ $comments.shortname }}",
                             behaviour: {
-                                uid: "{{ .Params.media_id }}"
+                                uid: "{{ if .Params.media_id }}{{ .Params.media_id }}{{ else }}{{ .Slug }}{{ end }}"
                             }
                         }
 
