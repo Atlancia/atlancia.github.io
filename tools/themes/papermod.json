@@ -1,0 +1,42 @@
+{
+  "name": "papermod",
+  "repo": "https://github.com/adityatelange/hugo-PaperMod.git",
+  "branch": "master",
+  "hugo": "hugo-0.167.exe",
+  "featured_image_key": "cover",
+  "featured_image_style": "cover",
+  "skip": [
+    "gallery.md"
+  ],
+  "config": {
+    "theme": "papermod",
+    "defaultContentLanguage": "en",
+    "enableEmoji": true,
+    "buildDrafts": false,
+    "buildFuture": false,
+    "summaryLength": 45,
+    "uglyURLs": true,
+    "permalinks": {
+      "posts": "/:slug"
+    },
+    "params": {
+      "env": "production",
+      "defaultTheme": "auto",
+      "ShowReadingTime": true,
+      "ShowWordCount": true,
+      "ShowToc": true,
+      "TocOpen": true,
+      "ShowCodeCopyButtons": true,
+      "ShowPostNavLinks": true,
+      "ShowBreadCrumbs": true,
+      "ShowFullText": false,
+      "disableSearch": false,
+      "disableAnimate": true,
+      "hideDefaultTranslationWarning": true,
+      "cover": {
+        "display": "cover",
+        "responsiveImages": true
+      }
+    }
+  }
+}

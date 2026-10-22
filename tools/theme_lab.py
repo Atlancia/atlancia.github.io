@@ -55,8 +55,15 @@ def remap_front_matter(text: str, config: dict) -> str:
             # The theme decides its own addresses.
             continue
         if stripped.startswith("featured_image:") and config.get("featured_image_key"):
-            value = stripped.split(":", 1)[1].strip()
-            out.append(f'{config["featured_image_key"]}: {value}')
+            value = stripped.split(":", 1)[1].strip().strip('"')
+            key = config["featured_image_key"]
+            if config.get("featured_image_style") == "cover":
+                # PaperMod reads a table, with the image named inside it. The
+                # bundle holds the image under the name the theme looks for.
+                out.append(f"{key}:")
+                out.append(f"  image: featured{Path(value).suffix}")
+            else:
+                out.append(f"{key}: {value}")
             continue
         out.append(line)
     return "\n".join(["---"] + out + ["---"] + body)
@@ -72,7 +79,7 @@ def toml_value(value) -> str:
     return json.dumps(value)
 
 
-def toml_document(settings: dict) -> str:
+def toml_document(settings: dict, prefix: str = "") -> str:
     lines = []
     tables = []
     for key, value in settings.items():
@@ -81,10 +88,11 @@ def toml_document(settings: dict) -> str:
         else:
             lines.append(f"{key} = {toml_value(value)}")
     for key, value in tables:
+        name = f"{prefix}{key}"
         lines.append("")
-        lines.append(f"[{key}]")
-        for sub_key, sub_value in value.items():
-            lines.append(f"{sub_key} = {toml_value(sub_value)}")
+        lines.append(f"[{name}]")
+        body = toml_document(value, f"{name}.")
+        lines.extend(body.strip("\n").split("\n"))
     return "\n".join(lines) + "\n"
 
 
@@ -98,6 +106,43 @@ def remove_tree(path: Path) -> None:
         function(target)
 
     shutil.rmtree(path, onerror=make_writable)
+
+
+def make_bundle(source: Path, destination: Path, media_root: Path, config: dict) -> None:
+    """Turn a post into a page bundle with its own images beside it.
+
+    The published site keeps the media in one folder and resolves it with a
+    template of its own, which only that site understands. A page bundle is
+    the way Hugo expects a post's own media to live, and it works in any
+    theme with no image code at all.
+    """
+    text = remap_front_matter(source.read_text(encoding="utf-8"), config)
+    media_id = ""
+    for line in text.split("\n"):
+        if line.startswith("media_id:"):
+            media_id = line.split(":", 1)[1].strip()
+    folder = media_root / "posts" / media_id if media_id else None
+
+    destination.mkdir(parents=True, exist_ok=True)
+    destination.joinpath("index.md").write_text(text, encoding="utf-8")
+
+    if folder and folder.is_dir():
+        for name in set(re.findall(r"\]\(([^)\s]+)", text)):
+            if "/" in name or name.startswith("http"):
+                continue
+            source_image = folder / name
+            if source_image.is_file():
+                shutil.copy2(source_image, destination / name)
+
+    # The image at the top of the post, which the theme looks for by name.
+    featured = ""
+    for line in text.split("\n"):
+        if line.startswith("featured_image:"):
+            featured = line.split(":", 1)[1].strip().strip('"')
+    if featured and folder:
+        source_image = folder / Path(featured).name
+        if source_image.is_file():
+            shutil.copy2(source_image, destination / f"featured{Path(featured).suffix}")
 
 
 def build(name: str, base_url: str | None) -> int:
@@ -119,6 +164,14 @@ def build(name: str, base_url: str | None) -> int:
     for source in sorted((ROOT / "content").rglob("*.md")):
         relative = source.relative_to(ROOT / "content")
         if config.get("skip") and relative.as_posix() in config["skip"]:
+            continue
+        if config.get("bundles", True) and relative.parent.name == "posts":
+            make_bundle(
+                source,
+                content / relative.parent / source.stem,
+                ROOT / "static" / "media",
+                config,
+            )
             continue
         destination = content / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
