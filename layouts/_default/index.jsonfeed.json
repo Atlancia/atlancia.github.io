@@ -1,6 +1,10 @@
-{{- $site := site.Data.site -}}
-{{- $pages := where site.RegularPages "Type" "posts" -}}
-{{- $pages = where $pages "Params.hidden" nil -}}
+{{- /*
+  The JSON Feed at /feed.json, the second address the site has always
+  published. Same essays, same order, same summary as the Atom feed.
+*/ -}}
+{{- $site := hugo.Data.site -}}
+{{- $root := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $pages := where site.RegularPages "Section" "posts" -}}
 {{- $pages = $pages.ByDate.Reverse -}}
 {{- $items := slice -}}
 {{- range $pages -}}
@@ -8,11 +12,11 @@
     "id" .Permalink
     "url" .Permalink
     "title" .Title
-    "summary" (partial "excerpt.html" .)
+    "summary" (partial "excerpt.html" . | plainify)
     "content_html" (.Content | safeHTML)
   -}}
-  {{- with .Params.featured_image -}}
-    {{- $item = merge $item (dict "image" (printf "%s%s" site.BaseURL .)) -}}
+  {{- with .Params.featureimage -}}
+    {{- $item = merge $item (dict "image" (printf "%s/%s" $root .)) -}}
   {{- end -}}
   {{- $item = merge $item (dict
     "author" (dict "name" "Liam Shaw")
@@ -26,10 +30,10 @@
   "version" "https://jsonfeed.org/version/1"
   "title" $site.name
   "description" $site.description
-  "home_page_url" site.BaseURL
-  "feed_url" (printf "%sfeed.json" site.BaseURL)
+  "home_page_url" $root
+  "feed_url" (printf "%s/feed.json" $root)
   "user_comment" ""
-  "icon" (printf "%s%s" site.BaseURL $site.logo)
+  "icon" (printf "%s/%s" $root $site.logo)
   "author" (dict "name" "Liam Shaw")
   "items" $items
 -}}

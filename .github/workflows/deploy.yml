@@ -16,11 +16,15 @@ jobs:
     steps:
       - name: Check out the site
         uses: actions/checkout@v4
+        with:
+          # The theme is a git submodule. Without this the build has no theme.
+          submodules: recursive
 
       - name: Set up Hugo
-        uses: peaceiris/setup-hugo@v3
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 0.148.2
+          # The extended build, because the theme resizes WebP.
+          hugo-version: "0.167.0"
           extended: true
 
       - name: Set up Python
@@ -30,6 +34,8 @@ jobs:
 
       - name: Build the site
         run: python tools/build.py public
+        env:
+          HUGO: hugo
 
       - name: Check out the published site
         uses: actions/checkout@v4

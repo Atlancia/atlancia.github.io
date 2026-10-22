@@ -12,8 +12,8 @@ backend:
   repo: Atlancia/atlancia
   branch: main
 
-media_folder: static/media
-public_folder: /media
+media_folder: static/media/posts
+public_folder: media/posts
 
 collections:
   - name: posts
@@ -22,6 +22,7 @@ collections:
     folder: content/posts
     create: true
     slug: "{{slug}}"
+    identifier_field: title
     editor:
       preview: false
     summary: "{{title}} on {{date}}"
@@ -33,12 +34,9 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
-      - { label: Slug, name: slug, widget: string, hint: "The address of the post, without the .html ending." }
-      - { label: Description, name: description, widget: text, required: false, hint: "Left empty, the site writes the first 45 words of the post." }
-      - { label: Body, name: body, widget: markdown }
-      - { label: Hero image, name: featured_image, widget: image, required: false, choose_url: false, hint: "The image at the top of the post." }
-      - { label: Hero image description, name: featured_image_alt, widget: string, required: false }
+      - { label: Address, name: slug, widget: string, hint: "The last part of the address. /leaders-gardeners.html comes from slug leaders-gardeners." }
+      - { label: Hero image, name: featureimage, widget: image, required: false, choose_url: false, hint: "The image at the top of the essay and beside it in the lists." }
       - { label: Author, name: authors, widget: select, multiple: true, default: [liam], options: [liam] }
-      - { label: Hidden, name: hidden, widget: boolean, default: false, required: false, hint: "A hidden post keeps its address but stays out of the listings and the feed." }
-      - { label: Keep off the home page, name: exclude_from_home, widget: boolean, default: false, required: false }
+      - { label: Show the comments, name: showComments, widget: boolean, default: true, required: false }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: markdown }

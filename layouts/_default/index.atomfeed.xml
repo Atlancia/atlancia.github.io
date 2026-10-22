@@ -1,0 +1,48 @@
+{{- /*
+  The Atom feed at /feed.xml, the address the site has always published.
+
+  It keeps the old shape rather than the theme's RSS: an Atom document with a
+  media thumbnail for each essay, a summary in the entry and the whole essay in
+  the content element. Readers and the newsletter have pointed at this address
+  for years and none of them should notice the move.
+*/ -}}
+{{- $pages := where site.RegularPages "Section" "posts" -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $author := site.Params.author.name | default "Liam Shaw" -}}
+{{- $root := strings.TrimSuffix "/" site.BaseURL -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>" | safeHTML }}
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+    <title>{{ site.Title }}</title>
+    <link href="{{ $root }}/feed.xml" rel="self" />
+    <link href="{{ $root }}" />
+    <updated>{{ (index $pages 0).Lastmod.Format "2006-01-02T15:04:05-07:00" }}</updated>
+    <author>
+        <name>{{ $author }}</name>
+    </author>
+    <id>{{ $root }}</id>
+{{- range $pages }}
+    <entry>
+        <title>{{ .Title }}</title>
+        <author>
+            <name>{{ $author }}</name>
+        </author>
+        <link href="{{ .Permalink }}"/>
+        <id>{{ .Permalink }}</id>
+        {{- with .Params.featureimage }}
+        <media:content url="{{ $root }}/{{ . }}" medium="image" />
+        {{- end }}
+
+        <updated>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}</updated>
+            <summary type="html">
+                {{- $thumb := "" -}}
+                {{- with .Params.featureimage -}}
+                  {{- $thumb = printf "<img src=\"%s/%s\" alt=\"\" />" $root . -}}
+                {{- end -}}
+                {{- printf "<![CDATA[\n%s\n%s\n]]>" $thumb (partial "excerpt.html" .) | safeHTML }}
+            </summary>
+        <content type="html">
+            {{- printf "<![CDATA[\n%s\n]]>" .Content | safeHTML }}
+        </content>
+    </entry>
+{{- end }}
+</feed>

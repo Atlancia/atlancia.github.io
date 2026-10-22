@@ -3,12 +3,13 @@ title: "Seeing the Difference Between a Boss and a Botanist"
 date: "2025-02-17T00:00:00-05:00"
 lastmod: "2026-10-05T10:13:02-04:00"
 slug: "leaders-gardeners"
+url: "/leaders-gardeners.html"
 type: posts
-layout: posts/single
 media_id: 5
 authors: ["liam"]
+showComments: true
 meta_robots: "index, follow"
-featured_image: "media/posts/5/middle-header.webp"
+featureimage: "media/posts/5/middle-header.webp"
 ---
 In the sclerosis of corporate hierarchies, middle management often finds itself caricatured as a relic of bygone organizational structures, scar tissue left behind by the Peter Principle. From the bumbling inefficiency of *Office Space*’s Lumbergh to the clichéd “paper-pusher,” middle managers have been the subject of fascination, frustration, and ridicule. But these stereotypes belie a deeper truth: middle managers, especially in knowledge work are essential stewards of an organizations most important and undervalued resource: the team.
 

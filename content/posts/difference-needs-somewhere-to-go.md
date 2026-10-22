@@ -3,12 +3,13 @@ title: "Difference Needs Somewhere to Go"
 date: "2026-09-30T14:41:46-04:00"
 lastmod: "2026-10-05T10:21:05-04:00"
 slug: "difference-needs-somewhere-to-go"
+url: "/difference-needs-somewhere-to-go.html"
 type: posts
-layout: posts/single
 media_id: 6
 authors: ["liam"]
+showComments: true
 meta_robots: "index, follow"
-featured_image: "media/posts/6/pexels-thales13-39315864-2.jpg"
+featureimage: "media/posts/6/pexels-thales13-39315864-2.jpg"
 ---
 > I was raised up believing I was somehow unique. Like a snowflake distinct among snowflakes. Unique in each way you'd conceive. And now after some thinking I'd say I'd rather be, a functioning cog in some great machinery, serving something beyond me.
 >

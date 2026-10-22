@@ -1,0 +1,248 @@
+/*
+ * Atlancia.
+ *
+ * Three jobs, in order: put the site's own type and colours on top of the
+ * theme's, hand the figures in the essays the tokens they expect, and tidy the
+ * handful of places where the theme and the old site disagree.
+ *
+ * The scheme file next to this one sets the theme's Tailwind palette. This
+ * file sets the page itself, because the page has to hold #23233D in the dark
+ * and #FBFAF7 in the light, and one Tailwind scale cannot do both.
+ */
+
+@font-face {
+  font-family: "Cal Sans";
+  src: url("/assets/dynamic/fonts/calsans/calsans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-body: "Cal Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+
+  --atl-page: #23233d;
+  --atl-text: #d9d9d9;
+  --atl-heading: #eeedee;
+  --atl-link: #eeedee;
+  --atl-link-hover: #ffc074;
+  --atl-rule: #373737;
+
+  /*
+   * The figures in the essays were built against these names. They are the
+   * site's palette under a second set of names, so a figure follows the mode
+   * rather than carrying a second palette of its own.
+   */
+  --atl-ink: #eeeded;
+  --atl-figure-text: #bfbfbf;
+  --atl-dim: #9d9d9d;
+  --atl-line: #373737;
+  --atl-bg: #141418;
+  --atl-surface: #1e1e1e;
+  --atl-accent: #ffc074;
+  --atl-success: #54a468;
+  --atl-warning: #fb6762;
+  --atl-info: #5b9ed5;
+  --atl-highlight: #f6dc90;
+}
+
+html:not(.dark) {
+  --atl-page: #fbfaf7;
+  --atl-text: #3a3a42;
+  --atl-heading: #16161a;
+  --atl-link: #16161a;
+  --atl-link-hover: #b03a2e;
+  --atl-rule: #d6d2ca;
+
+  --atl-ink: #16161a;
+  --atl-figure-text: #3a3a42;
+  --atl-dim: #6b6b70;
+  --atl-line: #d6d2ca;
+  --atl-bg: #e7e3dc;
+  --atl-surface: #f1efea;
+  --atl-accent: #b03a2e;
+  --atl-success: #2e7d4b;
+  --atl-warning: #c0392b;
+  --atl-info: #2f6fa8;
+  --atl-highlight: #8a6d1f;
+}
+
+/* -- The page ------------------------------------------------------------- */
+
+body {
+  background-color: var(--atl-page);
+  color: var(--atl-text);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-body);
+  color: var(--atl-heading);
+}
+
+/* The theme paints its own background on the body. These two rules are the
+   reason the scheme file cannot do the whole job on its own. */
+html.dark body {
+  background-color: var(--atl-page);
+  color: var(--atl-text);
+}
+
+html:not(.dark) body {
+  background-color: var(--atl-page);
+  color: var(--atl-text);
+}
+
+.prose {
+  --tw-prose-body: var(--atl-text);
+  --tw-prose-headings: var(--atl-heading);
+  --tw-prose-links: var(--atl-link-hover);
+  --tw-prose-bold: var(--atl-heading);
+  --tw-prose-quotes: var(--atl-heading);
+  --tw-prose-quote-borders: var(--atl-accent);
+  --tw-prose-hr: var(--atl-rule);
+  --tw-prose-captions: var(--atl-dim);
+}
+
+/* A link in the body is underlined and takes the accent on hover, the way the
+   essays have always read. */
+.article-content a {
+  color: var(--atl-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.article-content a:hover,
+.article-content a:focus-visible {
+  color: var(--atl-link-hover);
+}
+
+/* -- The header ----------------------------------------------------------- */
+
+/*
+ * The wordmark is a white shape. In light mode it is turned over so it reads
+ * as dark ink on paper, which is the same trick the old site used with a
+ * second file.
+ */
+html:not(.dark) img.logo {
+  filter: invert(1);
+}
+
+/* The floating header caps the logo at its own height. The wordmark is wide
+   and short, so it needs the width back. */
+.main-menu img.logo {
+  max-width: 9rem;
+  max-height: 2.25rem;
+}
+
+/* The wordmark already says the name. The theme prints the site title beside
+   it as well, and its own switch for turning that off does not work: the
+   template reads `not .Site.Params.disableTextInHeader | default true`, and
+   `default` treats false as empty, so the text is always on. */
+.main-menu a.text-base {
+  display: none;
+}
+
+/* -- The figures ---------------------------------------------------------- */
+
+/*
+ * A figure is inlined into the page, so it inherits the page's type and the
+ * page's colour mode. It carries its own <style> block for everything inside
+ * it; this is only the box around it.
+ */
+.atlx {
+  max-width: 100%;
+  margin: 2.5rem 0;
+  /* A few figures are wider than the column. They scroll inside their own box
+     rather than pushing the page sideways. */
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+
+  /*
+   * A figure is drawn on its own plate, in its own palette, in both modes.
+   *
+   * The essays' figures were built against a dark surface, and each one draws
+   * its inner boxes with literal dark greys rather than with the tokens. If the
+   * tokens went light while those greys stayed dark, a figure would come out
+   * half cream and half charcoal with the text unreadable in the places where
+   * the two met. Keeping the plate dark is the one choice that stays legible
+   * everywhere, and it reads as deliberate: a dark plate on a light page, the
+   * same way a code block does.
+   *
+   * Repainting the inside of each figure is a separate piece of work, one
+   * figure at a time, not something a stylesheet can decide for all of them.
+   */
+  --atl-ink: #eeeded;
+  --atl-text: #bfbfbf;
+  --atl-dim: #9d9d9d;
+  --atl-line: #373737;
+  --atl-bg: #141418;
+  --atl-surface: #1e1e1e;
+  --atl-accent: #ffc074;
+  --atl-success: #54a468;
+  --atl-warning: #fb6762;
+  --atl-info: #5b9ed5;
+  --atl-highlight: #f6dc90;
+}
+
+html:not(.dark) .atlx {
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgb(22 22 26 / 0.06), 0 8px 24px rgb(22 22 26 / 0.06);
+}
+
+.prose .atlx {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* The interactive controls were drawn on a dark surface, which they keep. */
+
+/* -- Comments ------------------------------------------------------------- */
+
+/*
+ * GraphComment brings its own frame and its own background. The wrapper only
+ * gives it the site's surface and enough room to breathe.
+ */
+.my-comments-wrapper {
+  background: var(--atl-surface);
+  border: 1px solid var(--atl-rule);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.my-comments-inner {
+  padding: 0;
+}
+
+.custom-h2 {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--atl-heading);
+  margin: 0 0 1rem;
+}
+
+/* -- The gallery of figures ----------------------------------------------- */
+
+.atlx-gallery__item {
+  border-top: 1px solid var(--atl-rule);
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+}
+
+.atlx-gallery__item > h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+.atlx-gallery__meta {
+  color: var(--atl-dim);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

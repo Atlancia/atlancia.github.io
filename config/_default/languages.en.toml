@@ -1,0 +1,24 @@
+locale = "en"
+label = "English"
+weight = 1
+title = "Atlancia"
+
+[params]
+  displayName = "Atlancia"
+  isoCode = "en"
+  rtl = false
+  dateFormat = "2 January 2006"
+  logo = "media/website/logo-2.png"
+  logoText = "Atlancia"
+  description = "Essays on teams, organisations, and the work of making sense together."
+
+[params.author]
+  name = "Liam Shaw"
+  email = "liam@atlancia.com"
+  image = "media/website/logo-2.png"
+  headline = "Writing about teams, organisations and knowledge work."
+  bio = "Liam Shaw writes about the systems we work in: middle management, difference, complexity, and the assumptions underneath all of it."
+  links = [
+    { x-twitter = "https://twitter.com/atlancia" },
+    { linkedin = "https://ca.linkedin.com/in/liamshaw3" },
+  ]

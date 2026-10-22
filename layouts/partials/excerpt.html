@@ -9,7 +9,7 @@
 {{- $text = replaceRE `\s+` " " $text -}}
 {{- $text = trim $text " " -}}
 {{- $words := split $text " " -}}
-{{- $limit := int site.Data.site.excerpt_length -}}
+{{- $limit := int (hugo.Data.site.excerpt_length | default 45) -}}
 {{- $take := first $limit $words -}}
 {{- $excerpt := delimit $take " " -}}
 {{- if gt (len $words) $limit -}}

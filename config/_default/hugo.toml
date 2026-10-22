@@ -1,0 +1,112 @@
+# The site settings. The theme reads most of its own settings from
+# config/_default/params.toml, and this file is the part that belongs to Hugo.
+
+theme = "blowfish"
+baseURL = "https://atlancia.com/"
+defaultContentLanguage = "en"
+
+# The dates in the front matter are Toronto dates, and the feeds publish the
+# offset they carry.
+timeZone = "America/Toronto"
+
+enableRobotsTXT = false
+summaryLength = 45
+hasCJKLanguage = false
+
+buildDrafts = false
+buildFuture = false
+
+enableEmoji = false
+
+# The published addresses are flat files at the root, the way they have always
+# been: /leaders-gardeners.html rather than /posts/leaders-gardeners/.
+uglyURLs = false
+
+[pagination]
+  pagerSize = 10
+
+[imaging]
+  anchor = 'Center'
+
+[permalinks]
+  posts = "/:slug"
+
+[taxonomies]
+  tag = "tags"
+  author = "authors"
+
+[sitemap]
+  changefreq = 'always'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+[services]
+  [services.rss]
+    limit = 50
+
+# The home page publishes four things: the page itself, the search index the
+# theme builds, and the two feeds the site has always kept at /feed.xml and
+# /feed.json. There is no /index.xml, because there never was one.
+[outputs]
+  home = ["HTML", "JSON", "AtomFeed", "JSONFeed"]
+
+[mediaTypes."application/feed+json"]
+  suffixes = ["json"]
+
+[outputFormats.AtomFeed]
+  mediaType = "application/rss+xml"
+  baseName = "feed"
+  isPlainText = false
+  isHTML = false
+
+[outputFormats.JSONFeed]
+  mediaType = "application/feed+json"
+  baseName = "feed"
+  isPlainText = true
+  isHTML = false
+
+# The images and the figures keep their physical home in static/media, so every
+# address the old site published still resolves, and are mounted into assets as
+# well so that resources.Get can process them: the hero, the featured image on
+# an essay, the logo. One copy on disk, two ways in.
+[module]
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "static/media"
+    target = "assets/media"
+
+[related]
+  threshold = 0
+  toLower = false
+
+    [[related.indices]]
+        name = "tags"
+        weight = 100
+
+    [[related.indices]]
+        name = "authors"
+        weight = 20
+
+    [[related.indices]]
+        name = "date"
+        weight = 10

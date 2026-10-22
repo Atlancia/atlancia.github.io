@@ -3,12 +3,13 @@ title: "Changing Requirements to be a Successful Business Analyst"
 date: "2019-06-14T00:00:00-04:00"
 lastmod: "2025-08-23T08:27:53-04:00"
 slug: "business-analyst-reflection"
+url: "/business-analyst-reflection.html"
 type: posts
-layout: posts/single
 media_id: 2
 authors: ["liam"]
+showComments: true
 meta_robots: "index, follow"
-featured_image: "media/posts/2/bapost.jpg"
+featureimage: "media/posts/2/bapost.jpg"
 ---
 *A look into personal experience with business analysis, agile and modern projects.*
 

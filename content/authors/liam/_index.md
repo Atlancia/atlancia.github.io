@@ -1,7 +1,9 @@
 ---
 title: "Liam Shaw"
-username: "liam"
-description: ""
-url: "/authors/liam/index.html"
-body_class: author-template
+description: "Writing about teams, organisations and knowledge work."
+url: "/authors/liam/"
+aliases: []
 ---
+
+Liam Shaw writes about the systems we work in: middle management, difference,
+complexity, and the assumptions underneath all of it.

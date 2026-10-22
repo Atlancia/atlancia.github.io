@@ -3,12 +3,13 @@ title: "From Shovels to Software: Why Difference Matters When Things Get Complex
 date: "2023-06-05T00:00:00-04:00"
 lastmod: "2025-08-23T08:28:51-04:00"
 slug: "diversity-complexity"
+url: "/diversity-complexity.html"
 type: posts
-layout: posts/single
 media_id: 4
 authors: ["liam"]
+showComments: true
 meta_robots: "index, follow"
-featured_image: "media/posts/4/diverse-header.jpg"
+featureimage: "media/posts/4/diverse-header.jpg"
 ---
 > In many creative activities the medium of execution is intractable. Lumber splits; paints smear; electrical circuits ring. These physical limitations of the medium constrain the ideas that may be expressed, and they also create unexpected difficulties in the implementation.
 >
@@ -24,7 +25,7 @@ In today’s ever changing and interconnected world, organizations are facing th
 
 ## The Complicated and the Complex
 
-![](diverse-1.webp "Simplified Stacey Matrix (also known as Stacey Complexity Model)")
+![](media/posts/4/diverse-1.webp "Simplified Stacey Matrix (also known as Stacey Complexity Model)")
 
 As a starting point for moving further, I have to start with a few definitions.
 
@@ -32,13 +33,13 @@ As a starting point for moving further, I have to start with a few definitions.
 - A complicated problem where there may be multiple “good” solutions and one “optimal” solution but once they are discovered through training and experience, they remain optimal. Imagine watch repair, there are multiple strategies for diagnosis and repair, but with enough experience a repair-person can find at least a personal (local) optimum.
 - And finally, the complex and chaotic environments of the dancing landscapes, in which optimums can only temporarily be discovered, a peak today may not be a peak tomorrow, an optimum may not be an optimum in a year, etc. An easy example would be financial markets, where any sufficiently good strategy, ceases to be a good strategy once other parties wise up to it (Adaptive Market Hypothesis).
 
-![](diverse-2.webp "From Investigating Emergent Design Failures Using a Knowledge-Action-Decision Framework by Colin P. F. Shields")
+![](media/posts/4/diverse-2.webp "From Investigating Emergent Design Failures Using a Knowledge-Action-Decision Framework by Colin P. F. Shields")
 
 ## Kicking and Screaming Into Complexity
 
 Regardless of how we choose to encode the ideas of complexity, either the above, or other common models like Cynefin, the key idea is that there is a point in complexity where we leave the world of the predictable, stable and solvable and enter a different domain.
 
-![](diverse-3.webp)
+![](media/posts/4/diverse-3.webp)
 
 When we traverse across that line, we have to discard many notions that worked in the predictable environment. Best practices become good practices, the very notion that a single practice can be best is a fools errand. Processes become anchors slowing down needed change. Staying still becomes as big a risk as changing, where adaptability is a dimension of organizational resilience (see BS 65000:2022 — Organizational Resilience).
 
@@ -68,11 +69,11 @@ Then surely the natural response would be to seek not to build a team of “qual
 
 Below is a very simplified model built to illustrate some key difference between; making the complicated workings of a watch and the complex development of a novel software product.
 
-![](diverse-4.webp "Comparing perspectives and skills; how people bring different ways of understanding and contributing to an outcome.")
+![](media/posts/4/diverse-4.webp "Comparing perspectives and skills; how people bring different ways of understanding and contributing to an outcome.")
 
 Some key difference that might be visible:
 
-![](diverse-5.webp)
+![](media/posts/4/diverse-5.webp)
 
 The table above almost certainly sells the incredible skills of watchmaking short, but as a model, the key ideas hopefully hold up. The key concepts that we can tease out though are:
 
@@ -82,7 +83,7 @@ The table above almost certainly sells the incredible skills of watchmaking shor
 
 Unpredictability in work, needed skills/knowledge and the inter-connectedness of a individuals on a team mean that a viable strategy to strengthen a team is to pursue adding to existing skills, but also add diverse perspectives and heuristics. A team might look at what upcoming work is coming and ask themselves what perspectives are missing to address the work.
 
-![](diverse-6.webp)
+![](media/posts/4/diverse-6.webp)
 
 Say this team had to balance two very big pieces of work in their system: a large security issue and a challenging high priority feature request. What could they do as a first step? Look at the new work and ask themselves, what they might be missing to address them, and seek out adding that to the team. It is only the team though who could assess this as it is based on their collective skills.
 

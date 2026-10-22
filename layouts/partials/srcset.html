@@ -1,6 +1,0 @@
-{{- /* The responsive set for an image, with every address made absolute. */ -}}
-{{- $parts := slice -}}
-{{- range index . "srcset" -}}
-  {{- $parts = $parts | append (printf "%s%s" site.BaseURL .) -}}
-{{- end -}}
-{{- delimit $parts ", " -}}

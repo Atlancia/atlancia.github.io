@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{/*
+    The gallery: every figure the essays were built with, each one running in
+    the page rather than in a frame, so it follows the site's colour mode.
+  */}}
+  <article>
+    <header class="mt-5 max-w-prose">
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        {{ .Title | emojify }}
+      </h1>
+      {{ with .Params.description }}
+        <p class="mt-3 text-lg text-neutral-600 dark:text-neutral-400">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    <section class="mt-8 max-w-full prose dark:prose-invert">
+      {{ .Content }}
+      {{ range $name, $figure := hugo.Data.embeds }}
+        <section class="atlx-gallery__item" id="figure-{{ $name }}">
+          <h2>{{ $figure.title }}</h2>
+          <p class="atlx-gallery__meta">{{ $figure.kind }}{{ with $figure.post }}, for the essay "{{ . }}"{{ end }}</p>
+          {{ with resources.Get (printf "embeds/%s.html" $name) }}
+            {{ .Content | safeHTML }}
+          {{ else }}
+            <p class="atlx-gallery__meta">The figure {{ $name }} is missing from assets/embeds.</p>
+          {{ end }}
+        </section>
+      {{ end }}
+    </section>
+  </article>
+{{ end }}

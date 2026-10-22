@@ -6,3 +6,8 @@ public_*/
 
 __pycache__/
 *.pyc
+
+resources/
+
+# local screenshots, session artifacts
+state/

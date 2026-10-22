@@ -3,12 +3,13 @@ title: "Building a Trade-off Mentality"
 date: "2023-05-06T00:00:00-04:00"
 lastmod: "2026-09-30T17:06:42-04:00"
 slug: "trade-off-mentality"
+url: "/trade-off-mentality.html"
 type: posts
-layout: posts/single
 media_id: 3
 authors: ["liam"]
+showComments: true
 meta_robots: "index, follow"
-featured_image: "media/posts/3/tradeoffpost.jpg"
+featureimage: "media/posts/3/tradeoffpost.jpg"
 ---
 > *If you wish to make an apple pie from scratch, you must first invent the universe.  
 > – Carl Sagan*
@@ -36,7 +37,7 @@ For instance, we can look at even subtle constraints to a team’s productivity.
 
 Indicator statements such as: “We should make time for training,” “I would like you to deliver this as well,” or “The team must assume accountability for this new system” may serve as potential triggers for conversations on underlying assumptions and required trade-offs. The figure below shows a hypothetical model of transition for a team taking on a new application, in which a new idea comes to mind — the “cost” of assuming new accountabilities.
 
-![](state-view.webp)
+![](media/posts/3/state-view.webp)
 
 A classic trade-off in systems development, for example, is the balance between investing in new features versus reducing technical debt. A team’s ability to discuss and evaluate these classic trade-offs can have a significant impact on their long-term success. Investments in technical debt reduction, while not as glamorous as new features, can often lead to more sustainable development and increased capacity for future innovation.
 
@@ -73,7 +74,7 @@ In the world of project management, the concept of a “work package” is all a
 
 However, there are also cases where this approach might be detrimental. In situations where a team is stable, and tools and solutions are already in place, breaking down tasks into smaller packages can be more effective. This allows for greater flexibility in addressing high-priority items, regardless of where they might fit into a larger package.
 
-![](selected-view.webp)
+![](media/posts/3/selected-view.webp)
 
 To illustrate this point, let’s consider an abstract example. Imagine that there are three potential packages of work and one of them contains critical work. There’s no question that this work should take priority over all other work. However, if this critical work is bundled with other non-critical work, the entire package might be completed before other packages containing high-priority work. In this scenario, the lower-priority work ends up taking precedence simply because it was packaged together with the critical work. By breaking work down into smaller, more manageable pieces, teams can avoid this issue and ensure that the most important work always takes priority.
 

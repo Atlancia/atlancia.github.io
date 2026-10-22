@@ -1,0 +1,142 @@
+# This file is the whole personality of the site.
+#
+# Every line is a setting you can change, and most of them change how the
+# site looks without touching a template. The theme's own documentation for
+# each one is at https://blowfish.page/docs/configuration/
+
+# -- The palette -----------------------------------------------------------
+# "atlancia" is the site's own scheme, in assets/css/schemes/atlancia.css.
+# The theme also ships seventeen others, listed in the theme's stylesheets.
+colorScheme = "atlancia"
+
+# "dark", "light" or "auto". "auto" follows the reader's system and the
+# switch in the footer overrides it.
+defaultAppearance = "dark"
+autoSwitchAppearance = true
+
+# -- The header ------------------------------------------------------------
+[header]
+  # "floating" is the rounded, blurred bar that sits over the page.
+  # The others are "basic", "fixed", "fixed-fill", "fixed-gradient" and
+  # "fixed-fill-blur".
+  layout = "floating"
+  mobileMenuStyle = "dropdown"
+
+# -- The home page ---------------------------------------------------------
+[homepage]
+  # "landing" is the big title over a fading hero image, with the essays
+  # underneath. The others are "hero", "page", "profile", "card", "background"
+  # and "custom".
+  layout = "landing"
+  layoutSwitcher = false
+  homepageImage = "media/website/Hero2.jpg"
+  showRecent = true
+  showRecentItems = 5
+  showMoreLink = false
+  cardView = false
+  layoutBackgroundBlur = false
+  disableHeroImageFilter = false
+
+# -- A single essay -------------------------------------------------------
+[article]
+  showDate = true
+  showDateOnlyInArticle = false
+  showDateUpdated = false
+  showAuthor = true
+  showAuthorBottom = false
+  showHero = true
+  # "big" puts a large image under the title, which is how the old site did
+  # it. "background" fills the width behind the title.
+  heroStyle = "big"
+  layoutBackgroundBlur = true
+  layoutBackgroundHeaderSpace = true
+  showBreadcrumbs = false
+  showDraftLabel = true
+  showEdit = false
+  seriesOpened = false
+  showHeadingAnchors = true
+  showPagination = true
+  invertPagination = false
+  showReadingTime = true
+  showReadingProgress = true
+  showTableOfContents = true
+  showRelatedContent = true
+  relatedContentLimit = 3
+  showTaxonomies = true
+  showAuthorsBadges = false
+  showWordCount = false
+  showZenMode = true
+  sharingLinks = [ "linkedin", "bluesky", "reddit", "email" ]
+
+# -- A list of essays ------------------------------------------------------
+[list]
+  showHero = true
+  heroStyle = "background"
+  layoutBackgroundBlur = true
+  layoutBackgroundHeaderSpace = false
+  showBreadcrumbs = false
+  showSummary = false
+  showTableOfContents = true
+  showCards = true
+  orderByWeight = true
+  groupByYear = false
+  cardView = false
+  cardViewScreenWidth = false
+  constrainItemsWidth = false
+  featureImageHover = false
+
+# -- The footer ------------------------------------------------------------
+[footer]
+  showMenu = true
+  showCopyright = true
+  showThemeAttribution = false
+  showAppearanceSwitcher = true
+  showScrollToTop = true
+
+# -- The things the theme can do -------------------------------------------
+enableA11y = false
+enableSearch = true
+enableCodeCopy = true
+# The addresses are flat files, so a structured breadcrumb would say
+# something the page does not show.
+enableStructuredBreadcrumbs = false
+
+replyByEmail = false
+
+mainSections = ["posts"]
+
+disableImageOptimization = false
+disableImageOptimizationMD = false
+disableTextInHeader = true
+
+defaultBackgroundImage = ""
+backgroundCanvas = false
+defaultFeaturedImage = ""
+defaultSocialImage = "media/website/logo-2.png"
+hotlinkFeatureImage = false
+
+highlightCurrentMenuArea = true
+smartTOC = true
+smartTOCHideUnfocusedChildren = false
+
+fingerprintAlgorithm = "sha512"
+
+[sitemap]
+  excludedKinds = []
+
+[taxonomy]
+  showTermCount = true
+  showHero = true
+  heroStyle = "background"
+  showBreadcrumbs = false
+  showTableOfContents = true
+  cardView = false
+
+[term]
+  showHero = true
+  heroStyle = "background"
+  showBreadcrumbs = false
+  showTableOfContents = true
+  groupByYear = false
+  cardView = true
+  cardViewScreenWidth = false

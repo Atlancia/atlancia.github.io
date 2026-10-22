@@ -1,26 +1,31 @@
-{{- $pages := where site.RegularPages "Kind" "page" -}}
-{{- $pages = sort $pages "Params.slug" -}}
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="{{ site.BaseURL }}sitemap.xsl"?>
+{{- /*
+  The sitemap at /sitemap.xml. The old one listed the home page and the essays,
+  each with the images that appear on it, and left the tag and author pages out.
+  Sorted by address so the order is the order the addresses read.
+*/ -}}
+{{- $pages := sort site.RegularPages ".RelPermalink" -}}
+{{- $root := strings.TrimSuffix "/" site.BaseURL -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" | safeHTML }}
+{{- printf "<?xml-stylesheet type=\"text/xsl\" href=\"%s/sitemap.xsl\"?>\n" $root | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 <url>
-<loc>{{ site.BaseURL }}</loc>
+<loc>{{ $root }}/</loc>
 </url>
 {{- range $pages }}
 <url>
 <loc>{{ .Permalink }}</loc>
 <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
-{{- with .Params.featured_image }}
+{{- with .Params.featureimage }}
 <image:image>
-<image:loc>{{ site.BaseURL }}{{ . }}</image:loc>
-<image:title><![CDATA[]]></image:title>
+<image:loc>{{ $root }}/{{ . }}</image:loc>
+<image:title>{{ "<![CDATA[]]>" | safeHTML }}</image:title>
 </image:image>
 {{- end }}
 {{- range findRE `src="[^"]*media/posts/[^"]+"` .Content }}
 {{- $path := replaceRE `^src=".*?(media/posts/[^"]+)"$` "$1" . -}}
 <image:image>
-<image:loc>{{ site.BaseURL }}{{ $path }}</image:loc>
-<image:title><![CDATA[]]></image:title>
+<image:loc>{{ $root }}/{{ $path }}</image:loc>
+<image:title>{{ "<![CDATA[]]>" | safeHTML }}</image:title>
 </image:image>
 {{- end }}
 </url>
