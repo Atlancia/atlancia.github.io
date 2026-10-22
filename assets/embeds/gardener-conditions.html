@@ -1,0 +1,44 @@
+<!-- Atlancia embed: Gardener conditions (new interactive, gardener essay) -->
+<div class="atlx atlx-console atlx-fig-wrap">
+  <style>
+    .atlx-console { --kc-ink:var(--atl-ink); --kc-text:var(--atl-text); --kc-dim:var(--atl-dim); --kc-line:var(--atl-line); --kc-surface:var(--atl-surface); --kc-amber:var(--atl-accent); --kc-green:var(--atl-success); font-family:"Figtree",ui-sans-serif,system-ui,sans-serif; background:var(--kc-surface); color:var(--kc-text); border:1px solid var(--kc-line); border-radius:6px; padding:1.3rem 1.3rem 1.1rem; margin:2.5rem 0; max-width:100%; font-size:1rem; line-height:1.55; }
+    .atlx-console *{box-sizing:border-box}
+    .atlx-console .atlx-gc-k-kick { margin:0 0 .4rem; font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--kc-amber); }
+    .atlx-console .atlx-gc-k-title { margin:0 0 .2rem; font-family:"Aleo",Georgia,serif; font-weight:500; font-size:1.25rem; line-height:1.35; color:var(--kc-ink); }
+    .atlx-console .atlx-gc-k-sub { margin:0 0 1rem; color:var(--kc-dim); font-size:.95rem; }
+    .atlx-console .atlx-gc-k-ctl { margin:0 0 .9rem; }
+    .atlx-console .atlx-gc-k-ctl label { display:flex; justify-content:space-between; align-items:baseline; font-weight:600; color:var(--kc-ink); font-size:.95rem; margin-bottom:.15rem; }
+    .atlx-console output { font-variant-numeric:tabular-nums; font-weight:600; color:var(--kc-amber); font-size:.95rem; }
+    .atlx-console input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:26px; background:transparent; margin:0; cursor:pointer; }
+    .atlx-console input[type="range"]::-webkit-slider-runnable-track { height:6px; border-radius:999px; background:#333; }
+    .atlx-console input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:var(--kc-amber); border:3px solid #181818; margin-top:-7px; }
+    .atlx-console input[type="range"]::-moz-range-track { height:6px; border-radius:999px; background:#333; }
+    .atlx-console input[type="range"]::-moz-range-thumb { width:15px; height:15px; border-radius:50%; background:var(--kc-amber); border:3px solid #181818; }
+    .atlx-console input[type="range"]:focus-visible { outline:2px solid var(--kc-amber); outline-offset:4px; border-radius:999px; }
+    .atlx-console .atlx-gc-k-read { font-variant-numeric:tabular-nums; color:var(--kc-ink); margin:.5rem 0 .7rem; font-size:.98rem; }
+    .atlx-console .atlx-gc-k-read .dim { color:var(--kc-dim); }
+    .atlx-console button.atlx-gc-k-btn { font:inherit; font-size:.88rem; font-weight:600; cursor:pointer; color:var(--kc-ink); background:#262626; border:1px solid var(--kc-line); border-radius:999px; padding:.42rem 1rem; }
+    .atlx-console button.atlx-gc-k-btn:hover { border-color:var(--kc-amber); color:var(--kc-amber); }
+    .atlx-console button.atlx-gc-k-btn[aria-pressed="true"] { background:var(--kc-amber); border-color:var(--kc-amber); color:#181818; }
+    .atlx-console .atlx-gc-k-meter { margin:1.1rem 0 .4rem; padding-top:1.3rem; }
+    .atlx-console .atlx-gc-k-track { position:relative; height:14px; border-radius:999px; background:#2b2b2b; border:1px solid var(--kc-line); }
+    .atlx-console .atlx-gc-k-fill { height:100%; width:60%; border-radius:999px; background:var(--kc-amber); transition:width .35s ease, background .2s ease; }
+    .atlx-console .atlx-gc-k-ceil { position:absolute; right:3%; top:-1.5rem; bottom:-4px; width:0; border-left:1px dashed #6a6a6a; }
+    .atlx-console .atlx-gc-k-ceil span { position:absolute; right:0; top:0; transform:translateX(50%); white-space:nowrap; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--kc-dim); }
+    .atlx-console .atlx-gc-k-note { margin:.65rem 0 0; font-size:.9rem; color:var(--kc-dim); min-height:2.4em; }
+    .atlx-console .atlx-gc-k-note.warn { color:var(--kc-warn); }
+  </style>
+  <p class="atlx-gc-k-kick">What the gardener holds</p>
+  <h3 class="atlx-gc-k-title">Set the weather, not the plant</h3>
+  <p class="atlx-gc-k-sub">Three conditions a gardener holds. Watch what responds, and what will not.</p>
+  <div class="atlx-gc-k-ctl"><label for="atlx-gc-k-cl">Clarity of the brief <output id="atlx-gc-k-cl-o" for="atlx-gc-k-cl">60</output></label><input id="atlx-gc-k-cl" type="range" min="0" max="100" step="1" value="60"></div>
+  <div class="atlx-gc-k-ctl"><label for="atlx-gc-k-st">Standards of the work <output id="atlx-gc-k-st-o" for="atlx-gc-k-st">65</output></label><input id="atlx-gc-k-st" type="range" min="0" max="100" step="1" value="65"></div>
+  <div class="atlx-gc-k-ctl"><label for="atlx-gc-k-au">Room to move <output id="atlx-gc-k-au-o" for="atlx-gc-k-au">55</output></label><input id="atlx-gc-k-au" type="range" min="0" max="100" step="1" value="55"></div>
+  <div class="atlx-gc-k-meter"><div class="atlx-gc-k-track"><div class="atlx-gc-k-fill" id="atlx-gc-k-fill"></div><div class="atlx-gc-k-ceil"><span>growth itself</span></div></div></div>
+  <p class="atlx-gc-k-read" id="atlx-gc-k-read" aria-live="polite"></p>
+  <button type="button" class="atlx-gc-k-btn" id="atlx-gc-k-force">Command the bloom</button>
+  <p class="atlx-gc-k-note" id="atlx-gc-k-note">The gardener sets light, soil and pruning. The growing stays the plant's job.</p>
+  <script>
+    (function () { var root=document.currentScript&&document.currentScript.closest?document.currentScript.closest(".atlx-console"):document.querySelector(".atlx-console"); if (!root) return; var cl=root.querySelector("#atlx-gc-k-cl"); var st=root.querySelector("#atlx-gc-k-st"); var au=root.querySelector("#atlx-gc-k-au"); var clO=root.querySelector("#atlx-gc-k-cl-o"); var stO=root.querySelector("#atlx-gc-k-st-o"); var auO=root.querySelector("#atlx-gc-k-au-o"); var fill=root.querySelector("#atlx-gc-k-fill"); var read=root.querySelector("#atlx-gc-k-read"); var note=root.querySelector("#atlx-gc-k-note"); var btn=root.querySelector("#atlx-gc-k-force"); var CEIL=92; var CLEAR="The gardener sets light, soil and pruning. The growing stays the plant's job."; var PUSHED="The meter stops at the line. Conditions can be set; the bloom cannot be ordered."; var forced=false; var timer=null; function health(){ return Math.round(0.34*Number(cl.value)+0.33*Number(st.value)+0.33*Number(au.value)); } function render(){ var h=health(); var shown=forced?Math.min(h+14,CEIL):h; fill.style.width=shown+"%"; fill.style.background=forced?"#FB6762":"#FFC074"; read.innerHTML='<span class="dim">Conditions:</span> '+shown+' of 100'+(forced?", pushing at the line":""); clO.textContent=cl.value; stO.textContent=st.value; auO.textContent=au.value; note.textContent=forced?PUSHED:CLEAR; note.classList.toggle("warn",forced); } [cl,st,au].forEach(function(input){ input.addEventListener("input",function(){ if(timer){clearTimeout(timer);timer=null;} forced=false; root.classList.remove("shake"); render(); }); }); btn.addEventListener("click",function(){ forced=true; render(); root.classList.remove("shake"); void root.offsetWidth; root.classList.add("shake"); if(timer){clearTimeout(timer);} timer=setTimeout(function(){forced=false;timer=null;render();},2400); }); render(); })();
+  </script>
+</div>

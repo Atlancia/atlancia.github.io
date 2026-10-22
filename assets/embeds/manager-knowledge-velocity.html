@@ -1,0 +1,581 @@
+<!-- Atlancia Interactive Instrument: The Knowledge Velocity Threshold
+     Fits: Seeing the Difference Between a Boss and a Botanist
+     Self-contained: Inline styles and reactive vanilla JavaScript, zero external dependencies. -->
+<div class="atlx-kv" id="atlx-kv-root">
+  <style>
+    .atlx-kv {
+      --kv-bg: var(--atl-bg);
+      --kv-card: rgba(22, 27, 34, 0.85);
+      --kv-border: var(--atl-line);
+      --kv-border-focus: #58a6ff;
+      --kv-text-main: var(--atl-text);
+      --kv-text-muted: var(--atl-dim);
+      --kv-text-dim: var(--atl-dim);
+      --kv-accent-amber: var(--atl-accent);
+      --kv-accent-cyan: #38bdf8;
+      --kv-accent-emerald: #10b981;
+      --kv-accent-rose: #f43f5e;
+      --kv-accent-purple: #a855f7;
+
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--kv-bg);
+      color: var(--kv-text-main);
+      border: 1px solid var(--kv-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      box-sizing: border-box;
+      max-width: 100%;
+      line-height: 1.5;
+    }
+    .atlx-kv * { box-sizing: border-box; }
+
+    .atlx-kv-header {
+      border-bottom: 1px solid var(--kv-border);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .atlx-kv-kicker {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--kv-accent-amber);
+      margin: 0 0 0.35rem;
+    }
+    .atlx-kv-title {
+      font-family: 'Aleo', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--kv-text-main);
+      margin: 0 0 0.4rem;
+      line-height: 1.25;
+    }
+    .atlx-kv-desc {
+      color: var(--kv-text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+      max-width: 48rem;
+    }
+
+    .atlx-kv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .atlx-kv-grid { grid-template-columns: 1fr; }
+    }
+
+    .atlx-kv-controls {
+      background: var(--kv-card);
+      border: 1px solid var(--kv-border);
+      border-radius: 10px;
+      padding: 1.35rem;
+      backdrop-filter: blur(12px);
+    }
+    .atlx-kv-field {
+      margin-bottom: 1.25rem;
+    }
+    .atlx-kv-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.35rem;
+    }
+    .atlx-kv-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--kv-text-main);
+    }
+    .atlx-kv-val {
+      font-family: ui-monospace, 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--kv-accent-amber);
+    }
+    .atlx-kv-subtext {
+      font-size: 0.78rem;
+      color: var(--kv-text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .atlx-kv-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #21262d;
+      outline: none;
+      margin: 0.5rem 0 0.2rem;
+      cursor: pointer;
+    }
+    .atlx-kv-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--kv-accent-amber);
+      border: 2px solid var(--kv-bg);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.45);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .atlx-kv-range::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .atlx-kv-stance-group {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--kv-border);
+    }
+    .atlx-kv-stance-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--kv-text-muted);
+      margin-bottom: 0.65rem;
+    }
+    .atlx-kv-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .atlx-kv-stance-btn {
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--kv-border);
+      background: #161b22;
+      color: var(--kv-text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .atlx-kv-stance-btn:hover {
+      border-color: var(--kv-text-muted);
+      color: var(--kv-text-main);
+    }
+    .atlx-kv-stance-btn.is-active-directive {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: var(--kv-accent-rose);
+      color: var(--kv-accent-rose);
+    }
+    .atlx-kv-stance-btn.is-active-gardener {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--kv-accent-emerald);
+      color: var(--kv-accent-emerald);
+    }
+
+    .atlx-kv-visual {
+      background: var(--kv-card);
+      border: 1px solid var(--kv-border);
+      border-radius: 10px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .atlx-kv-graph-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .atlx-kv-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .atlx-kv-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      margin-top: 0.35rem;
+    }
+    .atlx-kv-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--kv-text-muted);
+    }
+    .atlx-kv-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .atlx-kv-callout {
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--kv-border);
+      background: #161b22;
+      transition: all 0.25s ease;
+    }
+    .atlx-kv-callout-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .atlx-kv-callout-body {
+      font-size: 0.84rem;
+      color: var(--kv-text-muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .atlx-kv-stag {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--kv-border);
+    }
+    .atlx-kv-stag-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+    .atlx-kv-stag-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--kv-accent-purple);
+      margin: 0;
+    }
+    .atlx-kv-matrix-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .atlx-kv-cell {
+      padding: 0.65rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #21262d;
+      background: #0d1117;
+      font-size: 0.78rem;
+    }
+    .atlx-kv-cell-role {
+      font-weight: 700;
+      color: var(--kv-text-main);
+      margin-bottom: 0.15rem;
+    }
+    .atlx-kv-cell-desc {
+      color: var(--kv-text-muted);
+    }
+    .atlx-kv-cell.is-selected {
+      border-color: var(--kv-accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+  </style>
+
+  <div class="atlx-kv-header">
+    <p class="atlx-kv-kicker">Cybernetic Model · Leadership as Ecosystem Architecture</p>
+    <h3 class="atlx-kv-title">The Knowledge Velocity Threshold</h3>
+    <p class="atlx-kv-desc">
+      When domain knowledge is generated through hands-on practice, technical ground truth outpaces secondary managerial context. At the crossover point, directive authority becomes an organizational bottleneck.
+    </p>
+  </div>
+
+  <div class="atlx-kv-grid">
+    <div class="atlx-kv-controls">
+      <div class="atlx-kv-field">
+        <div class="atlx-kv-label-row">
+          <span class="atlx-kv-label" id="lbl-domain-rate">Domain Knowledge Growth Rate (dK/dt)</span>
+          <span class="atlx-kv-val" id="val-domain-rate">72</span>
+        </div>
+        <input type="range" class="atlx-kv-range" id="input-domain-rate" min="10" max="100" value="72" aria-labelledby="lbl-domain-rate">
+        <div class="atlx-kv-subtext">Low = Bounded routine (shovels); High = Emergent systems (software, AI)</div>
+      </div>
+
+      <div class="atlx-kv-field">
+        <div class="atlx-kv-label-row">
+          <span class="atlx-kv-label" id="lbl-admin-overhead">Manager Administrative Load</span>
+          <span class="atlx-kv-val" id="val-admin-overhead">65%</span>
+        </div>
+        <input type="range" class="atlx-kv-range" id="input-admin-overhead" min="15" max="85" value="65" aria-labelledby="lbl-admin-overhead">
+        <div class="atlx-kv-subtext">Time absorbed by meetings, status decks, and governance</div>
+      </div>
+
+      <div class="atlx-kv-field">
+        <div class="atlx-kv-label-row">
+          <span class="atlx-kv-label" id="lbl-team-autonomy">Team Autonomy and Soil Quality</span>
+          <span class="atlx-kv-val" id="val-team-autonomy">55</span>
+        </div>
+        <input type="range" class="atlx-kv-range" id="input-team-autonomy" min="10" max="100" value="55" aria-labelledby="lbl-team-autonomy">
+        <div class="atlx-kv-subtext">Psychological safety to experiment and prune friction</div>
+      </div>
+
+      <div class="atlx-kv-stance-group">
+        <div class="atlx-kv-stance-title">Management Operating Stance</div>
+        <div class="atlx-kv-btn-group" role="group" aria-label="Management Stance">
+          <button type="button" class="atlx-kv-stance-btn is-active-directive" id="btn-stance-directive" data-stance="directive">
+            Directive Authority<br><span style="font-size:0.72rem;font-weight:400;">Chess Master</span>
+          </button>
+          <button type="button" class="atlx-kv-stance-btn" id="btn-stance-gardener" data-stance="gardener">
+            Ecosystem Architect<br><span style="font-size:0.72rem;font-weight:400;">Botanist</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="atlx-kv-stag">
+        <div class="atlx-kv-stag-head">
+          <span class="atlx-kv-stag-title">Stag Hunt Payoff (Rousseau & Edmondson)</span>
+        </div>
+        <div class="atlx-kv-matrix-grid">
+          <div class="atlx-kv-cell" id="cell-hare">
+            <div class="atlx-kv-cell-role">Hare Strategy (Quiet)</div>
+            <div class="atlx-kv-cell-desc">Personal safety; avoid conflict; rabbit starvation.</div>
+          </div>
+          <div class="atlx-kv-cell is-selected" id="cell-stag">
+            <div class="atlx-kv-cell-role">Stag Strategy (Candor)</div>
+            <div class="atlx-kv-cell-desc">Collective breakthrough; requires low failure penalty.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="atlx-kv-visual">
+      <div class="atlx-kv-graph-wrapper">
+        <svg class="atlx-kv-svg" viewBox="0 0 540 300" id="kv-svg-chart" role="img" aria-label="Chart comparing Team Ground Truth against Manager Secondary Context over time">
+          <defs>
+            <linearGradient id="kv-team-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
+            </linearGradient>
+            <linearGradient id="kv-crossover-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(244,63,94,0.0)"/>
+              <stop offset="100%" stop-color="rgba(244,63,94,0.18)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Grid lines -->
+          <line x1="50" y1="30" x2="520" y2="30" stroke="#21262d" stroke-dasharray="3,3"/>
+          <line x1="50" y1="95" x2="520" y2="95" stroke="#21262d" stroke-dasharray="3,3"/>
+          <line x1="50" y1="160" x2="520" y2="160" stroke="#21262d" stroke-dasharray="3,3"/>
+          <line x1="50" y1="225" x2="520" y2="225" stroke="#21262d" stroke-dasharray="3,3"/>
+
+          <!-- Axis lines -->
+          <line x1="50" y1="260" x2="520" y2="260" stroke="#30363d" stroke-width="1.5"/>
+          <line x1="50" y1="260" x2="50" y2="20" stroke="#30363d" stroke-width="1.5"/>
+
+          <!-- Axis labels -->
+          <text x="285" y="285" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600">Project / Domain Timeline</text>
+          <text x="25" y="140" text-anchor="middle" fill="#8b949e" font-size="11" font-weight="600" transform="rotate(-90 25 140)">Domain Truth / Mastery</text>
+
+          <!-- Crossover boundary band -->
+          <rect id="kv-crossover-rect" x="220" y="20" width="300" height="240" fill="url(#kv-crossover-grad)"/>
+          <line id="kv-crossover-line" x1="220" y1="20" x2="220" y2="260" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4,4"/>
+          <text id="kv-crossover-tag" x="225" y="40" fill="#f43f5e" font-size="10" font-weight="700">CROSSOVER POINT</text>
+
+          <!-- Area fill for team -->
+          <path id="kv-team-area" d="" fill="url(#kv-team-grad)"/>
+
+          <!-- Curve: Team Ground Truth -->
+          <path id="kv-team-path" d="" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Curve: Manager Context -->
+          <path id="kv-mgr-path" d="" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,4" stroke-linecap="round"/>
+
+          <!-- Status badge indicator -->
+          <circle id="kv-marker-team" cx="500" cy="50" r="5" fill="#38bdf8"/>
+          <circle id="kv-marker-mgr" cx="500" cy="180" r="5" fill="#f59e0b"/>
+        </svg>
+      </div>
+
+      <div class="atlx-kv-legend">
+        <div class="atlx-kv-legend-item">
+          <span class="atlx-kv-legend-dot" style="background:#38bdf8;"></span>
+          <span>Team Ground Truth (Edge Innovation)</span>
+        </div>
+        <div class="atlx-kv-legend-item">
+          <span class="atlx-kv-legend-dot" style="background:#f59e0b;"></span>
+          <span>Manager Context (Secondary Learning)</span>
+        </div>
+      </div>
+
+      <div class="atlx-kv-callout" id="kv-status-callout">
+        <div class="atlx-kv-callout-head">
+          <span id="kv-status-title" style="color:var(--kv-accent-rose);">Bottleneck Sclerosis Detected</span>
+          <span id="kv-throughput-metric" style="color:var(--kv-accent-rose); font-family:monospace; font-weight:700;">-48% Cycle Velocity</span>
+        </div>
+        <p class="atlx-kv-callout-body" id="kv-status-body">
+          Domain velocity exceeds managerial context capacity. Under directive authority, approvals create queuing drag and force team silence.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const root = document.getElementById('atlx-kv-root');
+    if (!root) return;
+
+    const inputRate = root.querySelector('#input-domain-rate');
+    const inputOverhead = root.querySelector('#input-admin-overhead');
+    const inputAutonomy = root.querySelector('#input-team-autonomy');
+    const valRate = root.querySelector('#val-domain-rate');
+    const valOverhead = root.querySelector('#val-admin-overhead');
+    const valAutonomy = root.querySelector('#val-team-autonomy');
+
+    const btnDirective = root.querySelector('#btn-stance-directive');
+    const btnGardener = root.querySelector('#btn-stance-gardener');
+
+    const pathTeam = root.querySelector('#kv-team-path');
+    const areaTeam = root.querySelector('#kv-team-area');
+    const pathMgr = root.querySelector('#kv-mgr-path');
+    const lineCross = root.querySelector('#kv-crossover-line');
+    const rectCross = root.querySelector('#kv-crossover-rect');
+    const tagCross = root.querySelector('#kv-crossover-tag');
+    const markTeam = root.querySelector('#kv-marker-team');
+    const markMgr = root.querySelector('#kv-marker-mgr');
+
+    const statusTitle = root.querySelector('#kv-status-title');
+    const statusMetric = root.querySelector('#kv-throughput-metric');
+    const statusBody = root.querySelector('#kv-status-body');
+    const cellHare = root.querySelector('#cell-hare');
+    const cellStag = root.querySelector('#cell-stag');
+
+    let currentStance = 'directive';
+
+    function calculate() {
+      const rate = parseFloat(inputRate.value);
+      const overhead = parseFloat(inputOverhead.value);
+      const autonomy = parseFloat(inputAutonomy.value);
+
+      valRate.textContent = rate;
+      valOverhead.textContent = overhead + '%';
+      valAutonomy.textContent = autonomy;
+
+      const x0 = 50, x1 = 520, yBase = 260;
+      const width = x1 - x0;
+
+      // Team ground truth curve: steeper with higher rate and higher autonomy
+      const teamGrowthFactor = (rate / 50) * (0.8 + autonomy / 120);
+      const mgrCapFactor = (1 - overhead / 100) * 1.35;
+
+      const teamPts = [];
+      const mgrPts = [];
+      let crossoverX = null;
+
+      for (let i = 0; i <= 20; i++) {
+        const t = i / 20;
+        const x = x0 + t * width;
+        
+        // Team curve: exponential rise when rate is high
+        const yTeamNorm = Math.pow(t, 1.35) * teamGrowthFactor;
+        const yTeam = Math.max(30, yBase - yTeamNorm * 200);
+        teamPts.push({ x, y: yTeam });
+
+        // Manager curve: linear/asymptotic cap due to overhead
+        const yMgrNorm = (t * 0.85) * mgrCapFactor;
+        const yMgr = Math.max(45, yBase - Math.min(1.0, yMgrNorm) * 170);
+        mgrPts.push({ x, y: yMgr });
+
+        if (crossoverX === null && yTeam < yMgr) {
+          crossoverX = x;
+        }
+      }
+
+      // Generate SVG path strings
+      let dTeam = 'M ' + teamPts[0].x + ' ' + teamPts[0].y;
+      let dArea = 'M ' + teamPts[0].x + ' ' + yBase + ' L ' + teamPts[0].x + ' ' + teamPts[0].y;
+      for (let i = 1; i < teamPts.length; i++) {
+        dTeam += ' L ' + teamPts[i].x + ' ' + teamPts[i].y;
+        dArea += ' L ' + teamPts[i].x + ' ' + teamPts[i].y;
+      }
+      dArea += ' L ' + x1 + ' ' + yBase + ' Z';
+
+      let dMgr = 'M ' + mgrPts[0].x + ' ' + mgrPts[0].y;
+      for (let i = 1; i < mgrPts.length; i++) {
+        dMgr += ' L ' + mgrPts[i].x + ' ' + mgrPts[i].y;
+      }
+
+      pathTeam.setAttribute('d', dTeam);
+      areaTeam.setAttribute('d', dArea);
+      pathMgr.setAttribute('d', dMgr);
+
+      const lastTeam = teamPts[teamPts.length - 1];
+      const lastMgr = mgrPts[mgrPts.length - 1];
+      markTeam.setAttribute('cx', lastTeam.x);
+      markTeam.setAttribute('cy', lastTeam.y);
+      markMgr.setAttribute('cx', lastMgr.x);
+      markMgr.setAttribute('cy', lastMgr.y);
+
+      // Crossover line placement
+      const crossPos = crossoverX || (x0 + width * 0.45);
+      lineCross.setAttribute('x1', crossPos);
+      lineCross.setAttribute('x2', crossPos);
+      rectCross.setAttribute('x', crossPos);
+      rectCross.setAttribute('width', x1 - crossPos);
+      tagCross.setAttribute('x', Math.min(x1 - 120, crossPos + 8));
+
+      // Diagnostics & Status
+      const isPastCrossover = rate > 40 || overhead > 50;
+
+      if (currentStance === 'directive') {
+        if (isPastCrossover) {
+          const penalty = Math.round(20 + (rate * 0.4) + (overhead * 0.35));
+          statusTitle.textContent = 'Bottleneck Sclerosis Active';
+          statusTitle.style.color = 'var(--kv-accent-rose)';
+          statusMetric.textContent = '-' + penalty + '% Delivery Velocity';
+          statusMetric.style.color = 'var(--kv-accent-rose)';
+          statusBody.textContent = 'The manager is structurally on the outside of edge ground truth. Requiring directive approval delays delivery and punishes team candor.';
+          cellHare.classList.add('is-selected');
+          cellStag.classList.remove('is-selected');
+        } else {
+          statusTitle.textContent = 'Directive Stance Stable (Bounded Domain)';
+          statusTitle.style.color = 'var(--kv-accent-amber)';
+          statusMetric.textContent = '+5% Coordinated Pace';
+          statusMetric.style.color = 'var(--kv-accent-amber)';
+          statusBody.textContent = 'Domain knowledge growth is low enough that secondary managerial context keeps pace with the work. Centralized commands do not stall progress.';
+          cellHare.classList.remove('is-selected');
+          cellStag.classList.remove('is-selected');
+        }
+      } else {
+        // Gardener stance
+        const boost = Math.round(35 + (autonomy * 0.85) + (rate * 0.25));
+        statusTitle.textContent = 'Ecosystem Equilibrium Active';
+        statusTitle.style.color = 'var(--kv-accent-emerald)';
+        statusMetric.textContent = '+' + boost + '% System Throughput';
+        statusMetric.style.color = 'var(--kv-accent-emerald)';
+        statusBody.textContent = 'The manager cultivates conditions: pruning blockers, setting strategic boundaries, and establishing high psychological safety. Edge insight flows directly into delivery.';
+        cellHare.classList.remove('is-selected');
+        cellStag.classList.add('is-selected');
+      }
+    }
+
+    inputRate.addEventListener('input', calculate);
+    inputOverhead.addEventListener('input', calculate);
+    inputAutonomy.addEventListener('input', calculate);
+
+    btnDirective.addEventListener('click', function() {
+      currentStance = 'directive';
+      btnDirective.classList.add('is-active-directive');
+      btnGardener.classList.remove('is-active-gardener');
+      calculate();
+    });
+
+    btnGardener.addEventListener('click', function() {
+      currentStance = 'gardener';
+      btnGardener.classList.add('is-active-gardener');
+      btnDirective.classList.remove('is-active-directive');
+      calculate();
+    });
+
+    calculate();
+  })();
+  </script>
+</div>

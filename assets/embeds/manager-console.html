@@ -1,0 +1,171 @@
+<!-- Atlancia embed: The manager's console (what a gardener controls).
+     Fits the post Seeing the Difference Between a Boss and a Botanist.
+     Paste this whole file into a Publii HTML block where the figure should sit. -->
+<div class="atlx atlx-console">
+  <style>
+    .atlx-console {
+      --kc-ink: var(--atl-ink); --kc-text: var(--atl-text); --kc-dim: var(--atl-dim); --kc-line: var(--atl-line);
+      --kc-surface: var(--atl-surface); --kc-amber: var(--atl-accent); --kc-warn: var(--atl-warning);
+      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+      background: var(--kc-surface); color: var(--kc-text);
+      border: 1px solid var(--kc-line); border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem; margin: 2.5rem 0; max-width: 100%;
+      font-size: 1rem; line-height: 1.55;
+    }
+    .atlx-console * { box-sizing: border-box; }
+    .atlx-console .atlx-mc-k-kick {
+      margin: 0 0 .4rem; font-size: .72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--kc-amber);
+    }
+    .atlx-console .atlx-mc-k-title {
+      margin: 0 0 .2rem; font-family: 'Aleo', Georgia, serif; font-weight: 500;
+      font-size: 1.25rem; line-height: 1.35; color: var(--kc-ink);
+    }
+    .atlx-console .atlx-mc-k-sub { margin: 0 0 1rem; color: var(--kc-dim); font-size: .95rem; }
+    .atlx-console .atlx-mc-k-ctl { margin: 0 0 .9rem; }
+    .atlx-console .atlx-mc-k-ctl label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-weight: 600; color: var(--kc-ink); font-size: .95rem; margin-bottom: .1rem;
+    }
+    .atlx-console output { font-variant-numeric: tabular-nums; color: var(--kc-amber); font-weight: 600; }
+    .atlx-console input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 26px;
+      background: transparent; margin: 0; cursor: pointer;
+    }
+    .atlx-console input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-console input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--kc-amber); border: 3px solid #181818; margin-top: -7px;
+    }
+    .atlx-console input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-console input[type="range"]::-moz-range-thumb {
+      width: 15px; height: 15px; border-radius: 50%; background: var(--kc-amber); border: 3px solid #181818;
+    }
+    .atlx-console input[type="range"]:focus-visible { outline: 2px solid var(--kc-amber); outline-offset: 4px; border-radius: 999px; }
+
+    .atlx-console .atlx-mc-k-meter { margin: 1.1rem 0 .4rem; padding-top: 1.3rem; }
+    .atlx-console .atlx-mc-k-track {
+      position: relative; height: 14px; border-radius: 999px; background: #2b2b2b;
+      border: 1px solid var(--kc-line);
+    }
+    .atlx-console .atlx-mc-k-fill {
+      height: 100%; width: 60%; border-radius: 999px; background: var(--kc-amber);
+      transition: width .35s ease, background .2s ease;
+    }
+    .atlx-console .atlx-mc-k-ceil {
+      position: absolute; top: -1.35rem; right: 8%; bottom: -4px; width: 0;
+      border-left: 1px dashed #6a6a6a;
+    }
+    .atlx-console .atlx-mc-k-ceil span {
+      position: absolute; right: 0; top: 0; transform: translateX(50%);
+      white-space: nowrap; font-size: .68rem; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--kc-dim);
+    }
+    .atlx-console .atlx-mc-k-read {
+      font-variant-numeric: tabular-nums; color: var(--kc-ink); margin: .5rem 0 .7rem; font-size: .98rem;
+    }
+    .atlx-console .atlx-mc-k-read .dim { color: var(--kc-dim); }
+    .atlx-console button.atlx-mc-k-btn {
+      font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+      color: var(--kc-ink); background: #262626; border: 1px solid var(--kc-line);
+      border-radius: 999px; padding: .42rem 1rem;
+    }
+    .atlx-console button.atlx-mc-k-btn:hover { border-color: var(--kc-amber); color: var(--kc-amber); }
+    .atlx-console .atlx-mc-k-note { margin: .65rem 0 0; font-size: .9rem; color: var(--kc-dim); min-height: 2.4em; }
+    .atlx-console .atlx-mc-k-note.warn { color: var(--kc-warn); }
+    .atlx-console.shake .atlx-mc-k-track { animation: atlx-mc-k-shake .3s ease; }
+    @keyframes atlx-mc-k-shake {
+      25% { transform: translateX(3px); } 50% { transform: translateX(-3px); } 75% { transform: translateX(2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .atlx-console.shake .atlx-mc-k-track { animation: none; }
+    }
+  </style>
+
+  <p class="atlx-mc-k-kick">What the gardener holds</p>
+  <h3 class="atlx-mc-k-title">Set the weather, not the plant</h3>
+  <p class="atlx-mc-k-sub">Three conditions you actually control. Watch what responds, and what will not.</p>
+
+  <div class="atlx-mc-k-ctl">
+    <label for="atlx-mc-k-cl">Clarity of the brief <output id="atlx-mc-k-cl-o" for="atlx-mc-k-cl">60</output></label>
+    <input id="atlx-mc-k-cl" type="range" min="0" max="100" step="1" value="60">
+  </div>
+  <div class="atlx-mc-k-ctl">
+    <label for="atlx-mc-k-st">Standards of the work <output id="atlx-mc-k-st-o" for="atlx-mc-k-st">65</output></label>
+    <input id="atlx-mc-k-st" type="range" min="0" max="100" step="1" value="65">
+  </div>
+  <div class="atlx-mc-k-ctl">
+    <label for="atlx-mc-k-au">Room to move <output id="atlx-mc-k-au-o" for="atlx-mc-k-au">55</output></label>
+    <input id="atlx-mc-k-au" type="range" min="0" max="100" step="1" value="55">
+  </div>
+
+  <div class="atlx-mc-k-meter">
+    <div class="atlx-mc-k-track">
+      <div class="atlx-mc-k-fill" id="atlx-mc-k-fill"></div>
+      <div class="atlx-mc-k-ceil"><span>growth itself</span></div>
+    </div>
+  </div>
+  <p class="atlx-mc-k-read" id="atlx-mc-k-read" aria-live="polite"></p>
+  <button type="button" class="atlx-mc-k-btn" id="atlx-mc-k-force">Command the bloom</button>
+  <p class="atlx-mc-k-note" id="atlx-mc-k-note">The gardener sets light, soil and pruning. The growing stays the plant's job.</p>
+
+  <script>
+  (function () {
+    var script = document.currentScript;
+    var root = script && script.closest ? script.closest('.atlx-console') : document.querySelector('.atlx-console');
+    if (!root) return;
+
+    var qs = function (sel) { return root.querySelector(sel); };
+    var cl = qs('#atlx-mc-k-cl'), st = qs('#atlx-mc-k-st'), au = qs('#atlx-mc-k-au');
+    var clO = qs('#atlx-mc-k-cl-o'), stO = qs('#atlx-mc-k-st-o'), auO = qs('#atlx-mc-k-au-o');
+    var fill = qs('#atlx-mc-k-fill');
+    var read = qs('#atlx-mc-k-read');
+    var note = qs('#atlx-mc-k-note');
+    var btn = qs('#atlx-mc-k-force');
+
+    var CEIL = 92;
+    var CLEAR = 'The gardener sets light, soil and pruning. The growing stays the plant\'s job.';
+    var PUSHED = 'The meter stops at the line. Conditions can be set; the bloom cannot be ordered.';
+    var forced = false;
+    var timer = null;
+
+    function health() { return Math.round(0.34 * Number(cl.value) + 0.33 * Number(st.value) + 0.33 * Number(au.value)); }
+
+    function render() {
+      var h = health();
+      var shown = forced ? Math.min(h + 14, CEIL) : h;
+      fill.style.width = shown + '%';
+      fill.style.background = forced ? '#FB6762' : '#FFC074';
+      read.innerHTML = '<span class="dim">Conditions:</span> ' + shown + ' of 100' + (forced ? ', pushing at the line' : '');
+      clO.textContent = cl.value; stO.textContent = st.value; auO.textContent = au.value;
+      note.textContent = forced ? PUSHED : CLEAR;
+      note.classList.toggle('warn', forced);
+    }
+
+    [cl, st, au].forEach(function (input) {
+      input.addEventListener('input', function () {
+        if (timer) { clearTimeout(timer); timer = null; }
+        forced = false;
+        root.classList.remove('shake');
+        render();
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      forced = true;
+      render();
+      root.classList.remove('shake');
+      void root.offsetWidth;   /* restart the animation */
+      root.classList.add('shake');
+      if (timer) { clearTimeout(timer); }
+      timer = setTimeout(function () {
+        forced = false;
+        timer = null;
+        render();
+      }, 2400);
+    });
+
+    render();
+  })();
+  </script>
+</div>

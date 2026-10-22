@@ -1,0 +1,448 @@
+<!-- Atlancia embed: Pocket-Ready Rules Exporter
+     Fits the post Difference Needs Somewhere to Go.
+     Self-contained: Inline styles, dynamic rule synthesis across four tool targets, clipboard export, zero external dependencies. -->
+<div class="atlx atlx-re" id="atlx-re-root">
+  <style>
+    .atlx-re {
+      --re-ink: var(--atl-ink);
+      --re-text: var(--atl-text);
+      --re-dim: var(--atl-dim);
+      --re-line: var(--atl-line);
+      --re-surface: var(--atl-surface);
+      --re-card: var(--atl-surface);
+      --re-code-bg: var(--atl-bg);
+      --re-amber: var(--atl-accent);
+      --re-cyan: #38BDF8;
+      --re-emerald: #54A468;
+      --re-focus: #F6DC90;
+
+      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+      background: var(--re-surface);
+      color: var(--re-text);
+      border: 1px solid var(--re-line);
+      border-radius: 8px;
+      padding: 1.5rem 1.4rem 1.3rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+      box-sizing: border-box;
+    }
+    .atlx-re * { box-sizing: border-box; }
+
+    .atlx-re .atlx-re-kick {
+      margin: 0 0 .35rem;
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--re-amber);
+    }
+    .atlx-re .atlx-re-title {
+      margin: 0 0 .3rem;
+      font-family: 'Aleo', Georgia, serif;
+      font-weight: 500;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      color: var(--re-ink);
+    }
+    .atlx-re .atlx-re-sub {
+      margin: 0 0 1.2rem;
+      color: var(--re-dim);
+      font-size: .95rem;
+      max-width: 44rem;
+    }
+
+    /* Target Selector Tabs */
+    .atlx-re .atlx-re-targets {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin: 0 0 1.25rem;
+    }
+    .atlx-re .atlx-re-tab {
+      font: inherit;
+      font-size: .86rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--re-ink);
+      background: var(--re-card);
+      border: 1px solid var(--re-line);
+      border-radius: 999px;
+      padding: .42rem .95rem;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .atlx-re .atlx-re-tab:hover {
+      border-color: var(--re-amber);
+      color: var(--re-amber);
+    }
+    .atlx-re .atlx-re-tab[aria-pressed="true"] {
+      background: var(--re-amber);
+      border-color: var(--re-amber);
+      color: #181818;
+    }
+
+    /* Rules Checklist Grid */
+    .atlx-re .atlx-re-checklist {
+      background: var(--re-card);
+      border: 1px solid var(--re-line);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+    .atlx-re .atlx-re-checklist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .8rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--re-line);
+    }
+    .atlx-re .atlx-re-checklist-title {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--re-ink);
+      margin: 0;
+    }
+    .atlx-re .atlx-re-count {
+      font-size: .84rem;
+      color: var(--re-dim);
+      font-variant-numeric: tabular-nums;
+    }
+    .atlx-re .atlx-re-rules {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+    }
+    .atlx-re .atlx-re-rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      font-size: .94rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .atlx-re .atlx-re-rule-item input[type="checkbox"] {
+      -webkit-appearance: auto;
+      appearance: auto;
+      width: 1.15rem;
+      height: 1.15rem;
+      margin: .2rem 0 0;
+      flex: none;
+      accent-color: var(--re-amber);
+      cursor: pointer;
+    }
+    .atlx-re .atlx-re-rule-item span.rule-name {
+      color: var(--re-ink);
+      font-weight: 600;
+    }
+    .atlx-re .atlx-re-rule-item span.rule-desc {
+      color: var(--re-dim);
+      font-size: .88rem;
+      margin-left: .35rem;
+    }
+
+    /* Output Section */
+    .atlx-re .atlx-re-output-wrapper {
+      position: relative;
+      margin-top: 1rem;
+    }
+    .atlx-re .atlx-re-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .5rem;
+    }
+    .atlx-re .atlx-re-target-label {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--re-cyan);
+    }
+    .atlx-re .atlx-re-copy-btn {
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--re-ink);
+      background: #2b2b2b;
+      border: 1px solid var(--re-line);
+      border-radius: 4px;
+      padding: .35rem .8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      transition: all .2s ease;
+    }
+    .atlx-re .atlx-re-copy-btn:hover {
+      border-color: var(--re-cyan);
+      color: var(--re-cyan);
+      background: #333333;
+    }
+    .atlx-re .atlx-re-copy-btn.copied {
+      border-color: var(--re-emerald);
+      color: var(--re-emerald);
+      background: #1e2c22;
+    }
+    .atlx-re .atlx-re-copy-btn svg {
+      width: 14px;
+      height: 14px;
+      flex: none;
+    }
+
+    /* Monospace Code View */
+    .atlx-re .atlx-re-code-container {
+      background: var(--re-code-bg);
+      border: 1px solid var(--re-line);
+      border-radius: 6px;
+      padding: 1rem;
+      overflow-x: auto;
+      max-height: 22rem;
+    }
+    .atlx-re pre {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .85rem;
+      line-height: 1.5;
+      color: #E2E8F0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Grounded Footer */
+    .atlx-re .atlx-re-footer {
+      margin-top: .9rem;
+      padding-top: .75rem;
+      border-top: 1px solid var(--re-line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .6rem;
+      font-size: .82rem;
+      color: var(--re-dim);
+    }
+    .atlx-re .atlx-re-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+    }
+  </style>
+
+  <p class="atlx-re-kick">Seed Prompt and Rule Exporter</p>
+  <h3 class="atlx-re-title">Take the rules into your tools</h3>
+  <p class="atlx-re-sub">Convert the essay principles into operational instructions for your chat assistant, IDE ruleset, agent contract, or team agreement.</p>
+
+  <div class="atlx-re-targets" role="group" aria-label="Target tool selection">
+    <button type="button" class="atlx-re-tab" data-target="chat" aria-pressed="true">ChatGPT / Claude</button>
+    <button type="button" class="atlx-re-tab" data-target="cursor" aria-pressed="false">Cursor / Copilot</button>
+    <button type="button" class="atlx-re-tab" data-target="agents" aria-pressed="false">AGENTS.md Contract</button>
+    <button type="button" class="atlx-re-tab" data-target="team" aria-pressed="false">Team Working Agreement</button>
+  </div>
+
+  <div class="atlx-re-checklist">
+    <div class="atlx-re-checklist-header">
+      <span class="atlx-re-checklist-title">Included Pocket Rules</span>
+      <span class="atlx-re-count" id="atlx-re-rule-count">5 of 5 selected</span>
+    </div>
+    <div class="atlx-re-rules">
+      <label class="atlx-re-rule-item">
+        <input type="checkbox" data-rule="1" checked>
+        <span><span class="rule-name">Difference needs somewhere to go:</span><span class="rule-desc">Constructive channels prevent quiet cynicism and defensive silos.</span></span>
+      </label>
+      <label class="atlx-re-rule-item">
+        <input type="checkbox" data-rule="2" checked>
+        <span><span class="rule-name">Nobody knows enough:</span><span class="rule-desc">Ensure the table is smarter than any single individual.</span></span>
+      </label>
+      <label class="atlx-re-rule-item">
+        <input type="checkbox" data-rule="3" checked>
+        <span><span class="rule-name">Truth from debate:</span><span class="rule-desc">Test arguments on merit while the clay is wet.</span></span>
+      </label>
+      <label class="atlx-re-rule-item">
+        <input type="checkbox" data-rule="4" checked>
+        <span><span class="rule-name">New information is never a penalty:</span><span class="rule-desc">Early flaw discovery is cheap resilience.</span></span>
+      </label>
+      <label class="atlx-re-rule-item">
+        <input type="checkbox" data-rule="5" checked>
+        <span><span class="rule-name">Collective collective synthesis:</span><span class="rule-desc">Outcomes produced by interdependent, colliding disciplines.</span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="atlx-re-output-wrapper">
+    <div class="atlx-re-toolbar">
+      <span class="atlx-re-target-label" id="atlx-re-target-heading">Chat Seed Prompt</span>
+      <button type="button" class="atlx-re-copy-btn" id="atlx-re-copy-button" aria-label="Copy prompt to clipboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="atlx-re-copy-text">Copy to clipboard</span>
+      </button>
+    </div>
+    <div class="atlx-re-code-container">
+      <pre id="atlx-re-output-code"></pre>
+    </div>
+  </div>
+
+  <div class="atlx-re-footer">
+    <span>Runs entirely in your browser. Nothing is sent, stored, or tracked.</span>
+    <span>Atlancia Interactive Kit</span>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.currentScript && document.currentScript.closest
+        ? document.currentScript.closest(".atlx-re")
+        : document.querySelector(".atlx-re");
+      if (root === null || typeof root === "undefined") return;
+
+      var currentTarget = "chat";
+      var tabs = Array.prototype.slice.call(root.querySelectorAll(".atlx-re-tab"));
+      var checkboxes = Array.prototype.slice.call(root.querySelectorAll("input[data-rule]"));
+      var countEl = root.querySelector("#atlx-re-rule-count");
+      var headingEl = root.querySelector("#atlx-re-target-heading");
+      var codeEl = root.querySelector("#atlx-re-output-code");
+      var copyBtn = root.querySelector("#atlx-re-copy-button");
+      var copyText = root.querySelector("#atlx-re-copy-text");
+
+      var TARGET_CONFIG = {
+        chat: {
+          label: "Chat Seed Prompt (ChatGPT, Claude)",
+          header: "# Collaboration Agreement\n\nYou are acting as an expert thinking partner. In our discussions, adhere to the following principles:\n",
+          rules: {
+            1: "Channel friction constructively: Do not agree just to be agreeable. If you notice a flaw, tension, or counter-perspective, state it directly. A silent room is not aligned; it is merely quiet.",
+            2: "Recognize that nobody knows enough: Avoid pretending to possess total answers across novel domains. Surface boundary unknowns and suggest how orthogonal viewpoints can evaluate them.",
+            3: "Test truth through debate: Scrutinize arguments on their merits while the clay is wet. Challenge unstated assumptions early and avoid validating weak premises.",
+            4: "Treat new information as resilience: When an edge case, contradictory fact, or design flaw emerges, treat it as an early escape from expensive failure; it strengthens the system.",
+            5: "Aim for interdependent synthesis: Formulate answers where different domain constraints actively alter and improve the solution, avoiding superficial compromises."
+          },
+          footer: "\nAdopt these habits immediately in your responses."
+        },
+        cursor: {
+          label: "Coding Assistant (.cursorrules, Copilot)",
+          header: "# Developer System Directives\n\nAdhere to the following engineering guidelines throughout implementation:\n",
+          rules: {
+            1: "Surface architectural friction immediately: If an implementation creates technical debt, violates system boundaries, or conceals a hack, flag it before writing code. Never quietly patch around structural flaws.",
+            2: "Prioritize collective clarity: Nobody knows enough to maintain opaque monoliths. Write modular, understandable components with deterministic tests rather than clever, brittle solutions.",
+            3: "Verify on technical merits: Evaluate design patterns against hard runtime constraints and empirical proofs rather than unexamined convention or authority.",
+            4: "Welcome edge-case discovery: Uncovering a breaking test or missing constraint is the cost of contacting reality. Refactor without treating discovered flaws as penalties.",
+            5: "Design for system integration: Ensure every function and module connects cleanly with surrounding architecture, avoiding idiosyncratic silos."
+          },
+          footer: "\nEnforce these standards in all code generation and refactoring proposals."
+        },
+        agents: {
+          label: "Agent Contract (AGENTS.md, Autonomous Harness)",
+          header: "# Autonomous Agent Behavioral Contract\n\nThe agent must strictly comply with the following operational doctrines:\n",
+          rules: {
+            1: "Doctrine of Constructive Channeling: Unresolved friction or schema mismatches must be surfaced at the proposal gate or execution check immediately. Silent drift and polite compliance are prohibited.",
+            2: "Doctrine of Bounded Knowledge: Verify claims against authoritative storage before acting. When context runs short, state the boundary explicitly without guessing.",
+            3: "Doctrine of Merit-Based Verification: Authority resides in executable proof, schemas, and passing tests. Tradition, momentum, and rank do not supersede empirical verification.",
+            4: "Doctrine of Reality Contact: Negative test results and runtime constraints are high-value telemetry. Update system boundaries immediately upon discovering errors.",
+            5: "Doctrine of Interdependent Cohesion: Generated artifacts must integrate cleanly into existing repository structures without creating orphan state."
+          },
+          footer: "\nFailure to enforce these clauses constitutes contract breach."
+        },
+        team: {
+          label: "Team Working Agreement (Human Charter)",
+          header: "# Team Working Agreement: Five Operating Norms\n\nOur team commits to the following shared norms for how we collaborate:\n",
+          rules: {
+            1: "Give difference somewhere to go: Disagreements are brought into team discussions early while designs are flexible, preventing silent cynicism in back channels.",
+            2: "Acknowledge that nobody knows enough: We assemble cross-functional teams because no single discipline holds the entire solution. We actively invite colleagues to examine our plans.",
+            3: "Decide through open debate: Technical and product direction must earn consensus on merit. Half-formed ideas are welcomed while the clay is wet.",
+            4: "View new information as an asset: Discovering a flaw early is cheap resilience. We inspect reality directly without assigning blame.",
+            5: "Foster genuine collective ownership: When we ship, success is described as what we solved together, reflecting how each discipline shaped the outcome."
+          },
+          footer: "\nReviewed and reaffirmed in team retrospectives."
+        }
+      };
+
+      function render() {
+        var activeRules = [];
+        checkboxes.forEach(function (cb) {
+          if (cb.checked) {
+            activeRules.push(parseInt(cb.getAttribute("data-rule"), 10));
+          }
+        });
+
+        countEl.textContent = activeRules.length + " of " + checkboxes.length + " selected";
+
+        var config = TARGET_CONFIG[currentTarget] || TARGET_CONFIG.chat;
+        headingEl.textContent = config.label;
+
+        if (activeRules.length === 0) {
+          codeEl.textContent = "# Notice\n\nNo rules selected. Please check at least one Pocket Rule above to generate your export.";
+          return;
+        }
+
+        var lines = [config.header];
+        activeRules.forEach(function (ruleNum, idx) {
+          var ruleText = config.rules[ruleNum];
+          if (typeof ruleText === "string") {
+            lines.push((idx + 1) + ". " + ruleText);
+          }
+        });
+        lines.push(config.footer);
+
+        codeEl.textContent = lines.join("\n");
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) {
+            t.setAttribute("aria-pressed", "false");
+          });
+          tab.setAttribute("aria-pressed", "true");
+          currentTarget = tab.getAttribute("data-target");
+          render();
+        });
+      });
+
+      checkboxes.forEach(function (cb) {
+        cb.addEventListener("change", render);
+      });
+
+      copyBtn.addEventListener("click", function () {
+        var text = codeEl.textContent;
+        if (text === "" || text === null) return;
+
+        function showFeedback() {
+          copyBtn.classList.add("copied");
+          copyText.textContent = "Copied to clipboard";
+          setTimeout(function () {
+            copyBtn.classList.remove("copied");
+            copyText.textContent = "Copy to clipboard";
+          }, 2200);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showFeedback).catch(function () {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+
+        function fallbackCopy(val) {
+          var ta = document.createElement("textarea");
+          ta.value = val;
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showFeedback();
+          } catch (e) {}
+          document.body.removeChild(ta);
+        }
+      });
+
+      render();
+    })();
+  </script>
+</div>

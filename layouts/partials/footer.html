@@ -5,7 +5,16 @@
   {{- $glued = .glued -}}
 {{- end -}}
 {{- $site := site.Data.site -}}
+<div class="progress" aria-hidden="true">
+    <div class="progress__bar"></div>
+</div>
 <footer class="footer{{ if $glued }} footer--glued{{ end }}">
+    <nav class="footer__nav">
+        <ul>
+            <li><a href="{{ site.BaseURL }}gallery/">Figures</a></li>
+            <li><a href="{{ site.BaseURL }}feed.xml">Feed</a></li>
+        </ul>
+    </nav>
     <div class="wrapper">
         <div class="footer__copyright">
             {{ $site.copyright_text | safeHTML }}
@@ -20,7 +29,13 @@
     </div>
 </footer>
 
+<div class="zoom" id="zoom" hidden>
+    <button class="zoom__close" type="button" aria-label="Close the image">×</button>
+    <img class="zoom__image" alt="">
+</div>
+
 <script defer="defer" src="{{ site.BaseURL }}assets/js/scripts.min.js"></script>
+<script defer="defer" src="{{ site.BaseURL }}assets/js/atlancia.js"></script>
 
 <script>window.publiiThemeMenuConfig={mobileMenuMode:'{{ $site.mobile_menu }}',animationSpeed:300,submenuWidth: '{{ $site.submenu }}',doubleClickTime:500,mobileMenuExpandableSubmenus:{{ $site.mobile_menu_expandable }},relatedContainerForOverlayMenuSelector:'.top'};</script>
 
@@ -36,5 +51,3 @@
         }
     }
 </script>
-</body>
-</html>

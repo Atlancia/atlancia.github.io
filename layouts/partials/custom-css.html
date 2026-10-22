@@ -1,5 +1,269 @@
 <style>
-/* Comment block, carried over from the GraphComment plugin configuration. */
+/*
+ * The colour mode.
+ *
+ * The site follows the operating system until the reader chooses otherwise.
+ * The choice is stored in the browser and applied as an attribute on the root
+ * element before the first paint, so the page never flashes the wrong mode.
+ * The two token sets below are the whole palette.
+ */
+:root {
+    color-scheme: dark;
+
+    --page-bg: #23233d;
+    --text-color: #D9D9D9;
+    --headings-color: #EEEDED;
+    --link-color: #EEEDED;
+    --link-color-hover: #FFC074;
+    --color: #FFC074;
+    --nav-link-color: rgba(255, 255, 255, 1);
+    --nav-link-color-hover: rgba(255, 255, 255, .7);
+    --logo-color: #FFFFFF;
+    --gray: #9D9D9D;
+    --light: #373737;
+    --lighter: #1e1e1e;
+    --helper: #1e1e1e;
+    --black: #1e1e1e;
+    --white: #FFFFFF;
+    --dark: #CECBCB;
+    --highlight-color: #F6DC90;
+    --info-color: #5B9ED5;
+    --success-color: #54A468;
+    --warning-color: #FB6762;
+
+    /*
+     * The palette the figures in the essays use. The figures carry these as
+     * their own variables so that they follow the site rather than carrying a
+     * second, parallel palette.
+     */
+    --atl-ink: #EEEDED;
+    --atl-text: #BFBFBF;
+    --atl-dim: #9D9D9D;
+    --atl-line: #373737;
+    --atl-bg: #141418;
+    --atl-surface: #1e1e1e;
+    --atl-accent: #FFC074;
+    --atl-success: #54A468;
+    --atl-warning: #FB6762;
+    --atl-info: #5B9ED5;
+    --atl-highlight: #F6DC90;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --page-bg: #FBFAF7;
+    --text-color: #3A3A42;
+    --headings-color: #16161A;
+    --link-color: #16161A;
+    --link-color-hover: #B03A2E;
+    --color: #B03A2E;
+    --nav-link-color: rgba(22, 22, 26, .88);
+    --nav-link-color-hover: rgba(22, 22, 26, .6);
+    --logo-color: #16161A;
+    --gray: #6B6B70;
+    --light: #D6D2CA;
+    --lighter: #F1EFEA;
+    --helper: #EDEAE4;
+    --black: #16161A;
+    --white: #FFFFFF;
+    --dark: #2E2E33;
+    --highlight-color: #8A6D1F;
+    --info-color: #2F6FA8;
+    --success-color: #2E7D4B;
+    --warning-color: #C0392B;
+
+    --atl-ink: #16161A;
+    --atl-text: #3A3A42;
+    --atl-dim: #6B6B70;
+    --atl-line: #D6D2CA;
+    --atl-bg: #E7E3DC;
+    --atl-surface: #F1EFEA;
+    --atl-accent: #B03A2E;
+    --atl-success: #2E7D4B;
+    --atl-warning: #C0392B;
+    --atl-info: #2F6FA8;
+    --atl-highlight: #8A6D1F;
+}
+
+/*
+ * The wordmark is a white shape, so the light mode uses a second file with
+ * the same shape in a dark fill.
+ */
+.logo--on-dark {
+    display: inline-block;
+}
+
+.logo--on-light {
+    display: none;
+}
+
+:root[data-theme="light"] .logo--on-dark {
+    display: none;
+}
+
+:root[data-theme="light"] .logo--on-light {
+    display: inline-block;
+}
+
+/* The button that changes the mode. */
+.theme-toggle {
+    align-items: center;
+    background: none;
+    border: 1px solid var(--light);
+    border-radius: 999px;
+    color: var(--nav-link-color);
+    cursor: pointer;
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    margin-left: .8rem;
+    order: 4;
+    padding: 0;
+    width: 2rem;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    border-color: var(--color);
+    color: var(--color);
+}
+
+.theme-toggle svg {
+    fill: none;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.5;
+    width: 1rem;
+}
+
+.theme-toggle .icon--auto {
+    display: none;
+}
+
+.theme-toggle[data-mode="auto"] .icon--auto {
+    display: block;
+}
+
+.theme-toggle[data-mode="auto"] .icon--light,
+.theme-toggle[data-mode="auto"] .icon--dark {
+    display: none;
+}
+
+/* The reading progress bar. */
+.progress {
+    background: transparent;
+    height: 2px;
+    left: 0;
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.progress__bar {
+    background: var(--color);
+    height: 100%;
+    transform-origin: left center;
+    transform: scaleX(0);
+    width: 100%;
+}
+
+/* A table of contents for the long essays. */
+.post__toc h3 {
+    color: var(--headings-color);
+}
+
+.post__toc nav {
+    margin: 0;
+}
+
+.post__toc a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.post__toc a:hover,
+.post__toc a:focus-visible {
+    color: var(--color);
+    text-decoration: underline;
+}
+
+.post__toc li {
+    line-height: 1.5;
+    margin-top: calc(var(--baseline) * 2);
+}
+
+/* The overlay that opens when an image is clicked. */
+.zoom {
+    align-items: center;
+    background: rgba(10, 10, 14, .92);
+    border: 0;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    padding: 2rem;
+    position: fixed;
+    z-index: 200;
+}
+
+.zoom[hidden] {
+    display: none;
+}
+
+.zoom__image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.zoom__close {
+    background: none;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+    padding: .5rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.content__entry .post__image img,
+.content__entry figure img {
+    cursor: zoom-in;
+}
+
+/* The reading time beside the date. */
+.feed__reading {
+    color: var(--gray);
+    font-size: .8789062495rem;
+}
+
+/* The gallery of figures. */
+.atlx-gallery__item {
+    border-top: 1px solid var(--light);
+    margin-top: calc(var(--baseline) * 12 + 1vw);
+    padding-top: calc(var(--baseline) * 8 + .5vw);
+}
+
+.atlx-gallery__item h2 {
+    font-size: clamp(1.3808rem, 1.3808rem + 0.9332 * (100vw - 20rem) / 70, 2.3141rem);
+    margin-top: 0;
+}
+
+.atlx-gallery__meta {
+    color: var(--gray);
+    font-size: .8789062495rem;
+    margin-top: calc(var(--baseline) * 2);
+}
+
+/*
+ * Comment block, carried over from the GraphComment plugin configuration.
+ */
 blockquote {
     border: none !important;
     border-left: 3px solid var(--color) !important;
@@ -12,10 +276,6 @@ blockquote {
     margin: 2em 0 !important;
     padding: 0 0 0 2em !important;
     background: none !important;
-  }
-
-  :root {
-    --text-color: #D9D9D9 !important;
   }
 
   .custom-h2 {
@@ -50,7 +310,7 @@ blockquote {
 
 .my-comments-wrapper {
   padding: 0;
-  background: #2a2929;
+  background: var(--atl-surface);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -59,17 +319,6 @@ blockquote {
 .my-comments-inner {
   padding: calc(var(--baseline) * 5) calc(var(--page-margin) * 0.2);
   box-sizing: border-box;
-}
-
-/* Theme override: the published site forced this background colour. */
-:root,
-[data-theme="dark"],
-html {
-    --page-bg: #23233d !important;
-}
-
-body {
-    background: #23233d !important;
 }
 
 /*
@@ -82,9 +331,9 @@ body {
 }
 
 /*
- * The theme tightens the space that follows a level two heading. The
- * headings inside an essay are level two, so the space after them is put
- * back to what it was when they were level one.
+ * The theme tightens the space after a level two heading. The headings inside
+ * an essay are level two, so the space after them is put back to what it was
+ * when they were level one.
  */
 .content__entry h2 + p,
 .content__entry h2 + ul,

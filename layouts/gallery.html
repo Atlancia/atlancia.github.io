@@ -1,0 +1,27 @@
+{{ define "main" }}
+<main class="page page--gallery">
+    <div class="hero hero--noimage">
+        <header class="hero__content">
+            <div class="wrapper">
+                <h1>{{ .Title }}</h1>
+                {{- with .Params.description }}
+                <p class="page__desc">{{ . }}</p>
+                {{- end }}
+            </div>
+        </header>
+    </div>
+    <div class="entry-wrapper content__entry">
+        {{ .Content }}
+        {{- range $name, $figure := site.Data.embeds }}
+        <section class="atlx-gallery__item" id="figure-{{ $name }}">
+            <h2>{{ $figure.title }}</h2>
+            <p class="atlx-gallery__meta">{{ $figure.kind }}{{ with $figure.post }} · for the essay "{{ . }}"{{ end }}</p>
+            {{- $resource := resources.Get (printf "embeds/%s.html" $name) -}}
+            {{- with $resource }}
+            {{ .Content | safeHTML }}
+            {{- end }}
+        </section>
+        {{- end }}
+    </div>
+</main>
+{{ end }}

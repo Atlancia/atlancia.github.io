@@ -1,0 +1,142 @@
+<!-- Atlancia embed: Where difference can go (three fates).
+     Fits the post Difference Needs Somewhere to Go.
+     Paste this whole file into a Publii HTML block where the figure should sit. -->
+<div class="atlx atlx-flow is-assimilate">
+  <style>
+    .atlx-flow {
+      --fl-ink: var(--atl-ink); --fl-text: var(--atl-text); --fl-dim: var(--atl-dim); --fl-line: var(--atl-line);
+      --fl-surface: var(--atl-surface); --fl-amber: var(--atl-accent); --fl-info: var(--atl-info); --fl-green: var(--atl-success);
+      --fl-hl: var(--atl-highlight); --fl-warn: var(--atl-warning);
+      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+      background: var(--fl-surface); color: var(--fl-text);
+      border: 1px solid var(--fl-line); border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem; margin: 2.5rem 0; max-width: 100%;
+      font-size: 1rem; line-height: 1.55;
+    }
+    .atlx-flow * { box-sizing: border-box; }
+    .atlx-flow .atlx-fl-kick {
+      margin: 0 0 .4rem; font-size: .72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--fl-amber);
+    }
+    .atlx-flow .atlx-fl-title {
+      margin: 0 0 .2rem; font-family: 'Aleo', Georgia, serif; font-weight: 500;
+      font-size: 1.25rem; line-height: 1.35; color: var(--fl-ink);
+    }
+    .atlx-flow .atlx-fl-sub { margin: 0 0 .9rem; color: var(--fl-dim); font-size: .95rem; }
+    .atlx-flow .atlx-fl-modes { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 .4rem; }
+    .atlx-flow button {
+      font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+      color: var(--fl-ink); background: #262626; border: 1px solid var(--fl-line);
+      border-radius: 999px; padding: .4rem 1rem;
+    }
+    .atlx-flow button:hover { border-color: var(--fl-amber); color: var(--fl-amber); }
+    .atlx-flow button[aria-pressed="true"] { background: var(--fl-amber); border-color: var(--fl-amber); color: #181818; }
+    .atlx-flow svg { display: block; width: 100%; height: auto; margin: .5rem 0 .3rem; }
+    .atlx-flow .atlx-fl-caption { margin: .4rem 0 0; color: var(--fl-ink); font-size: .98rem; min-height: 3em; }
+    .atlx-flow .g-assimilate, .atlx-flow .g-contain, .atlx-flow .g-channel {
+      opacity: 0; transition: opacity .45s ease;
+    }
+    .atlx-flow.is-assimilate .g-assimilate,
+    .atlx-flow.is-contain .g-contain,
+    .atlx-flow.is-channel .g-channel { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .atlx-flow .g-assimilate, .atlx-flow .g-contain, .atlx-flow .g-channel { transition: none; }
+    }
+  </style>
+
+  <p class="atlx-fl-kick">Three fates for difference</p>
+  <h3 class="atlx-fl-title">Difference needs somewhere to go</h3>
+  <p class="atlx-fl-sub">Pick a fate and watch the room.</p>
+
+  <div class="atlx-fl-modes" role="group" aria-label="Fates for difference">
+    <button type="button" data-mode="assimilate" aria-pressed="true">Assimilate</button>
+    <button type="button" data-mode="contain" aria-pressed="false">Contain</button>
+    <button type="button" data-mode="channel" aria-pressed="false">Channel</button>
+  </div>
+
+  <svg viewBox="0 0 640 300" role="img" aria-label="Five distinct inputs arriving at a team, under three fates: assimilated into copies, sealed away, or channelled into the work">
+    <rect x="0" y="0" width="640" height="300" fill="transparent"/>
+
+    <!-- the arriving difference -->
+    <g>
+      <circle cx="84" cy="62" r="13" fill="#FFC074"/>
+      <rect x="71" y="93" width="26" height="26" rx="4" fill="#5B9ED5"/>
+      <polygon points="84,136 97,160 71,160" fill="#54A468"/>
+      <polygon points="84,180 97,195 84,210 71,195" fill="#F6DC90"/>
+      <polygon points="84,223 98,233 92,247 75,247 70,233" fill="#FB6762"/>
+    </g>
+    <text x="84" y="292" text-anchor="middle" fill="#9D9D9D" font-size="12.5" font-family="Figtree, sans-serif">difference</text>
+
+    <!-- the arrow into the work -->
+    <line x1="130" y1="150" x2="292" y2="150" stroke="#4a4a4a" stroke-width="2"/>
+    <polygon points="292,150 280,144 280,156" fill="#4a4a4a"/>
+
+    <!-- the work -->
+    <rect x="300" y="52" width="260" height="196" rx="14" fill="#232323" stroke="#373737" stroke-width="1.5"/>
+    <text x="430" y="238" text-anchor="middle" fill="#9D9D9D" font-size="12.5" font-family="Figtree, sans-serif">the work</text>
+
+    <!-- fate 1: assimilate -->
+    <g class="g-assimilate">
+      <circle cx="330" cy="120" r="11" fill="#6f6f6f"/>
+      <circle cx="380" cy="120" r="11" fill="#6f6f6f"/>
+      <circle cx="430" cy="120" r="11" fill="#6f6f6f"/>
+      <circle cx="480" cy="120" r="11" fill="#6f6f6f"/>
+      <circle cx="530" cy="120" r="11" fill="#6f6f6f"/>
+      <rect x="350" y="160" width="160" height="26" rx="6" fill="#3a3a3a"/>
+      <text x="430" y="178" text-anchor="middle" fill="#BFBFBF" font-size="12.5" font-family="Figtree, sans-serif">copies</text>
+    </g>
+
+    <!-- fate 2: contain -->
+    <g class="g-contain">
+      <rect x="48" y="38" width="180" height="224" rx="12" fill="none"
+            stroke="#9D9D9D" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <text x="138" y="30" text-anchor="middle" fill="#9D9D9D" font-size="12.5" font-family="Figtree, sans-serif">kept, sealed</text>
+      <line x1="250" y1="122" x2="250" y2="178" stroke="#FB6762" stroke-width="3"/>
+      <text x="430" y="150" text-anchor="middle" fill="#6f6f6f" font-size="12.5" font-family="Figtree, sans-serif">nothing crosses</text>
+    </g>
+
+    <!-- fate 3: channel -->
+    <g class="g-channel">
+      <circle cx="336" cy="96" r="10" fill="#FFC074"/>
+      <rect x="360" y="112" width="20" height="20" rx="3" fill="#5B9ED5"/>
+      <polygon points="404,186 415,204 393,204" fill="#54A468"/>
+      <circle cx="444" cy="150" r="9" fill="#FB6762"/>
+      <path d="M500 96 C 545 120, 545 180, 500 204" fill="none" stroke="#FFC074" stroke-width="3"/>
+      <path d="M516 84 C 570 118, 570 182, 516 216" fill="none" stroke="#5B9ED5" stroke-width="3"/>
+      <path d="M532 100 C 585 126, 585 174, 532 200" fill="none" stroke="#54A468" stroke-width="3"/>
+      <text x="430" y="80" text-anchor="middle" fill="#F6DC90" font-size="12.5" font-family="Figtree, sans-serif">range</text>
+    </g>
+  </svg>
+
+  <p class="atlx-fl-caption" id="atlx-fl-cap" aria-live="polite">If difference has to look like us, the room fills with copies.</p>
+
+  <script>
+  (function () {
+    var script = document.currentScript;
+    var root = script && script.closest ? script.closest('.atlx-flow') : document.querySelector('.atlx-flow');
+    if (!root) return;
+
+    var cap = root.querySelector('#atlx-fl-cap');
+    var buttons = Array.prototype.slice.call(root.querySelectorAll('button[data-mode]'));
+    var captions = {
+      assimilate: 'If difference has to look like us, the room fills with copies.',
+      contain: 'Kept but sealed, difference never reaches the work.',
+      channel: 'Given a channel, difference changes what the team can make.'
+    };
+
+    function set(mode) {
+      root.classList.remove('is-assimilate', 'is-contain', 'is-channel');
+      root.classList.add('is-' + mode);
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-mode') === mode ? 'true' : 'false');
+      });
+      cap.textContent = captions[mode];
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { set(b.getAttribute('data-mode')); });
+    });
+    set('assimilate');
+  })();
+  </script>
+</div>

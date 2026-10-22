@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{- $site := site.Data.site -}}
-{{- $pages := where site.RegularPages "Kind" "page" -}}
+{{- $pages := where site.RegularPages "Type" "posts" -}}
 {{- $pages = where $pages "Params.hidden" nil -}}
 {{- $pages = where $pages "Params.exclude_from_home" nil -}}
 {{- $pages = $pages.ByDate.Reverse -}}

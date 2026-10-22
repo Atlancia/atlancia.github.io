@@ -26,7 +26,7 @@
 {{- end -}}
 {{- $best := "" -}}
 {{- $bestScore := 0 -}}
-{{- range where site.RegularPages "Kind" "page" -}}
+{{- range where site.RegularPages "Type" "posts" -}}
   {{- if and (ne .Permalink $page.Permalink) (not .Params.hidden) -}}
     {{- $score := 0 -}}
     {{- range split (lower .Title) " " -}}

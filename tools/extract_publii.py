@@ -32,6 +32,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import make_logo_variant  # noqa: E402
 import media_registry  # noqa: E402
 
 # Publii responsive image variants, in the order the theme emits them.
@@ -470,6 +471,27 @@ def copy_media(site: PubliiSite, out_dir: Path) -> None:
     if target.exists():
         shutil.rmtree(target)
     shutil.copytree(source, target)
+    # The wordmark is white, so the light mode needs a dark version of it.
+    make_logo_variant.build_variant(
+        target / "website" / "logo-2.png", target / "website" / "logo-2-dark.png"
+    )
+
+
+def strip_visual_override(css: str) -> str:
+    """Remove the background colour the old theme forced on every page.
+
+    The Publii theme compiled its override into the stylesheet, so the colour
+    was set with !important on the root element, on the html element and on
+    the body. Those rules would win over any colour scheme, so they come out
+    and the palette lives in the templates instead.
+    """
+    def replace(match: re.Match[str]) -> str:
+        body = match.group(2)
+        if "!important" in body and "#23233d" in body and ("--page-bg" in body or "background" in body):
+            return ""
+        return match.group(0)
+
+    return re.sub(r"([^{}]+)\{([^{}]*)\}", replace, css)
 
 
 def copy_theme_assets(site: PubliiSite, out_dir: Path) -> None:
@@ -480,7 +502,13 @@ def copy_theme_assets(site: PubliiSite, out_dir: Path) -> None:
     css_target.mkdir(parents=True, exist_ok=True)
     for name in ("style.css", "main.css", "editor.css"):
         source = assets / "css" / name
-        if source.is_file():
+        if not source.is_file():
+            continue
+        if name == "style.css":
+            (css_target / name).write_text(
+                strip_visual_override(source.read_text(encoding="utf-8")), encoding="utf-8"
+            )
+        else:
             shutil.copy2(source, css_target / name)
 
     for folder in ("js", "svg"):

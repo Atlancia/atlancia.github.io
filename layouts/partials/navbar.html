@@ -1,7 +1,9 @@
 {{- $site := site.Data.site -}}
+{{- $logoDark := $site.logo | replaceRE `logo-2\.png$` "logo-2-dark.png" -}}
 <header class="top js-header">
    <a class="logo" href="{{ site.BaseURL }}">
-      <img src="{{ site.BaseURL }}{{ $site.logo }}" alt="{{ $site.name }}" width="{{ $site.logo_width }}" height="{{ $site.logo_height }}">
+      <img class="logo--on-dark" src="{{ site.BaseURL }}{{ $site.logo }}" alt="{{ $site.name }}" width="{{ $site.logo_width }}" height="{{ $site.logo_height }}">
+      <img class="logo--on-light" src="{{ site.BaseURL }}{{ $logoDark }}" alt="{{ $site.name }}" width="{{ $site.logo_width }}" height="{{ $site.logo_height }}">
    </a>
    <nav class="navbar js-navbar">
       <button
@@ -19,4 +21,9 @@
          {{- end }}
       </ul>
    </nav>
+   <button class="theme-toggle js-theme-toggle" type="button" data-mode="auto" aria-label="Colour mode: follow the system." title="Colour mode: follow the system.">
+      <svg class="icon--auto" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="12" rx="1.5"></rect><path d="M8 20h8"></path></svg>
+      <svg class="icon--light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"></path></svg>
+      <svg class="icon--dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path></svg>
+   </button>
 </header>

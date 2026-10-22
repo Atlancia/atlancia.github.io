@@ -1,0 +1,23 @@
+<!-- Atlancia embed: Difference closing form (new local form, difference essay) -->
+<div class="atlx atlx-check">
+  <style>
+    .atlx-check { --ck-ink:var(--atl-ink); --ck-text:var(--atl-text); --ck-dim:var(--atl-dim); --ck-line:var(--atl-line); --ck-surface:var(--atl-surface); --ck-amber:var(--atl-accent); --ck-green:var(--atl-success); font-family:"Figtree",ui-sans-serif,system-ui,sans-serif; background:var(--ck-surface); color:var(--ck-text); border:1px solid var(--ck-line); border-radius:6px; padding:1.3rem 1.3rem 1.1rem; margin:2.5rem 0; max-width:100%; font-size:1rem; line-height:1.55; } * { box-sizing:border-box } .atlx-check .atlx-cf-q-kick { margin:0 0 .4rem; font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ck-amber); } .atlx-check .atlx-cf-q-title { margin:0 0 .2rem; font-family:"Aleo",Georgia,serif; font-weight:500; font-size:1.25rem; line-height:1.35; color:var(--ck-ink); } .atlx-check .atlx-cf-q-sub { margin:0 0 1rem; color:var(--ck-dim); font-size:.95rem; } .atlx-check .atlx-cf-q-item { display:flex; align-items:flex-start; gap:.7rem; margin:0 0 .7rem; font-size:.98rem; color:var(--ck-text); cursor:pointer; } .atlx-check .atlx-cf-q-item:hover { color:var(--ck-ink); } .atlx-check input[type="checkbox"] { -webkit-appearance:auto; appearance:auto; width:1.15rem; height:1.15rem; margin:.2rem 0 0; flex:none; accent-color:var(--ck-amber); cursor:pointer; } .atlx-check input[type="checkbox"]:focus-visible { outline:2px solid var(--ck-amber); outline-offset:3px; } .atlx-check .atlx-cf-q-score { display:flex; align-items:baseline; gap:.9rem; flex-wrap:wrap; border-top:1px solid var(--ck-line); margin-top:1rem; padding-top:.9rem; } .atlx-check .atlx-cf-q-count { font-variant-numeric:tabular-nums; font-weight:600; color:var(--ck-ink); font-size:1.25rem; font-family:"Aleo",Georgia,serif; } .atlx-check .atlx-cf-q-band { margin:0; font-size:.95rem; color:var(--ck-text); } .atlx-check .atlx-cf-q-note { margin:.7rem 0 0; font-size:.85rem; color:var(--ck-dim); min-height:2.4em; }
+  </style>
+  <p class="atlx-cf-q-kick">A quiet audit</p>
+  <h3 class="atlx-cf-q-title">A quick look at your own room</h3>
+  <p class="atlx-cf-q-sub">Tick what is true where you work. Honest ticks only; nobody is reading over your shoulder.</p>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>In the last month, someone said the thing everyone was avoiding.</span></label>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>A real disagreement changed a plan for the better.</span></label>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>New people can shape the norms, even as they learn them.</span></label>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>We can tell dissent from sloppiness, and we treat them differently.</span></label>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>The quietest meetings still produce decisions worth keeping.</span></label>
+  <label class="atlx-cf-q-item"><input type="checkbox" data-atlx-q><span>When work ends, we talk about what we figured out as well as what we shipped.</span></label>
+  <div class="atlx-cf-q-score">
+    <span class="atlx-cf-q-count" id="atlx-cf-q-count" aria-live="polite">0 of 6</span>
+    <p class="atlx-cf-q-band" id="atlx-cf-q-band">The room may still be its own echo. Difference needs a channel before it needs a champion.</p>
+  </div>
+  <p class="atlx-cf-q-note">The boxes live only in your browser. Nothing is sent, stored or shared. The site palette and fonts match by name.</p>
+  <script>
+    (function () { var root=document.currentScript&&document.currentScript.closest?document.currentScript.closest(".atlx-check"):document.querySelector(".atlx-check"); if (!root) return; var boxes=Array.prototype.slice.call(root.querySelectorAll("input[data-atlx-q]")); var count=root.querySelector("#atlx-cf-q-count"); var band=root.querySelector("#atlx-cf-q-band"); function render() { var n=boxes.filter(function(b){ return b.checked; }).length; count.textContent=n+" of 6"; if (n<=2) band.textContent="The room may still be its own echo. Difference needs a channel before it needs a champion."; else if (n<=4) band.textContent="There is some channel. The next move is to keep a small disagreement alive long enough to matter."; else band.textContent="Difference seems to reach the work. Protect the plumbing that lets it."; } boxes.forEach(function(b){ b.addEventListener("change", render); }); render(); })();
+  </script>
+</div>

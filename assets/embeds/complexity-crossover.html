@@ -1,0 +1,161 @@
+<!-- Atlancia embed: The crossover (complexity and difference).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     Paste this whole file into a Publii HTML block where the figure should sit. -->
+<div class="atlx atlx-crossover">
+  <style>
+    .atlx-crossover {
+      --cx-ink: var(--atl-ink); --cx-text: var(--atl-text); --cx-dim: var(--atl-dim); --cx-line: var(--atl-line);
+      --cx-surface: var(--atl-surface); --cx-amber: var(--atl-accent); --cx-gray: #9D9D9D; --cx-info: var(--atl-info);
+      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+      background: var(--cx-surface); color: var(--cx-text);
+      border: 1px solid var(--cx-line); border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem; margin: 2.5rem 0; max-width: 100%;
+      font-size: 1rem; line-height: 1.55;
+    }
+    .atlx-crossover * { box-sizing: border-box; }
+    .atlx-crossover .atlx-c-kick {
+      margin: 0 0 .4rem; font-size: .72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--cx-amber);
+    }
+    .atlx-crossover .atlx-c-title {
+      margin: 0 0 .2rem; font-family: 'Aleo', Georgia, serif; font-weight: 500;
+      font-size: 1.25rem; line-height: 1.35; color: var(--cx-ink);
+    }
+    .atlx-crossover .atlx-c-sub { margin: 0 0 .3rem; color: var(--cx-dim); font-size: .95rem; }
+    .atlx-crossover svg { display: block; width: 100%; height: auto; margin: .6rem 0 .3rem; }
+    .atlx-crossover .atlx-c-row { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin: .7rem 0 0; }
+    .atlx-crossover .atlx-c-label { font-weight: 600; color: var(--cx-ink); font-size: .95rem; }
+    .atlx-crossover output { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--cx-amber); font-size: .95rem; }
+    .atlx-crossover input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 28px;
+      background: transparent; margin: 0; cursor: pointer;
+    }
+    .atlx-crossover input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-crossover input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--cx-amber); border: 3px solid #181818; margin-top: -8px;
+    }
+    .atlx-crossover input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-crossover input[type="range"]::-moz-range-thumb {
+      width: 16px; height: 16px; border-radius: 50%; background: var(--cx-amber); border: 3px solid #181818;
+    }
+    .atlx-crossover input[type="range"]:focus-visible { outline: 2px solid var(--cx-amber); outline-offset: 4px; border-radius: 999px; }
+    .atlx-crossover .atlx-c-read { font-variant-numeric: tabular-nums; margin: .5rem 0 .2rem; color: var(--cx-ink); font-size: .98rem; }
+    .atlx-crossover .atlx-c-read .dim { color: var(--cx-dim); }
+    .atlx-crossover .atlx-c-note { margin: .35rem 0 0; font-size: .9rem; color: var(--cx-dim); min-height: 2.4em; }
+  </style>
+
+  <p class="atlx-c-kick">Where effort stops paying</p>
+  <h3 class="atlx-c-title">Some walls only give way to a different mind</h3>
+  <p class="atlx-c-sub">Drag the complexity dial and watch which line climbs.</p>
+
+  <noscript><p style="color:#FB6762; font-size:.9rem;">This figure needs JavaScript to move. The gist: on familiar ground one shared method wins; on complex ground different methods buy reach.</p></noscript>
+  <svg viewBox="0 0 640 330" role="img" aria-label="Two curves of what a team can solve as problem complexity rises, crossing once"></svg>
+
+  <div class="atlx-c-row">
+    <label class="atlx-c-label" for="atlx-c-range">Complexity of the problem</label>
+    <output id="atlx-c-out" for="atlx-c-range">35</output>
+  </div>
+  <input id="atlx-c-range" type="range" min="0" max="100" step="1" value="35">
+
+  <p class="atlx-c-read" id="atlx-c-read" aria-live="polite"></p>
+  <p class="atlx-c-note" id="atlx-c-note"></p>
+
+  <script>
+  (function () {
+    var script = document.currentScript;
+    var root = script && script.closest ? script.closest('.atlx-crossover') : document.querySelector('.atlx-crossover');
+    if (!root) return;
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = root.querySelector('svg');
+    var range = root.querySelector('#atlx-c-range');
+    var out = root.querySelector('#atlx-c-out');
+    var read = root.querySelector('#atlx-c-read');
+    var note = root.querySelector('#atlx-c-note');
+
+    var X0 = 64, X1 = 616, Y0 = 270, Y1 = 40;
+    var x = function (c) { return X0 + (c / 100) * (X1 - X0); };
+    var y = function (v) { return Y0 - (Math.min(v, 100) / 100) * (Y0 - Y1); };
+
+    // Curves: a coherent team saturates; a varied team pays an early coordination
+    // cost, then overtakes once the problem gets complex enough.
+    var same = function (c) { return 95 * (1 - Math.exp(-c / 30)) * (1 - 0.15 * c / 100); };
+    var mixed = function (c) { return Math.min(100, 70 * (1 - Math.exp(-c / 55)) + 0.5 * c); };
+
+    // Crossover, found honestly by walking the range. Start past zero: both
+    // curves leave the origin together, so the first crossing that matters
+    // happens later.
+    var cross = null;
+    for (var c = 1; c <= 100; c += 0.5) {
+      if (mixed(c) >= same(c)) { cross = c; break; }
+    }
+    var crossV = cross === null ? null : same(cross);
+
+    function el(name, attrs, text) {
+      var n = document.createElementNS(NS, name);
+      for (var k in attrs) n.setAttribute(k, attrs[k]);
+      if (text) n.textContent = text;
+      return n;
+    }
+
+    svg.appendChild(el('rect', { x: 0, y: 0, width: 640, height: 330, fill: 'transparent' }));
+    [25, 50, 75].forEach(function (g) {
+      svg.appendChild(el('line', { x1: X0, y1: y(g), x2: X1, y2: y(g), stroke: '#2a2a2a', 'stroke-width': 1 }));
+      svg.appendChild(el('line', { x1: x(g), y1: Y0, x2: x(g), y2: Y1, stroke: '#2a2a2a', 'stroke-width': 1 }));
+    });
+    svg.appendChild(el('line', { x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: '#4a4a4a', 'stroke-width': 1.5 }));
+    svg.appendChild(el('line', { x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: '#4a4a4a', 'stroke-width': 1.5 }));
+    svg.appendChild(el('text', { x: (X0 + X1) / 2, y: Y0 + 34, 'text-anchor': 'middle', fill: '#9D9D9D', 'font-size': 13, 'font-family': 'Figtree, sans-serif' }, 'complexity'));
+    svg.appendChild(el('text', { x: X0, y: Y1 - 10, 'text-anchor': 'start', fill: '#9D9D9D', 'font-size': 13, 'font-family': 'Figtree, sans-serif' }, 'reach'));
+
+    function path(fn) {
+      var d = '';
+      for (var c = 0; c <= 100; c += 2) d += (c === 0 ? 'M' : 'L') + x(c).toFixed(1) + ' ' + y(fn(c)).toFixed(1) + ' ';
+      return d;
+    }
+    svg.appendChild(el('path', { d: path(same), fill: 'none', stroke: '#9D9D9D', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' }));
+    var mixedPath = el('path', { d: path(mixed), fill: 'none', stroke: '#FFC074', 'stroke-width': 2.5, 'stroke-linecap': 'round' });
+    svg.appendChild(mixedPath);
+
+    // Legend, placed above the plot so the curves never run through it
+    svg.appendChild(el('line', { x1: 130, y1: 22, x2: 162, y2: 22, stroke: '#9D9D9D', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' }));
+    svg.appendChild(el('text', { x: 170, y: 27, fill: '#9D9D9D', 'font-size': 12.5, 'font-family': 'Figtree, sans-serif' }, 'same minds, more effort'));
+    svg.appendChild(el('line', { x1: 380, y1: 22, x2: 412, y2: 22, stroke: '#FFC074', 'stroke-width': 2.5 }));
+    svg.appendChild(el('text', { x: 420, y: 27, fill: '#FFC074', 'font-size': 12.5, 'font-family': 'Figtree, sans-serif' }, 'different minds, different methods'));
+
+    // The crossover marker
+    if (cross !== null) {
+      svg.appendChild(el('circle', { cx: x(cross), cy: y(crossV), r: 7, fill: 'none', stroke: '#F6DC90', 'stroke-width': 2.5 }));
+      svg.appendChild(el('text', { x: x(cross), y: y(crossV) - 18, 'text-anchor': 'middle', fill: '#F6DC90', 'font-size': 12.5, 'font-family': 'Figtree, sans-serif' }, 'the crossover'));
+    }
+
+    var vline = el('line', { x1: x(35), y1: Y0, x2: x(35), y2: Y1, stroke: '#4a4a4a', 'stroke-width': 1.5, 'stroke-dasharray': '3 5' });
+    svg.appendChild(vline);
+    var dotSame = el('circle', { r: 6, fill: '#9D9D9D', stroke: '#181818', 'stroke-width': 2.5 });
+    svg.appendChild(dotSame);
+    var dotMixed = el('circle', { r: 6, fill: '#FFC074', stroke: '#181818', 'stroke-width': 2.5 });
+    svg.appendChild(dotMixed);
+
+    function render() {
+      var c = Number(range.value);
+      var s = same(c), m = mixed(c);
+      vline.setAttribute('x1', x(c));
+      vline.setAttribute('x2', x(c));
+      dotSame.setAttribute('cx', x(c)); dotSame.setAttribute('cy', y(s));
+      dotMixed.setAttribute('cx', x(c)); dotMixed.setAttribute('cy', y(m));
+      out.textContent = c;
+      read.innerHTML = '<span class="dim">At this complexity:</span> one shared method reaches ' + Math.round(s) + '; mixed methods reach ' + Math.round(m) + '.';
+      if (cross !== null && c < cross - 6) {
+        note.textContent = 'On familiar ground, one shared method carries the work. Difference is overhead here.';
+      } else if (cross !== null && Math.abs(c - cross) <= 6) {
+        note.textContent = 'Around here the advantage changes hands. The crossing is quiet on purpose.';
+      } else {
+        note.textContent = 'Past the crossover, another hour of the same method buys little. A different mind buys reach.';
+      }
+    }
+    range.addEventListener('input', render);
+    render();
+  })();
+  </script>
+</div>

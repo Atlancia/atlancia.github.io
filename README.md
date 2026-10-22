@@ -12,11 +12,14 @@ result.
 | Path | What it holds |
 |---|---|
 | `content/posts/` | The essays, one Markdown file each |
-| `content/authors/`, `content/tags/` | The author and tag pages |
+| `content/gallery.md` | The page that shows every figure |
 | `layouts/` | The theme, ported from the Publii "simple" theme |
+| `layouts/shortcodes/embed.html` | The shortcode that places a figure in a post |
 | `static/` | The stylesheet, the script, the fonts, the media and the content manager |
+| `assets/embeds/` | The twenty-three figures, as self-contained HTML |
 | `data/site.json` | The settings the theme reads: title, hero, menu, comments |
 | `data/media.json` | Every image with its responsive set and its size |
+| `data/embeds.json` | The figures, with the title, the kind and the essay each one fits |
 | `tools/` | The scripts that build the site and check it against the old build |
 
 ## Building
@@ -28,12 +31,46 @@ python tools/build.py
 That regenerates the media registry, then renders the site into `public/`.
 Hugo is needed on the path, version 0.148 or later with the extended build.
 
+For a copy that loads its own assets, which is what a local server needs:
+
+```
+python tools/build.py public_local http://localhost:8765/
+```
+
+## What the reader gets
+
+**A colour mode.** The site follows the operating system and the button in the
+header overrides it, and the choice is remembered in the browser. The two token
+sets live in `layouts/partials/custom-css.html`, and the figures in the essays
+read the same tokens, so they change with the site.
+
+**A table of contents** in the essays that have sections, a reading time, a
+bar showing how far through the essay the reader is, and a click on any image
+to open it larger.
+
+**A gallery** at `/gallery/` with every figure, each one live in the page.
+
+## Putting a figure in an essay
+
+The figures are self-contained: their own CSS and their own JavaScript, no
+external requests, no storage, nothing sent. A post places one with a single
+line:
+
+```
+{{< embed "trade-off-frontier" >}}
+```
+
+The shortcode reads the file from `assets/embeds/` and inlines it, so the
+figure is part of the document rather than a separate frame. It therefore
+inherits the site's fonts, the site's colours and the site's colour mode,
+which an embedded frame could never do.
+
 ## Editing in the browser
 
-The content manager lives at `/admin/`. Signing in uses an access token: create
-a fine-grained token with **Contents: read and write** for this repository
-only, then paste it into the sign-in dialog. The token is kept in the browser
-and never written to the repository.
+The content manager lives at `/admin/`. Signing in uses an access token:
+create a fine-grained token with **Contents: read and write** for this
+repository only, then paste it into the sign-in dialog. The token is kept in
+the browser and never written to the repository.
 
 Sveltia CMS signs its commits, so every change to the content is attributable.
 
@@ -59,14 +96,26 @@ theme has moved anything on the page.
 python tools/compare_build.py <the old build folder> public
 ```
 
+The differences it folds away are the ones the port made on purpose: body
+headings are level two, the editor's utility classes are gone, a figure is no
+longer wrapped in a second figure, and the parts the new build added (the
+colour mode, the table of contents, the reading time, the zoom, the progress
+bar and the gallery) are not part of the comparison.
+
 ## Where the content came from
 
 The essays were extracted from the Publii site with `tools/extract_publii.py`,
 which reads the desktop app's database and writes Markdown. It is kept for the
-record and for the next import; the site no longer depends on it.
+record and for the next import; the site no longer depends on it. It also
+writes the dark variant of the wordmark and removes the background colour the
+old theme had compiled into its stylesheet, because that colour would have won
+over any colour scheme.
 
-Two deliberate differences from the old build are worth knowing about. Headings
+The figures were built for the old site and live in the vault at
+`vault/Areas/Blog/embeds/`. Their published copies are here, with their
+colours repointed at the shared tokens.
+
+One deliberate difference from the old build is worth knowing about. Headings
 inside an essay are level two rather than level one, so the outline of each
 page is correct. And a paragraph that sat in front of an image inside a figure
-stays outside it, which means it is aligned with the rest of the text rather
-than centred.
+stays outside the figure, which means it is aligned with the rest of the text.

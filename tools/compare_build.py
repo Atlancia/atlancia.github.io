@@ -40,9 +40,23 @@ STYLED = {
 }
 
 SKIP_TAGS = {"meta", "link", "br", "hr", "source", "noscript", "style", "script"}
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
 # Words that differ because the two builders word their metadata differently.
 IGNORE_TEXT = re.compile(r"publii|hugo", re.I)
+
+
+# The parts the new build added on purpose. They are folded away so that the
+# comparison keeps meaning "the content did not change".
+SKIP_SUBTREE = {
+    "theme-toggle",
+    "progress",
+    "zoom",
+    "post__toc",
+    "footer__nav",
+    "logo--on-light",
+    "feed__reading",
+}
 
 
 class Skeleton(HTMLParser):
@@ -52,26 +66,40 @@ class Skeleton(HTMLParser):
         self.text: list[str] = []
         self.in_json_ld = False
         self.in_style = False
+        self.in_script = False
+        self.skip_depth = 0
 
     def handle_starttag(self, tag, attrs):
         attributes = {k: (v or "") for k, v in attrs}
-        if tag == "script" and attributes.get("type") == "application/ld+json":
-            self.in_json_ld = True
+        classes = attributes.get("class", "").split()
+        if self.skip_depth:
+            if tag not in VOID:
+                self.skip_depth += 1
+            return
+        if any(c in SKIP_SUBTREE for c in classes):
+            if tag not in VOID:
+                self.skip_depth = 1
+            return
+        if tag == "script":
+            if attributes.get("type") == "application/ld+json":
+                self.in_json_ld = True
+            else:
+                self.in_script = True
             return
         if tag == "style":
             self.in_style = True
             return
         if tag in SKIP_TAGS:
             return
-        classes = [c for c in attributes.get("class", "").split() if c in STYLED]
         parts = [tag]
-        if classes:
-            parts.append("." + ".".join(sorted(classes)))
+        styled = [c for c in classes if c in STYLED]
+        if styled:
+            parts.append("." + ".".join(sorted(styled)))
         for key in ("href", "src", "rel", "datetime", "sizes", "loading", "alt"):
             if key in attributes:
                 value = attributes[key]
                 if key in ("href", "src") and value:
-                    value = re.sub(r"^https://atlancia\.com", "", value)
+                    value = re.sub(r"^https?://[^/]+", "", value)
                     value = re.sub(r"\?v=.*$", "", value)
                 parts.append(f"{key}={value}")
         self.out.append("|".join(parts))
@@ -80,7 +108,7 @@ class Skeleton(HTMLParser):
         self.handle_starttag(tag, attrs)
 
     def handle_data(self, data):
-        if self.in_style:
+        if self.skip_depth or self.in_style or self.in_script:
             return
         if self.in_json_ld:
             try:
@@ -94,8 +122,12 @@ class Skeleton(HTMLParser):
             self.text.append(cleaned)
 
     def handle_endtag(self, tag):
+        if self.skip_depth:
+            self.skip_depth -= 1
+            return
         if tag == "script":
             self.in_json_ld = False
+            self.in_script = False
         if tag == "style":
             self.in_style = False
 
@@ -127,12 +159,26 @@ def normalize(tags: list[str]) -> list[str]:
     changes how the page reads, so it is folded away before comparing.
     """
     out: list[str] = []
-    for index, tag in enumerate(tags):
-        if tag in ("span", "picture"):
+    index = 0
+    while index < len(tags):
+        tag = tags[index]
+        following = tags[index + 1] if index + 1 < len(tags) else ""
+        after = tags[index + 2] if index + 2 < len(tags) else ""
+
+        if (
+            tag == "figure|.post__image.post__image--center"
+            and following.startswith("img|.post__image")
+            and not after.startswith("figcaption")
+        ):
+            # The old build wrapped a captionless image in a figure, with the
+            # paragraph in front of it inside the same figure.
+            index += 1
             continue
-        if tag == "div":
+        if tag in ("span", "picture", "div"):
+            index += 1
             continue
         if tag == "figure":
+            index += 1
             continue
         if tag == "h1":
             tag = "h2"
@@ -140,21 +186,23 @@ def normalize(tags: list[str]) -> list[str]:
             tag = "em"
         if tag == "p|.align-left":
             tag = "p"
+        if tag == "em" and out and out[-1] == "figcaption":
+            # The caption was marked up as emphasised inside the figure
+            # caption. The theme already sets captions in italics.
+            index += 1
+            continue
         if (
             tag == "p"
             and out
             and out[-1].startswith("figure|.")
-            and index + 1 < len(tags)
-            and tags[index + 1].startswith("img|")
+            and following.startswith("img|")
         ):
             # The previous build pulled the paragraph in front of an image
             # inside the figure. Here the paragraph stays outside it.
-            continue
-        if tag == "em" and out and out[-1] == "figcaption":
-            # The caption was marked up as emphasised inside the figure
-            # caption. The theme already sets captions in italics.
+            index += 1
             continue
         out.append(tag)
+        index += 1
     return out
 
 
@@ -228,6 +276,7 @@ def main(argv: list[str]) -> int:
         if "admin" not in p.relative_to(new_root).parts
     )
 
+    new_files = [f for f in new_files if f != "gallery/index.html"]
     only_old = set(old_files) - set(new_files)
     only_new = set(new_files) - set(old_files)
     if only_old:

@@ -1,0 +1,471 @@
+<!-- Atlancia Interactive Instrument: Decision Dilemma Cards (Button-Based Questionnaire)
+     Fits: Difference Needs Somewhere to Go
+     Self-contained: Replaces checkboxes with interactive action decisions and live climate scoring. -->
+<div class="atlx-dc" id="atlx-dc-root">
+  <style>
+    .atlx-dc {
+      --dc-bg: var(--atl-bg);
+      --dc-card: rgba(17, 24, 39, 0.85);
+      --dc-border: rgba(255, 255, 255, 0.08);
+      --dc-text: var(--atl-text);
+      --dc-text-muted: var(--atl-dim);
+      --dc-text-dim: var(--atl-dim);
+      --dc-amber: var(--atl-accent);
+      --dc-cyan: #38bdf8;
+      --dc-emerald: #10b981;
+      --dc-rose: #f43f5e;
+      --dc-purple: #a855f7;
+
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dc-bg);
+      color: var(--dc-text);
+      border: 1px solid var(--dc-border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      box-sizing: border-box;
+      max-width: 100%;
+      line-height: 1.5;
+    }
+    .atlx-dc * { box-sizing: border-box; }
+
+    .atlx-dc-header {
+      border-bottom: 1px solid var(--dc-border);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .atlx-dc-kicker {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dc-amber);
+      margin: 0 0 0.35rem;
+    }
+    .atlx-dc-title {
+      font-family: 'Aleo', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin: 0 0 0.4rem;
+      line-height: 1.25;
+    }
+    .atlx-dc-desc {
+      color: var(--dc-text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+      max-width: 48rem;
+    }
+
+    .atlx-dc-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .atlx-dc-grid { grid-template-columns: 1fr; }
+    }
+
+    .atlx-dc-cards-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .atlx-dc-card {
+      background: var(--dc-card);
+      border: 1px solid var(--dc-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s ease;
+    }
+    .atlx-dc-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .atlx-dc-card-step {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dc-cyan);
+    }
+    .atlx-dc-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dc-text);
+      margin-bottom: 0.35rem;
+    }
+    .atlx-dc-scenario {
+      font-size: 0.86rem;
+      color: var(--dc-text-muted);
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .atlx-dc-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .atlx-dc-btn {
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid #1f2937;
+      background: #0d1117;
+      color: var(--dc-text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .atlx-dc-btn:hover {
+      border-color: #374151;
+      color: var(--dc-text);
+      background: #111827;
+    }
+    .atlx-dc-btn.is-selected-assimilate {
+      border-color: var(--dc-rose);
+      background: rgba(244, 63, 94, 0.12);
+      color: var(--dc-rose);
+    }
+    .atlx-dc-btn.is-selected-contain {
+      border-color: var(--dc-amber);
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--dc-amber);
+    }
+    .atlx-dc-btn.is-selected-channel {
+      border-color: var(--dc-emerald);
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--dc-emerald);
+    }
+
+    .atlx-dc-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid currentColor;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* Scorecard sidebar */
+    .atlx-dc-scorecard {
+      background: var(--dc-card);
+      border: 1px solid var(--dc-border);
+      border-radius: 12px;
+      padding: 1.35rem;
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 1.5rem;
+    }
+    .atlx-dc-score-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dc-amber);
+      margin-bottom: 1rem;
+    }
+
+    .atlx-dc-meter-block {
+      margin-bottom: 1.15rem;
+    }
+    .atlx-dc-meter-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .atlx-dc-meter-bar {
+      height: 8px;
+      background: #1f2937;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .atlx-dc-meter-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+
+    .atlx-dc-verdict-box {
+      border-radius: 8px;
+      padding: 1rem;
+      background: #0d1117;
+      border: 1px solid #1f2937;
+      margin-top: 1.25rem;
+    }
+    .atlx-dc-verdict-head {
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .atlx-dc-verdict-body {
+      font-size: 0.82rem;
+      color: var(--dc-text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+  </style>
+
+  <div class="atlx-dc-header">
+    <p class="atlx-dc-kicker">Interactive Decision Simulator</p>
+    <h3 class="atlx-dc-title">Room Climate Navigator</h3>
+    <p class="atlx-dc-desc">
+      A room without friction is not aligned; it is merely quiet. Choose how you respond to four common workplace tensions to reveal whether your culture assimilates, contains, or channels difference into collective capability.
+    </p>
+  </div>
+
+  <div class="atlx-dc-grid">
+    <div class="atlx-dc-cards-column" id="dc-cards-container">
+      <!-- Card 1 -->
+      <div class="atlx-dc-card" data-card="0">
+        <div class="atlx-dc-card-head">
+          <span class="atlx-dc-card-step">Dilemma 01 · Planning Architecture</span>
+        </div>
+        <div class="atlx-dc-card-title">The Unspoken Latency Flaw</div>
+        <p class="atlx-dc-scenario">
+          In sprint planning, the team commits to an API redesign. You realize a race condition will degrade response times under load, but surfacing it will delay the sprint launch date.
+        </p>
+        <div class="atlx-dc-options">
+          <button type="button" class="atlx-dc-btn" data-choice="assimilate">
+            <span>Keep quiet to protect team sprint consensus.</span>
+            <span class="atlx-dc-tag">Assimilate</span>
+          </button>
+          <button type="button" class="atlx-dc-btn" data-choice="contain">
+            <span>Send a private DM to the tech lead later.</span>
+            <span class="atlx-dc-tag">Contain</span>
+          </button>
+          <button type="button" class="atlx-dc-btn is-selected-channel" data-choice="channel">
+            <span>Map the race condition on the board now with a fallback.</span>
+            <span class="atlx-dc-tag">Channel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="atlx-dc-card" data-card="1">
+        <div class="atlx-dc-card-head">
+          <span class="atlx-dc-card-step">Dilemma 02 · Perspective Variety</span>
+        </div>
+        <div class="atlx-dc-card-title">The Outside Heuristic</div>
+        <p class="atlx-dc-scenario">
+          A new colleague with a non-software background questions why an internal workflow requires four approvals, noting it creates duplicate steps.
+        </p>
+        <div class="atlx-dc-options">
+          <button type="button" class="atlx-dc-btn" data-choice="assimilate">
+            <span>Remind them that this is standard governance policy.</span>
+            <span class="atlx-dc-tag">Assimilate</span>
+          </button>
+          <button type="button" class="atlx-dc-btn is-selected-contain" data-choice="contain">
+            <span>Ask them to document their feedback in an offline document.</span>
+            <span class="atlx-dc-tag">Contain</span>
+          </button>
+          <button type="button" class="atlx-dc-btn" data-choice="channel">
+            <span>Examine whether the outside lens exposes redundant approvals.</span>
+            <span class="atlx-dc-tag">Channel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="atlx-dc-card" data-card="2">
+        <div class="atlx-dc-card-head">
+          <span class="atlx-dc-card-step">Dilemma 03 · Retrospective Friction</span>
+        </div>
+        <div class="atlx-dc-card-title">Clashing Priorities</div>
+        <p class="atlx-dc-scenario">
+          Two senior developers disagree sharply in retrospective over paying down technical debt versus shipping client features. The discussion grows heated.
+        </p>
+        <div class="atlx-dc-options">
+          <button type="button" class="atlx-dc-btn" data-choice="assimilate">
+            <span>Intervene quickly to keep the retro agreeable and friendly.</span>
+            <span class="atlx-dc-tag">Assimilate</span>
+          </button>
+          <button type="button" class="atlx-dc-btn" data-choice="contain">
+            <span>Table the topic and ask them to work it out privately.</span>
+            <span class="atlx-dc-tag">Contain</span>
+          </button>
+          <button type="button" class="atlx-dc-btn is-selected-channel" data-choice="channel">
+            <span>Frame the disagreement as a valid strategic trade-off: pace vs debt.</span>
+            <span class="atlx-dc-tag">Channel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="atlx-dc-card" data-card="3">
+        <div class="atlx-dc-card-head">
+          <span class="atlx-dc-card-step">Dilemma 04 · Measurement Integrity</span>
+        </div>
+        <div class="atlx-dc-card-title">The Dissenting Metric</div>
+        <p class="atlx-dc-scenario">
+          A new UX experiment temporarily lowers conversion by 4%, but user retention and satisfaction are up. Executive leadership asks why numbers slipped.
+        </p>
+        <div class="atlx-dc-options">
+          <button type="button" class="atlx-dc-btn" data-choice="assimilate">
+            <span>Revert the change immediately to keep conversion scores high.</span>
+            <span class="atlx-dc-tag">Assimilate</span>
+          </button>
+          <button type="button" class="atlx-dc-btn" data-choice="contain">
+            <span>Filter out the test cohort from executive reporting decks.</span>
+            <span class="atlx-dc-tag">Contain</span>
+          </button>
+          <button type="button" class="atlx-dc-btn is-selected-channel" data-choice="channel">
+            <span>Share the raw data and frame the 4% dip as a learning trade-off.</span>
+            <span class="atlx-dc-tag">Channel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scorecard -->
+    <div class="atlx-dc-scorecard">
+      <div class="atlx-dc-score-title">Room Climate Telemetry</div>
+
+      <div class="atlx-dc-meter-block">
+        <div class="atlx-dc-meter-head">
+          <span style="color:var(--dc-text-muted);">Psychological Safety</span>
+          <span id="dc-val-safety" style="font-family:monospace;font-weight:700;color:var(--dc-emerald);">78%</span>
+        </div>
+        <div class="atlx-dc-meter-bar">
+          <div class="atlx-dc-meter-fill" id="dc-bar-safety" style="width:78%;background:var(--dc-emerald);"></div>
+        </div>
+      </div>
+
+      <div class="atlx-dc-meter-block">
+        <div class="atlx-dc-meter-head">
+          <span style="color:var(--dc-text-muted);">Ground Truth Fidelity</span>
+          <span id="dc-val-truth" style="font-family:monospace;font-weight:700;color:var(--dc-cyan);">85%</span>
+        </div>
+        <div class="atlx-dc-meter-bar">
+          <div class="atlx-dc-meter-fill" id="dc-bar-truth" style="width:85%;background:var(--dc-cyan);"></div>
+        </div>
+      </div>
+
+      <div class="atlx-dc-meter-block">
+        <div class="atlx-dc-meter-head">
+          <span style="color:var(--dc-text-muted);">Masking Tax (Hidden Costs)</span>
+          <span id="dc-val-mask" style="font-family:monospace;font-weight:700;color:var(--dc-amber);">22%</span>
+        </div>
+        <div class="atlx-dc-meter-bar">
+          <div class="atlx-dc-meter-fill" id="dc-bar-mask" style="width:22%;background:var(--dc-amber);"></div>
+        </div>
+      </div>
+
+      <div class="atlx-dc-verdict-box">
+        <div class="atlx-dc-verdict-head" id="dc-verdict-title" style="color:var(--dc-emerald);">Channeling Climate Active</div>
+        <p class="atlx-dc-verdict-body" id="dc-verdict-text">
+          Divergent perspectives alter plans and systems. Disagreement is treated as operational data rather than personal friction.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const root = document.getElementById('atlx-dc-root');
+    if (!root) return;
+
+    const cards = root.querySelectorAll('.atlx-dc-card');
+    const valSafety = root.querySelector('#dc-val-safety');
+    const valTruth = root.querySelector('#dc-val-truth');
+    const valMask = root.querySelector('#dc-val-mask');
+    const barSafety = root.querySelector('#dc-bar-safety');
+    const barTruth = root.querySelector('#dc-bar-truth');
+    const barMask = root.querySelector('#dc-bar-mask');
+    const vTitle = root.querySelector('#dc-verdict-title');
+    const vText = root.querySelector('#dc-verdict-text');
+
+    // Initial choices: card0: channel, card1: contain, card2: channel, card3: channel
+    const selections = ['channel', 'contain', 'channel', 'channel'];
+
+    function calculate() {
+      let scoreAssimilate = 0;
+      let scoreContain = 0;
+      let scoreChannel = 0;
+
+      selections.forEach(choice => {
+        if (choice === 'assimilate') scoreAssimilate++;
+        else if (choice === 'contain') scoreContain++;
+        else if (choice === 'channel') scoreChannel++;
+      });
+
+      const total = selections.length; // 4
+
+      // Psychological Safety: High on channel, moderate on contain, low on assimilate
+      const safety = Math.round(((scoreChannel * 1.0 + scoreContain * 0.45 + scoreAssimilate * 0.1) / total) * 100);
+      // Truth fidelity: High on channel, low on contain/assimilate
+      const truth = Math.round(((scoreChannel * 1.0 + scoreContain * 0.3 + scoreAssimilate * 0.15) / total) * 100);
+      // Masking tax: High on assimilate/contain
+      const mask = Math.round(((scoreAssimilate * 1.0 + scoreContain * 0.65 + scoreChannel * 0.1) / total) * 100);
+
+      valSafety.textContent = safety + '%';
+      valTruth.textContent = truth + '%';
+      valMask.textContent = mask + '%';
+
+      barSafety.style.width = safety + '%';
+      barTruth.style.width = truth + '%';
+      barMask.style.width = mask + '%';
+
+      if (safety >= 70) {
+        barSafety.style.background = 'var(--dc-emerald)';
+        valSafety.style.color = 'var(--dc-emerald)';
+      } else if (safety >= 45) {
+        barSafety.style.background = 'var(--dc-amber)';
+        valSafety.style.color = 'var(--dc-amber)';
+      } else {
+        barSafety.style.background = 'var(--dc-rose)';
+        valSafety.style.color = 'var(--dc-rose)';
+      }
+
+      // Climate verdict
+      if (scoreChannel >= 3) {
+        vTitle.textContent = 'Channeling Climate Active';
+        vTitle.style.color = 'var(--dc-emerald)';
+        vText.textContent = 'Divergent perspectives alter plans and systems. Disagreement is treated as operational data rather than personal friction.';
+      } else if (scoreAssimilate >= 2) {
+        vTitle.textContent = 'Quiet Conformity Trap';
+        vTitle.style.color = 'var(--dc-rose)';
+        vText.textContent = 'Differences are shaved down to preserve harmony. The room feels quiet and agreeable, but operates with high blind-spot exposure.';
+      } else {
+        vTitle.textContent = 'Containment Silo State';
+        vTitle.style.color = 'var(--dc-amber)';
+        vText.textContent = 'Difference is acknowledged rhetorically, but isolated in side threads and memos. It rarely alters real architectural delivery.';
+      }
+    }
+
+    cards.forEach((card, cIdx) => {
+      const btns = card.querySelectorAll('.atlx-dc-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const choice = btn.getAttribute('data-choice');
+          selections[cIdx] = choice;
+
+          btns.forEach(b => {
+            b.classList.remove('is-selected-assimilate', 'is-selected-contain', 'is-selected-channel');
+          });
+          btn.classList.add('is-selected-' + choice);
+
+          calculate();
+        });
+      });
+    });
+
+    calculate();
+  })();
+  </script>
+</div>

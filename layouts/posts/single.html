@@ -7,7 +7,7 @@
                 <div class="wrapper">
                     <h1>{{ .Title }}</h1>
                     <div class="feed__meta content__meta">
-                        <a href="{{ site.BaseURL }}authors/liam/" class="feed__author">Liam Shaw</a> <time datetime="{{ .Date.Format "2006-01-02T15:04" }}" class="feed__date">{{ .Date.Format $site.format_date }}</time>
+                        <a href="{{ site.BaseURL }}authors/liam/" class="feed__author">Liam Shaw</a> <time datetime="{{ .Date.Format "2006-01-02T15:04" }}" class="feed__date">{{ .Date.Format $site.format_date }}</time> <span class="feed__reading">{{ .ReadingTime }} min read</span>
                     </div>
                 </div>
             </header>
@@ -15,6 +15,13 @@
             {{ partial "hero-image.html" . }}
             {{- end }}
         </div>
+
+        {{- with .TableOfContents }}
+        <div class="post__toc">
+            <h3>Contents</h3>
+            {{ . }}
+        </div>
+        {{- end }}
 
         <div class="entry-wrapper content__entry">
             {{ .Content }}

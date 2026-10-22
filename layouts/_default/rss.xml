@@ -1,4 +1,4 @@
-{{- $pages := where site.RegularPages "Kind" "page" -}}
+{{- $pages := where site.RegularPages "Type" "posts" -}}
 {{- $pages = where $pages "Params.hidden" nil -}}
 {{- $pages = $pages.ByDate.Reverse -}}
 <?xml version="1.0" encoding="utf-8"?>

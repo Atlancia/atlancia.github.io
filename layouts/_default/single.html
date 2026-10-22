@@ -1,0 +1,17 @@
+{{ define "main" }}
+<main class="page page--default">
+    <div class="hero hero--noimage">
+        <header class="hero__content">
+            <div class="wrapper">
+                <h1>{{ .Title }}</h1>
+                {{- with .Params.description }}
+                <p class="page__desc">{{ . }}</p>
+                {{- end }}
+            </div>
+        </header>
+    </div>
+    <div class="entry-wrapper content__entry">
+        {{ .Content }}
+    </div>
+</main>
+{{ end }}

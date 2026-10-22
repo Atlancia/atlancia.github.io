@@ -1,0 +1,172 @@
+<!-- Atlancia embed: The frontier (trade-offs).
+     Fits the post Building a Trade-off Mentality.
+     Paste this whole file into a Publii HTML block where the figure should sit. -->
+<div class="atlx atlx-frontier">
+  <style>
+    .atlx-frontier {
+      --fx-ink: var(--atl-ink); --fx-text: var(--atl-text); --fx-dim: var(--atl-dim); --fx-line: var(--atl-line);
+      --fx-surface: var(--atl-surface); --fx-amber: var(--atl-accent); --fx-warn: var(--atl-warning);
+      font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+      background: var(--fx-surface); color: var(--fx-text);
+      border: 1px solid var(--fx-line); border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem; margin: 2.5rem 0; max-width: 100%;
+      font-size: 1rem; line-height: 1.55;
+    }
+    .atlx-frontier * { box-sizing: border-box; }
+    .atlx-frontier .atlx-f-kick {
+      margin: 0 0 .4rem; font-size: .72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--fx-amber);
+    }
+    .atlx-frontier .atlx-f-title {
+      margin: 0 0 .2rem; font-family: 'Aleo', Georgia, serif; font-weight: 500;
+      font-size: 1.25rem; line-height: 1.35; color: var(--fx-ink);
+    }
+    .atlx-frontier .atlx-f-sub { margin: 0 0 .4rem; color: var(--fx-dim); font-size: .95rem; }
+    .atlx-frontier svg { display: block; width: 100%; height: auto; margin: .6rem 0 .3rem; }
+    .atlx-frontier .atlx-f-row { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin: .7rem 0 .2rem; }
+    .atlx-frontier .atlx-f-label { font-weight: 600; color: var(--fx-ink); font-size: .95rem; }
+    .atlx-frontier output {
+      font-variant-numeric: tabular-nums; font-weight: 600; color: var(--fx-amber); font-size: .95rem;
+    }
+    .atlx-frontier input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 28px;
+      background: transparent; margin: 0; cursor: pointer;
+    }
+    .atlx-frontier input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-frontier input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--fx-amber); border: 3px solid #181818; margin-top: -8px;
+    }
+    .atlx-frontier input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: #333; }
+    .atlx-frontier input[type="range"]::-moz-range-thumb {
+      width: 16px; height: 16px; border-radius: 50%; background: var(--fx-amber); border: 3px solid #181818;
+    }
+    .atlx-frontier input[type="range"]:focus-visible { outline: 2px solid var(--fx-amber); outline-offset: 4px; border-radius: 999px; }
+    .atlx-frontier .atlx-f-read {
+      font-variant-numeric: tabular-nums; margin: .4rem 0 .7rem; color: var(--fx-ink); font-size: .98rem;
+    }
+    .atlx-frontier .atlx-f-read .dim { color: var(--fx-dim); }
+    .atlx-frontier button.atlx-f-btn {
+      font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+      color: var(--fx-ink); background: #262626; border: 1px solid var(--fx-line);
+      border-radius: 999px; padding: .42rem 1rem;
+    }
+    .atlx-frontier button.atlx-f-btn:hover { border-color: var(--fx-amber); color: var(--fx-amber); }
+    .atlx-frontier button.atlx-f-btn[aria-pressed="true"] { background: var(--fx-amber); border-color: var(--fx-amber); color: #181818; }
+    .atlx-frontier .atlx-f-note { margin: .65rem 0 0; font-size: .9rem; color: var(--fx-dim); }
+    .atlx-frontier .atlx-f-note.warn { color: var(--fx-warn); }
+    @media (max-width: 520px) {
+      .atlx-frontier .atlx-f-row { gap: .5rem; }
+    }
+  </style>
+
+  <p class="atlx-f-kick">A small instrument for a large habit</p>
+  <h3 class="atlx-f-title">Everything on the line costs something</h3>
+  <p class="atlx-f-sub">Pace against endurance, and the menu they sit on.</p>
+
+  <noscript><p style="color:#FB6762; font-size:.9rem;">This figure needs JavaScript to move. The gist: anything gained in pace is paid for in endurance.</p></noscript>
+  <svg viewBox="0 0 640 330" role="img" aria-label="A frontier curve of pace against endurance with a movable point"></svg>
+
+  <div class="atlx-f-row">
+    <label class="atlx-f-label" for="atlx-f-range">Pace you buy</label>
+    <output id="atlx-f-out" for="atlx-f-range">55</output>
+  </div>
+  <input id="atlx-f-range" type="range" min="5" max="95" step="1" value="55" aria-describedby="atlx-f-note">
+
+  <p class="atlx-f-read" id="atlx-f-read" aria-live="polite"></p>
+  <button type="button" class="atlx-f-btn" id="atlx-f-lunch" aria-pressed="false">Reach for the top corner</button>
+  <p class="atlx-f-note" id="atlx-f-note">Slide to move the order. The curve is the menu; the point is the meal.</p>
+
+  <script>
+  (function () {
+    var script = document.currentScript;
+    var root = script && script.closest ? script.closest('.atlx-frontier') : document.querySelector('.atlx-frontier');
+    if (!root) return;
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = root.querySelector('svg');
+    var range = root.querySelector('#atlx-f-range');
+    var out = root.querySelector('#atlx-f-out');
+    var read = root.querySelector('#atlx-f-read');
+    var note = root.querySelector('#atlx-f-note');
+    var lunch = root.querySelector('#atlx-f-lunch');
+
+    var X0 = 64, X1 = 616, Y0 = 270, Y1 = 40;   // plot box
+    var PACE_MAX = 96, END_MAX = 92;
+    var x = function (p) { return X0 + (p / 100) * (X1 - X0); };
+    var y = function (e) { return Y0 - (e / 100) * (Y0 - Y1); };
+    var curveEndurance = function (p) {
+      var t = Math.min(p, PACE_MAX) / PACE_MAX;
+      return END_MAX * Math.sqrt(Math.max(0, 1 - t * t));
+    };
+
+    function el(name, attrs, text) {
+      var n = document.createElementNS(NS, name);
+      for (var k in attrs) n.setAttribute(k, attrs[k]);
+      if (text) n.textContent = text;
+      return n;
+    }
+
+    // Static scaffolding
+    svg.appendChild(el('rect', { x: 0, y: 0, width: 640, height: 330, fill: 'transparent' }));
+    [25, 50, 75].forEach(function (g) {
+      svg.appendChild(el('line', { x1: X0, y1: y(g), x2: X1, y2: y(g), stroke: '#2a2a2a', 'stroke-width': 1 }));
+      svg.appendChild(el('line', { x1: x(g), y1: Y0, x2: x(g), y2: Y1, stroke: '#2a2a2a', 'stroke-width': 1 }));
+    });
+    svg.appendChild(el('line', { x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: '#4a4a4a', 'stroke-width': 1.5 }));
+    svg.appendChild(el('line', { x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: '#4a4a4a', 'stroke-width': 1.5 }));
+    svg.appendChild(el('text', { x: (X0 + X1) / 2, y: Y0 + 34, 'text-anchor': 'middle', fill: '#9D9D9D', 'font-size': 13, 'font-family': 'Figtree, sans-serif' }, 'pace'));
+    svg.appendChild(el('text', { x: X0, y: Y1 - 10, 'text-anchor': 'start', fill: '#9D9D9D', 'font-size': 13, 'font-family': 'Figtree, sans-serif' }, 'endurance'));
+
+    // The frontier
+    var d = '';
+    for (var p = 0; p <= PACE_MAX; p += 2) {
+      d += (p === 0 ? 'M' : 'L') + x(p).toFixed(1) + ' ' + y(curveEndurance(p)).toFixed(1) + ' ';
+    }
+    var area = d + 'L' + x(PACE_MAX) + ' ' + y(0) + ' L' + x(0) + ' ' + y(0) + ' Z';
+    svg.appendChild(el('path', { d: area, fill: 'rgba(255,192,116,0.06)' }));
+    svg.appendChild(el('path', { d: d, fill: 'none', stroke: '#FFC074', 'stroke-width': 2.5, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('text', { x: x(30), y: y(62), fill: '#9D9D9D', 'font-size': 12, 'font-family': 'Figtree, sans-serif' }, 'what is actually available'));
+
+    var marker = el('circle', { r: 8, fill: '#F6DC90', stroke: '#181818', 'stroke-width': 3 });
+    svg.appendChild(marker);
+    var markerRing = el('circle', { r: 14, fill: 'none', stroke: 'rgba(246,220,144,0.35)', 'stroke-width': 2 });
+    svg.appendChild(markerRing);
+
+    var lunchMode = false;
+
+    function render() {
+      var p = Number(range.value);
+      var e = lunchMode ? 95 : curveEndurance(p);
+      var mp = lunchMode ? 95 : p;
+      marker.setAttribute('cx', x(mp));
+      marker.setAttribute('cy', y(e));
+      markerRing.setAttribute('cx', x(mp));
+      markerRing.setAttribute('cy', y(e));
+      marker.setAttribute('fill', lunchMode ? '#FB6762' : '#F6DC90');
+      out.textContent = p;
+      var body;
+      if (lunchMode) {
+        body = 'Pace 95 with endurance 95, at the same time. The corner is not for sale.';
+      } else if (p <= 40) {
+        body = 'Pace ' + p + ', endurance ' + Math.round(e) + '. The order leans patient; pace is the bill.';
+      } else if (p <= 70) {
+        body = 'Pace ' + p + ', endurance ' + Math.round(e) + '. A working middle: some of each, no discount.';
+      } else {
+        body = 'Pace ' + p + ', endurance ' + Math.round(e) + '. Every extra point of pace is paid in endurance.';
+      }
+      read.innerHTML = '<span class="dim">At this setting:</span> ' + body;
+      note.textContent = lunchMode
+        ? 'Nothing above the curve is for sale. The wish does not move the menu.'
+        : 'Slide to move the order. The curve is the menu; the point is the meal.';
+      note.classList.toggle('warn', lunchMode);
+      lunch.setAttribute('aria-pressed', lunchMode ? 'true' : 'false');
+      lunch.textContent = lunchMode ? 'Put it back on the menu' : 'Reach for the top corner';
+    }
+
+    range.addEventListener('input', function () { lunchMode = false; render(); });
+    lunch.addEventListener('click', function () { lunchMode = !lunchMode; render(); });
+    render();
+  })();
+  </script>
+</div>

@@ -1,5 +1,5 @@
 {{- $site := site.Data.site -}}
-{{- $pages := where site.RegularPages "Kind" "page" -}}
+{{- $pages := where site.RegularPages "Type" "posts" -}}
 {{- $pages = where $pages "Params.hidden" nil -}}
 {{- $pages = $pages.ByDate.Reverse -}}
 {{- $items := slice -}}

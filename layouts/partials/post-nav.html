@@ -1,6 +1,6 @@
 {{- /* Previous and next links, following the published order in time. */ -}}
 {{- $page := . -}}
-{{- $posts := where site.RegularPages "Kind" "page" -}}
+{{- $posts := where site.RegularPages "Type" "posts" -}}
 {{- $posts = where $posts "Params.hidden" nil -}}
 {{- $older := "" -}}
 {{- $newer := "" -}}

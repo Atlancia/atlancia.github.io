@@ -1199,6 +1199,16 @@
     ],
     "sizes": "(max-width: 1920px) 100vw, 1920px"
   },
+  "media/website/logo-2-dark.png": {
+    "src": "media/website/logo-2-dark.png",
+    "width": "500",
+    "height": "162"
+  },
+  "logo-2-dark.png": {
+    "src": "media/website/logo-2-dark.png",
+    "width": "500",
+    "height": "162"
+  },
   "media/website/logo-2.png": {
     "src": "media/website/logo-2.png",
     "width": "500",

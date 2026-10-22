@@ -1,0 +1,21 @@
+<!-- Atlancia embed: Career reflection self-check (new local form, analyst essay) -->
+<div class="atlx atlx-check">
+  <style>
+    .atlx-check { --ck-ink:var(--atl-ink); --ck-text:var(--atl-text); --ck-dim:var(--atl-dim); --ck-line:var(--atl-line); --ck-surface:var(--atl-surface); --ck-amber:var(--atl-accent); --ck-green:var(--atl-success); font-family:"Figtree",ui-sans-serif,system-ui,sans-serif; background:var(--ck-surface); color:var(--ck-text); border:1px solid var(--ck-line); border-radius:6px; padding:1.3rem 1.3rem 1.1rem; margin:2.5rem 0; max-width:100%; font-size:1rem; line-height:1.55; } *{box-sizing:border-box} .atlx-check .atlx-q-kick{margin:0 0 .4rem;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ck-amber)} .atlx-check .atlx-q-title{margin:0 0 .2rem;font-family:"Aleo",Georgia,serif;font-weight:500;font-size:1.25rem;line-height:1.35;color:var(--ck-ink)} .atlx-check .atlx-q-sub{margin:0 0 1rem;color:var(--ck-dim);font-size:.95rem} .atlx-check .atlx-q-item{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 .7rem;font-size:.98rem;color:var(--ck-text);cursor:pointer} .atlx-check .atlx-q-item:hover{color:var(--ck-ink)} .atlx-check input[type="checkbox"]{-webkit-appearance:auto;appearance:auto;width:1.15rem;height:1.15rem;margin:.2rem 0 0;flex:none;accent-color:var(--ck-amber);cursor:pointer} .atlx-check input[type="checkbox"]:focus-visible{outline:2px solid var(--ck-amber);outline-offset:3px} .atlx-check .atlx-q-score{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;border-top:1px solid var(--ck-line);margin-top:1rem;padding-top:.9rem} .atlx-check .atlx-q-count{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ck-ink);font-size:1.25rem;font-family:"Aleo",Georgia,serif} .atlx-check .atlx-q-band{margin:0;font-size:.95rem;color:var(--ck-text)} .atlx-check .atlx-q-note{margin:.7rem 0 0;font-size:.85rem;color:var(--ck-dim);min-height:2.4em}
+  </style>
+  <p class="atlx-q-kick">Look back before closing</p>
+  <h3 class="atlx-q-title">What this role has taught you</h3>
+  <p class="atlx-q-sub">A few honest ticks, for yourself only.</p>
+  <label class="atlx-q-item"><input type="checkbox" data-atlx-q><span>I can name one assumption I once treated as fixed.</span></label>
+  <label class="atlx-q-item"><input type="checkbox" data-atlx-q><span>I have translated between two worlds recently.</span></label>
+  <label class="atlx-q-item"><input type="checkbox" data-atlx-q><span>A disagreement led to a different design.</span></label>
+  <label class="atlx-q-item"><input type="checkbox" data-atlx-q><span>I know which conditions I hold and which the system holds.</span></label>
+  <div class="atlx-q-score">
+    <span class="atlx-q-count" id="atlx-q2-count" aria-live="polite">0 of 4</span>
+    <p class="atlx-q-band" id="atlx-q2-band">No ticks yet. The audit is quiet; the room is yours.</p>
+  </div>
+  <p class="atlx-q-note">The boxes live only in your browser. Nothing is sent, stored or shared. The site palette and fonts match by name.</p>
+  <script>
+    (function () { var root=document.currentScript&&document.currentScript.closest?document.currentScript.closest(".atlx-check"):document.querySelector(".atlx-check"); if (!root) return; var boxes=Array.prototype.slice.call(root.querySelectorAll("input[data-atlx-q]")); var count=root.querySelector("#atlx-q2-count"); var band=root.querySelector("#atlx-q2-band"); function render() { var n=boxes.filter(function(b){ return b.checked; }).length; count.textContent=n+" of 4"; if (n<=1) band.textContent="No ticks yet. The audit is quiet; the room is yours."; else if (n<=2) band.textContent="Some conditions clear. The next move is to name one more."; else band.textContent="Many conditions clear. Keep the plumbing that lets them stay that way."; } boxes.forEach(function(b){ b.addEventListener("change", render); }); render(); })();
+  </script>
+</div>

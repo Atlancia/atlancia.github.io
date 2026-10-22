@@ -1,0 +1,117 @@
+{
+  "analyst-pipeline": {
+    "title": "The analyst pipeline (new static, analyst essay)",
+    "post": "Changing Requirements to be a Successful Business Analyst",
+    "kind": "static diagram"
+  },
+  "analyst-translator": {
+    "title": "The translator between two rooms (static diagram)",
+    "post": "Changing Requirements to be a Successful Business Analyst",
+    "kind": "static diagram"
+  },
+  "career-reflection": {
+    "title": "Career reflection self-check (new local form, analyst essay)",
+    "post": "Changing Requirements to be a Successful Business Analyst",
+    "kind": "local form"
+  },
+  "complexity-comparison-v2": {
+    "title": "Complexity comparison v2",
+    "post": "From Shovels to Software: Why Difference Matters When Things Get Complex",
+    "kind": "static, comparison"
+  },
+  "complexity-crossover": {
+    "title": "The crossover (complexity and difference)",
+    "post": "From Shovels to Software: Why Difference Matters When Things Get Complex",
+    "kind": "interactive, slider"
+  },
+  "complexity-crossover-static": {
+    "title": "Complexity crossover comparison (new static, complexity essay)",
+    "post": "From Shovels to Software: Why Difference Matters When Things Get Complex",
+    "kind": "static, crossing card"
+  },
+  "complexity-team-slider-v2": {
+    "title": "Team mix slider v2",
+    "post": "From Shovels to Software: Why Difference Matters When Things Get Complex",
+    "kind": "interactive, slider"
+  },
+  "difference-closing-form": {
+    "title": "Difference closing form (new local form, difference essay)",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "local form"
+  },
+  "difference-comparison-static": {
+    "title": "Difference comparison (new static, difference essay)",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "static, comparison"
+  },
+  "difference-decision-cards": {
+    "title": "Decision Dilemma Cards (Button-Based Questionnaire)",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "figure"
+  },
+  "difference-expanding-room": {
+    "title": "The Expanding Room of Difference",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "figure"
+  },
+  "difference-flow": {
+    "title": "Where difference can go (three fates)",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "interactive, three modes"
+  },
+  "difference-rules-exporter": {
+    "title": "Pocket-Ready Rules Exporter",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "interactive, exporter"
+  },
+  "gardener-conditions": {
+    "title": "Gardener conditions (new interactive, gardener essay)",
+    "post": "Seeing the Difference Between a Boss and a Botanist",
+    "kind": "interactive, sliders"
+  },
+  "gardener-growth-diagram": {
+    "title": "Gardener growth conditions (new static, gardener essay)",
+    "post": "Seeing the Difference Between a Boss and a Botanist",
+    "kind": "static, conditions"
+  },
+  "manager-console": {
+    "title": "The manager's console (what a gardener controls)",
+    "post": "Seeing the Difference Between a Boss and a Botanist",
+    "kind": "interactive, sliders"
+  },
+  "manager-knowledge-velocity": {
+    "title": "The Knowledge Velocity Threshold",
+    "post": "Seeing the Difference Between a Boss and a Botanist",
+    "kind": "interactive, cybernetic model"
+  },
+  "reader-self-check": {
+    "title": "A quick look at your own room (local self-check)",
+    "post": "Difference Needs Somewhere to Go",
+    "kind": "local form"
+  },
+  "trade-frontier-calc-v2": {
+    "title": "Trade-off calculator v2",
+    "post": "Building a Trade-off Mentality",
+    "kind": "interactive, slider"
+  },
+  "trade-iceberg-static-2": {
+    "title": "The assumption iceberg v2 (new static)",
+    "post": "Building a Trade-off Mentality",
+    "kind": "static, iceberg diagram"
+  },
+  "trade-off-frontier": {
+    "title": "The frontier (trade-offs)",
+    "post": "Building a Trade-off Mentality",
+    "kind": "interactive, slider"
+  },
+  "universal-hours-to-read": {
+    "title": "Hours to read (new universal static, any essay)",
+    "post": "Any essay",
+    "kind": "static reference"
+  },
+  "universal-source-card": {
+    "title": "Source links card (new universal static, any essay)",
+    "post": "Any essay",
+    "kind": "static reference"
+  }
+}
