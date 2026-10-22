@@ -246,3 +246,81 @@ html:not(.dark) .atlx {
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
+
+/* -- The cover images ----------------------------------------------------- */
+
+/*
+ * Every cover in the site gets one grade, whatever photo is behind it: the
+ * photo reads in the site's own amber and grey, and the colour comes back on
+ * hover. One variable holds the grade, so restyling the whole site's covers
+ * is a single line here.
+ *
+ * The landing banner is left out on purpose: that photograph is the face of
+ * the site, not a cover.
+ */
+:root {
+  --atl-cover-filter: grayscale(1) sepia(0.25) saturate(0.9) contrast(1.04);
+  --atl-cover-hover-filter: grayscale(0) sepia(0) saturate(1) contrast(1);
+}
+
+html.dark {
+  --atl-cover-hover-filter: grayscale(0) sepia(0) saturate(1) contrast(1)
+    brightness(1.06);
+}
+
+.thumbnail img,
+.thumbnail_card img,
+.single_hero_round {
+  filter: var(--atl-cover-filter);
+  transition: filter 500ms ease;
+}
+
+.article-link--card:hover .thumbnail_card img,
+.article-link--card:focus-visible .thumbnail_card img,
+.article-link--simple:hover .thumbnail img,
+.article-link--simple:focus-visible .thumbnail img,
+.article-link--thumbnail:hover .thumbnail img,
+.article-link--thumbnail:focus-visible .thumbnail img,
+.single_hero_round:hover,
+.single_hero_round:focus-visible {
+  filter: var(--atl-cover-hover-filter);
+}
+
+/* The landing banner keeps the photo whole: no grade on its face. */
+
+#landing-hero-background {
+  position: relative;
+  height: 420px;
+}
+
+@media (min-width: 640px) {
+  #landing-hero-background {
+    height: 560px;
+  }
+}
+
+/* A tone at the top and a fade into the page at the bottom: the banner stays
+   part of the page in both modes. Nothing sits on the photo. */
+#landing-hero-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgb(243 239 232 / 0.08) 0%,
+    rgb(251 250 247 / 0.08) 55%,
+    rgb(251 250 247 / 0.92) 96%,
+    rgb(251 250 247) 100%
+  );
+}
+
+html.dark #landing-hero-background::after {
+  background: linear-gradient(
+    to bottom,
+    rgb(35 35 61 / 0.32) 0%,
+    rgb(35 35 61 / 0.28) 55%,
+    rgb(35 35 61 / 0.94) 96%,
+    rgb(35 35 61) 100%
+  );
+}

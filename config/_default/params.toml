@@ -9,9 +9,10 @@
 # The theme also ships seventeen others, listed in the theme's stylesheets.
 colorScheme = "atlancia"
 
-# "dark", "light" or "auto". "auto" follows the reader's system and the
-# switch in the footer overrides it.
-defaultAppearance = "dark"
+# "Follow the reader's system" is the default here: the default starts light,
+# and autoSwitchAppearance hands the decision to the OS, live, before the
+# switch in the header overrides it for that reader.
+defaultAppearance = "light"
 autoSwitchAppearance = true
 
 # -- The header ------------------------------------------------------------
