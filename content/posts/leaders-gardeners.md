@@ -9,7 +9,7 @@ media_id: 5
 authors: ["liam"]
 showComments: true
 meta_robots: "index, follow"
-featureimage: "media/posts/5/middle-header.webp"
+featureimage: "media/covers/leaders-gardeners.svg"
 ---
 In the sclerosis of corporate hierarchies, middle management often finds itself caricatured as a relic of bygone organizational structures, scar tissue left behind by the Peter Principle. From the bumbling inefficiency of *Office Space*’s Lumbergh to the clichéd “paper-pusher,” middle managers have been the subject of fascination, frustration, and ridicule. But these stereotypes belie a deeper truth: middle managers, especially in knowledge work are essential stewards of an organizations most important and undervalued resource: the team.
 

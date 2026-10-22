@@ -18,6 +18,29 @@
   font-display: swap;
 }
 
+/*
+ * Young Serif carries the essays. It is a weight-variable old style serif
+ * (Light to Bold, italics beside it), self-hosted from the NoirBlancRouge
+ * release under the OFL, license beside the files. Cal Sans keeps the
+ * interface: headings, cards, menus, captions. Young Serif keeps the reading.
+ */
+@font-face {
+  font-family: "Young Serif";
+  src: url("/assets/dynamic/fonts/youngserif/young-serif.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Young Serif";
+  src: url("/assets/dynamic/fonts/youngserif/young-serif-italic.woff2")
+    format("woff2");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --font-body: "Cal Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, sans-serif;
@@ -107,6 +130,15 @@ html:not(.dark) body {
   --tw-prose-quote-borders: var(--atl-accent);
   --tw-prose-hr: var(--atl-rule);
   --tw-prose-captions: var(--atl-dim);
+}
+
+/* The reading face: only the running text of an essay and its lists. Headings
+   stay Cal Sans, and figure plates keep their own fonts. */
+.article-content p,
+.article-content li,
+.article-content blockquote {
+  font-family: "Young Serif", Georgia, "Times New Roman", serif;
+  font-weight: 380;
 }
 
 /* A link in the body is underlined and takes the accent on hover, the way the
@@ -268,39 +300,52 @@ html.dark {
     brightness(1.06);
 }
 
-.thumbnail img,
-.thumbnail_card img,
-.single_hero_round {
+/* Photographs take the grade; vector covers already speak in the palette and
+   pass untouched. */
+.thumbnail img:not([src$=".svg"]),
+.thumbnail_card img:not([src$=".svg"]),
+.single_hero_round:not([src$=".svg"]) {
   filter: var(--atl-cover-filter);
   transition: filter 500ms ease;
 }
 
 .article-link--card:hover .thumbnail_card img,
 .article-link--card:focus-visible .thumbnail_card img,
-.article-link--simple:hover .thumbnail img,
-.article-link--simple:focus-visible .thumbnail img,
+.article-link--thumbnail:hover .thumbnail_card img,
+.article-link--thumbnail:focus-visible .thumbnail_card img,
 .article-link--thumbnail:hover .thumbnail img,
 .article-link--thumbnail:focus-visible .thumbnail img,
-.single_hero_round:hover,
-.single_hero_round:focus-visible {
+.article-link--simple:hover .thumbnail img:not([src$=".svg"]),
+.article-link--simple:focus-visible .thumbnail img:not([src$=".svg"]),
+.single_hero_round:hover:not([src$=".svg"]),
+.single_hero_round:focus-visible:not([src$=".svg"]) {
   filter: var(--atl-cover-hover-filter);
 }
 
-/* The landing banner keeps the photo whole: no grade on its face. */
+/* -- The landing banner --------------------------------------------------- */
 
+/*
+ * The type sits on the photograph on a wide screen: the photograph is fixed
+ * behind the page and the copy column is pushed to the right, over the water,
+ * away from the face at the left third of the frame. A lift of scrim behind
+ * the text keeps it readable without turning the photo into a plate.
+ *
+ * On a phone the right column is no column, so the banner returns to the
+ * flow at a short height and the type centres under it.
+ */
 #landing-hero-background {
   position: relative;
-  height: 420px;
+  height: 380px;
+  overflow: hidden;
 }
 
-@media (min-width: 640px) {
-  #landing-hero-background {
-    height: 560px;
-  }
+#landing-hero-background img {
+  position: absolute;
+  inset: 0;
 }
 
 /* A tone at the top and a fade into the page at the bottom: the banner stays
-   part of the page in both modes. Nothing sits on the photo. */
+   part of the page in both modes. */
 #landing-hero-background::after {
   content: "";
   position: absolute;
@@ -308,8 +353,8 @@ html.dark {
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgb(243 239 232 / 0.08) 0%,
-    rgb(251 250 247 / 0.08) 55%,
+    rgb(251 250 247 / 0.06) 0%,
+    rgb(251 250 247 / 0.06) 55%,
     rgb(251 250 247 / 0.92) 96%,
     rgb(251 250 247) 100%
   );
@@ -318,9 +363,56 @@ html.dark {
 html.dark #landing-hero-background::after {
   background: linear-gradient(
     to bottom,
-    rgb(35 35 61 / 0.32) 0%,
-    rgb(35 35 61 / 0.28) 55%,
+    rgb(35 35 61 / 0.24) 0%,
+    rgb(35 35 61 / 0.2) 55%,
     rgb(35 35 61 / 0.94) 96%,
     rgb(35 35 61) 100%
   );
+}
+
+.landing-copy {
+  max-width: 42rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  #landing-hero-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 640px;
+    z-index: -10;
+  }
+
+  /* The scrim leans to the right, where the copy is: strong under the text
+     column, gone before it reaches the face on the left third. */
+  #landing-hero-background::after {
+    background:
+      linear-gradient(
+        to left,
+        rgb(251 250 247 / 0.9) 0%,
+        rgb(251 250 247 / 0.45) 42%,
+        rgb(251 250 247 / 0) 66%
+      ),
+      linear-gradient(rgb(251 250 247 / 0.12), rgb(251 250 247 / 0.12));
+  }
+
+  html.dark #landing-hero-background::after {
+    background:
+      linear-gradient(
+        to left,
+        rgb(35 35 61 / 0.88) 0%,
+        rgb(35 35 61 / 0.5) 42%,
+        rgb(35 35 61 / 0) 66%
+      ),
+      linear-gradient(rgb(35 35 61 / 0.22), rgb(35 35 61 / 0.22));
+  }
+
+  .landing-copy {
+    margin-left: 45%;
+    padding-top: 14rem;
+    text-align: left;
+  }
 }

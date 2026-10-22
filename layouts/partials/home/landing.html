@@ -1,3 +1,15 @@
+{{/* Atlancia's landing page.
+
+   The banner photograph returns to the old structure: the type sits on it.
+   The face in the photo sits at the left third, so the copy column is pushed
+   to the right of the canvas, over the water, where nobody's face is. On a
+   phone the banner and the type stack again, because a right-hand column on
+   a 375px screen is no column at all.
+
+   Every position lives in css/custom.css under the landing banner, because
+   the theme's compiled stylesheet is prebuilt and does not carry classes this
+   partial invents. */}}
+
 <article class="relative isolate overflow-hidden">
   {{ $heroImage := .Params.heroImage | default site.Params.homepage.homepageImage }}
   {{ $heroImg := "" }}
@@ -9,16 +21,9 @@
     {{ end }}
   {{ end }}
   {{ with $heroImg }}
-    {{/*
-      The banner leads and the type follows underneath it.
-      The photo is exactly 2:1, so over its full width it fills this canvas
-      with no slack in any direction: sitting the title over it centered the
-      type dead on the face in the photo. Under the banner the title keeps
-      its size and its centring and the face keeps itself whole.
-    */}}
     <div
       id="landing-hero-background"
-      class="hero-canvas-fade nozoom relative h-[420px] sm:h-[560px]">
+      class="hero-canvas-fade nozoom">
       <img
         class="absolute inset-0 h-full w-full object-cover nozoom"
         src="{{ .RelPermalink }}"
@@ -36,15 +41,10 @@
       data-hero-id="landing-hero-background"
       data-fade-distance="500"></script>
   {{ end }}
-  <section class="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-14 lg:px-8">
-    <div class="mx-auto max-w-4xl text-center">
-      {{ with .Params.heroCaption | default .Site.Params.Author.name }}
-        <p class="landing-rise mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-primary-600 dark:text-primary-400">
-          {{ . | markdownify }}
-        </p>
-      {{ end }}
+  <section class="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 sm:pb-24 lg:px-8">
+    <div class="landing-copy">
       {{ with .Title }}
-        <h1 class="landing-rise landing-rise-1 text-balance text-5xl font-black leading-[1.05] tracking-tighter text-neutral-900 dark:text-white sm:text-7xl">
+        <h1 class="landing-rise text-balance text-5xl font-bold leading-[1.05] tracking-tight text-neutral-900 dark:text-white sm:text-7xl">
           {{ . | emojify }}
         </h1>
       {{ end }}
@@ -60,7 +60,7 @@
           {{ end }}
         </div>
       {{ end }}
-      <section class="landing-rise landing-rise-4 prose prose-lg mx-auto mt-10 max-w-3xl text-left dark:prose-invert sm:text-center">
+      <section class="landing-rise landing-rise-4 prose prose-lg mx-auto mt-10 max-w-3xl text-left dark:prose-invert">
         {{ .Content }}
       </section>
     </div>

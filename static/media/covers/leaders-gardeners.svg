@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" fill="none" role="img" aria-label="A watering can pouring onto a seedling in a garden bed, drawn in the site's line style">
+  <!--
+    Cover: Leaders Are Gardeners.
+    House line style: amber ink and a soft neutral, no fills, round caps.
+    It replaces the photograph the essay shipped with, in the palette the
+    figures on the gallery page already use.
+  -->
+  <g stroke="#FFC074" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- the sun -->
+    <circle cx="1305" cy="105" r="44"/>
+    <path d="m1305 30 0 -22m0 172 0 22m-73 -97 -22 0m168 0 22 0m-131 -37 -18 -18m54 110 18 18m36 -128 18 -18m-72 146 -18 18"/>
+  </g>
+
+  <!-- the watering can -->
+  <g stroke="#A7A29B" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m1024 272 152 0"/>
+    <rect x="1034" y="272" width="132" height="110" rx="16"/>
+    <path d="m1166 292 c40 8 44 62 -2 72"/>
+    <path d="m1040 308 -104 44"/>
+    <path d="m936 352 -26 10"/>
+  </g>
+
+  <!-- the pour -->
+  <g stroke="#FFC074" stroke-linecap="round" fill="none">
+    <circle cx="898" cy="382" r="5"/>
+    <circle cx="876" cy="402" r="4.5"/>
+    <circle cx="860" cy="422" r="3.5"/>
+
+    <!-- the seedling -->
+    <path d="m800 430 c8 -6 90 -6 112 3"/>
+    <path d="m852 430 c2 -30 2 -52 -2 -82" stroke-width="7"/>
+    <path d="m850 354 c-30 -6 -50 -26 -56 -58 26 4 48 26 56 58z" stroke-width="5"/>
+    <path d="m850 354 c24 -14 36 -38 36 -70 -26 10 -40 38 -36 70z" stroke-width="5"/>
+  </g>
+
+  <!-- the beds -->
+  <g stroke="#A7A29B" stroke-width="6" stroke-linecap="round">
+    <path d="m70 474 c360 -44 840 -44 1360 -6"/>
+    <path d="m52 424 c380 -46 900 -44 1358 -6"/>
+    <path d="m40 372 c360 -36 860 -30 1350 4"/>
+  </g>
+
+  <!-- soil -->
+  <g stroke="#A7A29B" stroke-width="4" stroke-linecap="round" opacity="0.7">
+    <path d="m250 458 4 0"/>
+    <path d="m520 446 4 0"/>
+    <path d="m672 468 4 0"/>
+    <path d="m1180 450 4 0"/>
+    <path d="m1332 430 4 0"/>
+  </g>
+</svg>
