@@ -225,7 +225,13 @@ def build(name: str, base_url: str | None) -> int:
     (target / "hugo.toml").write_text(toml_document(settings), encoding="utf-8")
 
     print(f"building {target}")
-    hugo = config.get("hugo", "hugo")
+    try:
+        from build import find_hugo
+
+        default_hugo = find_hugo()
+    except (ImportError, SystemExit):
+        default_hugo = "hugo"
+    hugo = config.get("hugo", default_hugo)
     result = subprocess.run(
         [hugo, "--cleanDestinationDir", "--destination", "public"], cwd=target
     )

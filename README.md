@@ -29,7 +29,18 @@ python tools/build.py
 ```
 
 That regenerates the media registry, then renders the site into `public/`.
-Hugo is needed on the path, version 0.148 or later with the extended build.
+Hugo ships with the repository, at
+`tools/bin/hugo-0.167.0-extended-windows-amd64.exe`. It is version 0.167
+extended, nothing has to be installed, and nothing has to be on the path, so
+the build travels with the clone. Blowfish v3.9.0 needs at least 0.162 and the
+0.148 build fails on it. To serve the site while writing:
+
+```
+tools\bin\hugo-0.167.0-extended-windows-amd64.exe server -D
+```
+
+`tools/build.py` uses `HUGO` from the environment when it is set, then the
+binary in `tools/bin`, then `~/bin`, then `hugo` on the path.
 
 For a copy that loads its own assets, which is what a local server needs:
 

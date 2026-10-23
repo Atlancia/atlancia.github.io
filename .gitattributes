@@ -4,6 +4,7 @@
 
 *.woff2 binary
 *.woff binary
+*.exe binary
 *.jpg binary
 *.jpeg binary
 *.png binary

@@ -25,23 +25,35 @@ import sys
 from pathlib import Path
 
 
+PINNED = "hugo-0.167.0-extended-windows-amd64.exe"
+
+
 def find_hugo() -> str:
-    """The Hugo to build with, preferring the pinned extended build."""
+    """The Hugo to build with. The pinned binary ships in tools/bin."""
     chosen = os.environ.get("HUGO")
     if chosen:
         return chosen
 
-    pinned = Path.home() / "bin" / "hugo-0.167-extended.exe"
-    if pinned.exists():
-        return str(pinned)
+    project = Path(__file__).resolve().parent.parent
+    vendored = project / "tools" / "bin" / PINNED
+    if vendored.exists():
+        return str(vendored)
+
+    for candidate in sorted((project / "tools" / "bin").glob("hugo*")):
+        if candidate.is_file():
+            return str(candidate)
+
+    legacy = Path.home() / "bin" / "hugo-0.167-extended.exe"
+    if legacy.exists():
+        return str(legacy)
 
     found = shutil.which("hugo")
     if found:
         return found
 
     raise SystemExit(
-        "no Hugo found: put hugo-0.167-extended.exe in ~/bin, put hugo on the "
-        "path, or set HUGO to the binary"
+        "no Hugo found: expected tools/bin/" + PINNED + " in the repository, "
+        "or set HUGO to a Hugo 0.167 extended binary"
     )
 
 
