@@ -1,0 +1,98 @@
+{
+ "version": 4,
+ "a": {
+  "type": "vgrad",
+  "c1": "#171727",
+  "c2": "#23233d",
+  "angle": 45,
+  "glowX": 300,
+  "glowY": 100,
+  "glowR": 180,
+  "alpha": 100,
+  "img": {
+   "src": "",
+   "name": "",
+   "fit": "cover",
+   "x": 50,
+   "y": 50,
+   "zoom": 100,
+   "blur": 0,
+   "mode": "none"
+  }
+ },
+ "divider": {
+  "kind": "thickhoriz",
+  "position": 50,
+  "angle": 45,
+  "size": 60,
+  "x": 50,
+  "y": 50,
+  "waveAmp": 26,
+  "waveFreq": 3,
+  "rotation": 0,
+  "band": 24,
+  "rings": 4,
+  "softness": 0,
+  "edge": 0,
+  "invert": false,
+  "motion": "breathe",
+  "sweep": 25,
+  "seed": 1,
+  "shapes": 12,
+  "b": {
+   "type": "vgrad",
+   "c1": "#ffc074",
+   "c2": "#836442",
+   "angle": 45,
+   "glowX": 300,
+   "glowY": 100,
+   "glowR": 180,
+   "alpha": 52,
+   "img": {
+    "src": "",
+    "name": "",
+    "fit": "cover",
+    "x": 50,
+    "y": 50,
+    "zoom": 100,
+    "blur": 0,
+    "mode": "none"
+   }
+  }
+ },
+ "icons": [
+  {
+   "alpha": 100,
+   "motion": "",
+   "name": "box",
+   "x": 300,
+   "y": 100,
+   "size": 88,
+   "color": "#fbfaf7"
+  }
+ ],
+ "icon": {
+  "color": "#23233d",
+  "size": 64
+ },
+ "treat": {
+  "type": "grain-light",
+  "intensity": 45,
+  "cell": 2,
+  "c1": "#23233d",
+  "c2": "#ffc074",
+  "seed": 1,
+  "shapes": 14
+ },
+ "anim": {
+  "base": "none",
+  "icon": "none",
+  "treat": false,
+  "cycles": 1,
+  "duration": 5,
+  "fps": 24
+ },
+ "out": {
+  "scale": 3
+ }
+}

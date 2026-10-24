@@ -43,7 +43,7 @@ REQUIRED = [
     "welcome-to-atlancia.html",
 ]
 
-POSTS = 5
+POSTS = 6
 
 LINK = re.compile(r'(?:href|src)="([^"]+)"')
 
