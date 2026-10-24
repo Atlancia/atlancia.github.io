@@ -9,7 +9,7 @@ media_id: 3
 authors: ["liam"]
 showComments: true
 meta_robots: "index, follow"
-featureimage: "media/posts/3/tradeoffpost.jpg"
+featureimage: "media/covers/trade-cover.png"
 ---
 > *If you wish to make an apple pie from scratch, you must first invent the universe.  
 > – Carl Sagan*

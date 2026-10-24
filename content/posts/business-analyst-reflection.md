@@ -9,7 +9,10 @@ media_id: 2
 authors: ["liam"]
 showComments: true
 meta_robots: "index, follow"
-featureimage: "media/posts/2/bapost.jpg"
+featureimage: "media/posts/2/ba-cover-rest.webp"
+coverMotion: "ba-cover"
+coverMotionBase: 0.8
+coverStyle: "dither"
 ---
 *A look into personal experience with business analysis, agile and modern projects.*
 

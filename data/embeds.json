@@ -113,5 +113,10 @@
     "title": "Source links card (new universal static, any essay)",
     "post": "Any essay",
     "kind": "static reference"
+  },
+  "governance-latency-simulator": {
+    "title": "Governance latency simulator (interactive, governance essay)",
+    "post": "Shippable Governance and the Human in the Loop",
+    "kind": "interactive"
   }
 }

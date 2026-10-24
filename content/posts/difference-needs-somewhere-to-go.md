@@ -9,7 +9,10 @@ media_id: 6
 authors: ["liam"]
 showComments: true
 meta_robots: "index, follow"
-featureimage: "media/posts/6/pexels-thales13-39315864-2.jpg"
+featureimage: "media/posts/6/dif-cover-rest.webp"
+coverMotion: "dif-cover"
+coverMotionBase: 0.8
+coverStyle: "artwork"
 ---
 > I was raised up believing I was somehow unique. Like a snowflake distinct among snowflakes. Unique in each way you'd conceive. And now after some thinking I'd say I'd rather be, a functioning cog in some great machinery, serving something beyond me.
 >

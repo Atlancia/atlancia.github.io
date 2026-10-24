@@ -1,0 +1,123 @@
+<!-- Atlancia embed: Governance Latency Simulator (Shippable Governance essay) -->
+<div class="atlx atlx-console atlx-fig-wrap">
+  <style>
+    .atlx-console { --kc-ink:#EEEDED; --kc-text:#BFBFBF; --kc-dim:#9D9D9D; --kc-line:#373737; --kc-surface:#1e1e1e; --kc-amber:#FFC074; --kc-green:#54A468; --kc-warn:#FB6762; font-family:"Figtree",ui-sans-serif,system-ui,sans-serif; background:var(--kc-surface); color:var(--kc-text); border:1px solid var(--kc-line); border-radius:6px; padding:1.3rem 1.3rem 1.1rem; margin:2.5rem 0; max-width:100%; font-size:1rem; line-height:1.55; }
+    .atlx-console *{box-sizing:border-box}
+    .atlx-console .atlx-gov-k-kick { margin:0 0 .4rem; font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--kc-amber); }
+    .atlx-console .atlx-gov-k-title { margin:0 0 .2rem; font-family:"Aleo",Georgia,serif; font-weight:500; font-size:1.25rem; line-height:1.35; color:var(--kc-ink); }
+    .atlx-console .atlx-gov-k-sub { margin:0 0 1rem; color:var(--kc-dim); font-size:.95rem; }
+    .atlx-console .atlx-gov-k-ctl { margin:0 0 .9rem; }
+    .atlx-console .atlx-gov-k-ctl label { display:flex; justify-content:space-between; align-items:baseline; font-weight:600; color:var(--kc-ink); font-size:.95rem; margin-bottom:.15rem; }
+    .atlx-console output { font-variant-numeric:tabular-nums; font-weight:600; color:var(--kc-amber); font-size:.95rem; }
+    .atlx-console input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:26px; background:transparent; margin:0; cursor:pointer; }
+    .atlx-console input[type="range"]::-webkit-slider-runnable-track { height:6px; border-radius:999px; background:#333; }
+    .atlx-console input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:var(--kc-amber); border:3px solid #181818; margin-top:-7px; }
+    .atlx-console input[type="range"]::-moz-range-track { height:6px; border-radius:999px; background:#333; }
+    .atlx-console input[type="range"]::-moz-range-thumb { width:15px; height:15px; border-radius:50%; background:var(--kc-amber); border:3px solid #181818; }
+    .atlx-console input[type="range"]:focus-visible { outline:2px solid var(--kc-amber); outline-offset:4px; border-radius:999px; }
+    .atlx-console .atlx-gov-modes { display:flex; gap:.5rem; margin-bottom:1rem; }
+    .atlx-console button.atlx-gov-btn { font:inherit; font-size:.85rem; font-weight:600; cursor:pointer; color:var(--kc-ink); background:#262626; border:1px solid var(--kc-line); border-radius:999px; padding:.4rem .9rem; flex:1; text-align:center; transition:all .2s ease; }
+    .atlx-console button.atlx-gov-btn:hover { border-color:var(--kc-amber); color:var(--kc-amber); }
+    .atlx-console button.atlx-gov-btn[aria-pressed="true"] { background:var(--kc-amber); border-color:var(--kc-amber); color:#181818; }
+    .atlx-console .atlx-gov-metrics { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:1rem 0; background:#181818; padding:.9rem; border-radius:4px; border:1px solid var(--kc-line); }
+    .atlx-console .atlx-gov-m-label { font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--kc-dim); margin-bottom:.2rem; }
+    .atlx-console .atlx-gov-m-val { font-size:1.15rem; font-weight:700; color:var(--kc-ink); font-variant-numeric:tabular-nums; }
+    .atlx-console .atlx-gov-meter { margin:.8rem 0 .4rem; }
+    .atlx-console .atlx-gov-track { position:relative; height:10px; border-radius:999px; background:#2b2b2b; }
+    .atlx-console .atlx-gov-fill { height:100%; border-radius:999px; background:var(--kc-amber); transition:width .3s ease, background .3s ease; }
+    .atlx-console .atlx-gov-note { margin:.7rem 0 0; font-size:.9rem; color:var(--kc-dim); min-height:2.6em; }
+    .atlx-console .atlx-gov-note.warn { color:var(--kc-warn); }
+  </style>
+  <p class="atlx-gov-k-kick">Governance Architecture Simulator</p>
+  <h3 class="atlx-gov-k-title">The Tollbooth versus The Guardrail</h3>
+  <p class="atlx-gov-k-sub">Scale delivery velocity and observe what happens to queue latency, human fatigue, and systemic safety.</p>
+
+  <div class="atlx-gov-k-ctl">
+    <label for="atlx-gov-vol">Agentic Delivery Velocity <output id="atlx-gov-vol-o" for="atlx-gov-vol">25 tasks/day</output></label>
+    <input id="atlx-gov-vol" type="range" min="5" max="100" step="5" value="25">
+  </div>
+
+  <div class="atlx-gov-modes">
+    <button type="button" class="atlx-gov-btn" id="atlx-mode-toll" aria-pressed="true">Manual Gatekeeper (Tollbooth)</button>
+    <button type="button" class="atlx-gov-btn" id="atlx-mode-guard" aria-pressed="false">Shippable Guardrails (Inverted)</button>
+  </div>
+
+  <div class="atlx-gov-metrics">
+    <div>
+      <div class="atlx-gov-m-label">Review Queue Latency</div>
+      <div class="atlx-gov-m-val" id="atlx-val-delay">2.4 days</div>
+    </div>
+    <div>
+      <div class="atlx-gov-m-label">Reviewer Cognitive Load</div>
+      <div class="atlx-gov-m-val" id="atlx-val-fatigue">48% (Moderate)</div>
+    </div>
+  </div>
+
+  <div class="atlx-gov-meter">
+    <div class="atlx-gov-track">
+      <div class="atlx-gov-fill" id="atlx-gov-fill" style="width: 48%;"></div>
+    </div>
+  </div>
+
+  <p class="atlx-gov-note" id="atlx-gov-note">In tollbooth mode, reviewers manually inspect every transaction. Velocity increases queue backlog and drives superficial rubber-stamping.</p>
+
+  <script>
+    (function () {
+      var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest(".atlx-console") : document.querySelector(".atlx-console");
+      if (!root) return;
+      var vol = root.querySelector("#atlx-gov-vol");
+      var volO = root.querySelector("#atlx-gov-vol-o");
+      var btnToll = root.querySelector("#atlx-mode-toll");
+      var btnGuard = root.querySelector("#atlx-mode-guard");
+      var valDelay = root.querySelector("#atlx-val-delay");
+      var valFatigue = root.querySelector("#atlx-val-fatigue");
+      var fill = root.querySelector("#atlx-gov-fill");
+      var note = root.querySelector("#atlx-gov-note");
+      var isToll = true;
+
+      function render() {
+        var v = Number(vol.value);
+        volO.textContent = v + " tasks/day";
+
+        if (isToll) {
+          var delayDays = (v <= 15) ? (v * 0.1).toFixed(1) + " days" : (v <= 40) ? (v * 0.18).toFixed(1) + " days" : (v <= 70) ? ((v * 0.28)).toFixed(0) + " days" : "3+ weeks (Stalled)";
+          var fatiguePct = Math.min(100, Math.round(v * 1.35));
+          var fatigueLabel = (fatiguePct < 40) ? fatiguePct + "% (Manageable)" : (fatiguePct < 75) ? fatiguePct + "% (Fatigue)" : fatiguePct + "% (Rubber-Stamping)";
+          valDelay.textContent = delayDays;
+          valFatigue.textContent = fatigueLabel;
+          fill.style.width = fatiguePct + "%";
+          fill.style.background = (fatiguePct > 70) ? "#FB6762" : "#FFC074";
+          note.textContent = (v > 50) ? "Critical failure: Reviewers are overwhelmed. Approvals become rubber-stamps while delivery latency exceeds three weeks." : "In tollbooth mode, reviewers manually inspect every transaction. Velocity increases queue backlog and review fatigue.";
+          note.classList.toggle("warn", v > 50);
+        } else {
+          valDelay.textContent = "< 4 minutes";
+          var humanShare = Math.round(v * 0.08);
+          valFatigue.textContent = humanShare + " edge cases/day";
+          var fillPct = Math.min(100, Math.round(humanShare * 10));
+          fill.style.width = Math.max(12, fillPct) + "%";
+          fill.style.background = "#54A468";
+          note.textContent = "Inverted mode: Deterministic test suites clear routine checks in milliseconds. The human investigates " + humanShare + " emergent edge cases per day.";
+          note.classList.remove("warn");
+        }
+      }
+
+      vol.addEventListener("input", render);
+
+      btnToll.addEventListener("click", function () {
+        isToll = true;
+        btnToll.setAttribute("aria-pressed", "true");
+        btnGuard.setAttribute("aria-pressed", "false");
+        render();
+      });
+
+      btnGuard.addEventListener("click", function () {
+        isToll = false;
+        btnToll.setAttribute("aria-pressed", "false");
+        btnGuard.setAttribute("aria-pressed", "true");
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</div>
