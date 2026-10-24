@@ -1,0 +1,115 @@
+{{/* Atlancia site copy of theme article-link/simple.html (Blowfish). The only
+  change from the theme file is the cover resolution, which runs through
+  functions/cover.html so a "-cover-light/-cover-dark" pair can follow the
+  reader's appearance mode. Everything else is theme code. */}}
+{{/* Used by
+  1. list.html and term.html (when the cardView option is not enabled)
+  2. Recent articles template (when the cardView option is not enabled)
+  3. Shortcode list.html
+*/}}
+{{ $constrainItemsWidth := site.Params.list.constrainItemsWidth | default false }}
+
+{{ $cardClasses := "flex flex-col md:flex-row relative" }}
+{{ $imgWrapperClasses := "" }}
+{{ $cardContentClasses := "" }}
+
+{{ if .Params.showCards | default site.Params.list.showCards }}
+  {{ $cardClasses = printf "%s overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-600" $cardClasses }}
+  {{ $imgWrapperClasses = "" }}
+  {{ $cardContentClasses = printf "%s p-4" $cardContentClasses }}
+{{ else }}
+  {{ $cardClasses = $cardClasses }}
+  {{ $imgWrapperClasses = printf "%s thumbnail-shadow md:mr-7" $imgWrapperClasses }}
+  {{ $cardContentClasses = printf "%s mt-3 md:mt-0" $cardContentClasses }}
+{{ end }}
+
+{{ if $constrainItemsWidth }}
+  {{ $cardClasses = printf "%s max-w-prose" $cardClasses }}
+{{ end }}
+
+{{ $page := .Page }}
+{{ $featuredURL := "" }}
+{{ $darkURL := "" }}
+{{ $featureImageHover := site.Params.list.featureImageHover | default false }}
+{{ if isset .Params "featureImageHover" }}{{ $featureImageHover = .Params.featureImageHover }}{{ end }}
+{{ $featureImagePosition := .Params.imagePositionFeature | default site.Params.imagePositionFeature | default site.Params.imagePosition }}
+{{ if not .Params.hideFeatureImage }}
+  {{ $cover := partial "functions/cover.html" (dict "page" $page "spec" "600x") }}
+  {{ $featuredURL = $cover.url }}
+  {{ $darkURL = $cover.dark }}
+{{ end }}
+
+{{ $motion := $page.Params.coverMotion }}
+{{ $motionBase := $page.Params.coverMotionBase | default 0.8 }}
+
+<article class="article-link--simple group {{ $cardClasses }}">
+  {{ if $motion }}
+    {{ $svg := resources.Get (printf "covers/%s.svg" $motion) }}
+    {{ if not $svg }}{{ errorf "coverMotion %q has no file at assets/covers/%s.svg" $motion $motion }}{{ end }}
+    <div
+      class="flex-none relative overflow-hidden {{ $imgWrapperClasses }} thumbnail motion-cover"
+      data-base="{{ $motionBase }}"
+      aria-label="{{ $page.Title }}">
+      {{ $svg.Content | safeHTML }}
+    </div>
+    {{ partial "functions/motion-script.html" . }}
+  {{ else }}{{ with $featuredURL }}
+    <div class="flex-none relative overflow-hidden {{ $imgWrapperClasses }} thumbnail{{ if $darkURL }} cover-pair{{ end }}">
+      <img
+        src="{{ . }}"
+        alt="{{ $page.Title }}"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        class="nozoom not-prose absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] {{ if $featureImageHover }}group-hover:scale-[1.03]{{ end }}{{ if $darkURL }} cover-pair__light{{ end }}"
+        {{ with $featureImagePosition }}style="object-position: {{ . }};"{{ end }} />
+      {{ with $darkURL }}
+        <img
+          src="{{ . }}"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="nozoom not-prose absolute inset-0 h-full w-full object-cover cover-pair__dark"
+          {{ with $featureImagePosition }}style="object-position: {{ . }};"{{ end }} />
+      {{ end }}
+    </div>
+  {{ end }}
+  {{ end }}
+  <div class="{{ $cardContentClasses }}">
+    <header class="items-center text-start text-xl font-semibold">
+      <a
+        {{ with $page.Params.externalUrl }}
+          href="{{ . }}" target="_blank" rel="external"
+        {{ else }}
+          href="{{ $page.RelPermalink }}"
+        {{ end }}
+        class="not-prose before:absolute before:inset-0 decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 hover:underline hover:underline-offset-2">
+        <h2>
+          {{ .Title | emojify }}
+          {{ if .Params.externalUrl }}
+            <span class="cursor-default align-top text-xs text-neutral-400 dark:text-neutral-500">
+              <span class="rtl:hidden">&#8599;</span>
+              <span class="ltr:hidden">&#8598;</span>
+            </span>
+          {{ end }}
+        </h2>
+      </a>
+      {{ if and .Draft .Site.Params.article.showDraftLabel }}
+        <div class="ms-2">{{ partial "badge.html" (i18n "article.draft" | emojify) }}</div>
+      {{ end }}
+      {{ if templates.Exists "partials/extend-article-link.html" }}
+        {{ partial "extend-article-link.html" . }}
+      {{ end }}
+    </header>
+    <div class="text-sm text-neutral-500 dark:text-neutral-400">
+      {{ partial "article-meta/basic.html" . }}
+    </div>
+    {{ if .Params.showSummary | default (site.Params.list.showSummary | default false) }}
+      <div class="article-link__summary prose dark:prose-invert max-w-fit mt-1 line-clamp-3">
+        {{ .Summary | plainify }}
+      </div>
+    {{ end }}
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</article>

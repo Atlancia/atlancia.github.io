@@ -46,9 +46,9 @@
     Roboto, sans-serif;
 
   --atl-page: #23233d;
-  --atl-text: #d9d9d9;
-  --atl-heading: #eeedee;
-  --atl-link: #eeedee;
+  --atl-text: #fffaf4;
+  --atl-heading: #fff5ea;
+  --atl-link: #fff5ea;
   --atl-link-hover: #ffc074;
   --atl-rule: #373737;
 
@@ -71,20 +71,20 @@
 }
 
 html:not(.dark) {
-  --atl-page: #fbfaf7;
-  --atl-text: #3a3a42;
-  --atl-heading: #16161a;
-  --atl-link: #16161a;
-  --atl-link-hover: #b03a2e;
+  --atl-page: #fffaf4;
+  --atl-text: #23233d;
+  --atl-heading: #23233d;
+  --atl-link: #23233d;
+  --atl-link-hover: #ffc074;
   --atl-rule: #d6d2ca;
 
-  --atl-ink: #16161a;
+  --atl-ink: #23233d;
   --atl-figure-text: #3a3a42;
   --atl-dim: #6b6b70;
   --atl-line: #d6d2ca;
-  --atl-bg: #e7e3dc;
+  --atl-bg: #f1efea;
   --atl-surface: #f1efea;
-  --atl-accent: #b03a2e;
+  --atl-accent: #ffc074;
   --atl-success: #2e7d4b;
   --atl-warning: #c0392b;
   --atl-info: #2f6fa8;
@@ -139,6 +139,15 @@ html:not(.dark) body {
 .article-content blockquote {
   font-family: "Young Serif", Georgia, "Times New Roman", serif;
   font-weight: 380;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures contextual;
+  font-variant-numeric: oldstyle-nums;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  hyphens: auto;
+  hanging-punctuation: first last;
 }
 
 /* A link in the body is underlined and takes the accent on hover, the way the
@@ -146,6 +155,7 @@ html:not(.dark) body {
 .article-content a {
   color: var(--atl-link);
   text-decoration: underline;
+  text-decoration-color: var(--atl-link);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
@@ -153,6 +163,7 @@ html:not(.dark) body {
 .article-content a:hover,
 .article-content a:focus-visible {
   color: var(--atl-link-hover);
+  text-decoration-color: var(--atl-link-hover);
 }
 
 /* -- The header ----------------------------------------------------------- */
@@ -279,7 +290,49 @@ html:not(.dark) .atlx {
   margin-top: 0.5rem;
 }
 
-/* -- The cover images ----------------------------------------------------- */
+/* -- Text selection ------------------------------------------------------- */
+
+::selection {
+  background-color: var(--atl-accent);
+  color: var(--atl-page);
+}
+
+::-moz-selection {
+  background-color: var(--atl-accent);
+  color: var(--atl-page);
+}
+
+/*
+ * The essay body reads at the theme's default (1rem). Bumping it ~50%
+ * (to 1.5rem) makes the long-form reading significantly more comfortable
+ * without touching headings, captions, or figure text.
+ */
+.article-content {
+  font-size: 1.5rem;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+  word-spacing: 0.02em;
+}
+
+/* -- Article link cards --------------------------------------------------- */
+
+.article-link--card a,
+.article-link--simple a,
+.article-link--thumbnail a {
+  text-decoration-color: var(--atl-link-hover);
+}
+
+.article-link--card a:hover,
+.article-link--simple a:hover,
+.article-link--thumbnail a:hover,
+.article-link--card a:focus-visible,
+.article-link--simple a:focus-visible,
+.article-link--thumbnail a:focus-visible {
+  text-decoration-color: var(--atl-link-hover);
+}
 
 /*
  * Every cover in the site gets one grade, whatever photo is behind it: the
@@ -300,11 +353,11 @@ html.dark {
     brightness(1.06);
 }
 
-/* Photographs take the grade; vector covers already speak in the palette and
-   pass untouched. */
-.thumbnail img:not([src$=".svg"]),
-.thumbnail_card img:not([src$=".svg"]),
-.single_hero_round:not([src$=".svg"]) {
+/* Photographs take the grade; vector covers and the build's paired covers
+   (-cover-light/-cover-dark, already treated) pass untouched. */
+.thumbnail img:not([src$=".svg"]):not([src*="-cover-"]),
+.thumbnail_card img:not([src$=".svg"]):not([src*="-cover-"]),
+.single_hero_round:not([src$=".svg"]):not([src*="-cover-"]) {
   filter: var(--atl-cover-filter);
   transition: filter 500ms ease;
 }
@@ -315,11 +368,58 @@ html.dark {
 .article-link--thumbnail:focus-visible .thumbnail_card img,
 .article-link--thumbnail:hover .thumbnail img,
 .article-link--thumbnail:focus-visible .thumbnail img,
-.article-link--simple:hover .thumbnail img:not([src$=".svg"]),
-.article-link--simple:focus-visible .thumbnail img:not([src$=".svg"]),
-.single_hero_round:hover:not([src$=".svg"]),
-.single_hero_round:focus-visible:not([src$=".svg"]) {
+.article-link--simple:hover .thumbnail img:not([src$=".svg"]):not([src*="-cover-"]),
+.article-link--simple:focus-visible .thumbnail img:not([src$=".svg"]):not([src*="-cover-"]),
+.single_hero_round:hover:not([src$=".svg"]):not([src*="-cover-"]),
+.single_hero_round:focus-visible:not([src$=".svg"]):not([src*="-cover-"]) {
   filter: var(--atl-cover-hover-filter);
+}
+
+/* -- Paired covers (the duotone twins) ------------------------------------ */
+
+/*
+ * An essay with a treated cover carries TWO images in the same slot: the
+ * amber-led and navy-led duotone twins from tools/make_covers.py. The mode
+ * decides which one shows, and hovering swaps to the twin of the OTHER mode
+ * as the hover indication, then back on leave. The swap is a pure opacity
+ * crossfade; no JavaScript.
+ */
+.cover-pair img {
+  transition:
+    opacity 450ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cover-pair .cover-pair__light {
+  opacity: 1;
+}
+
+.cover-pair .cover-pair__dark {
+  opacity: 0;
+}
+
+html.dark .cover-pair .cover-pair__light {
+  opacity: 0;
+}
+
+html.dark .cover-pair .cover-pair__dark {
+  opacity: 1;
+}
+
+.cover-pair:hover .cover-pair__light {
+  opacity: 0;
+}
+
+.cover-pair:hover .cover-pair__dark {
+  opacity: 1;
+}
+
+html.dark .cover-pair:hover .cover-pair__light {
+  opacity: 1;
+}
+
+html.dark .cover-pair:hover .cover-pair__dark {
+  opacity: 0;
 }
 
 /* -- The landing banner --------------------------------------------------- */
@@ -415,4 +515,21 @@ html.dark #landing-hero-background::after {
     padding-top: 14rem;
     text-align: left;
   }
+}
+
+/* A cover that carries motion. The animation lives inline in the document so
+   it can be held and released, which means it is not an <img> and the grade
+   above never reaches it. The box fills the way object-fit: cover does. */
+.motion-cover svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.motion-cover.is-ready svg {
+  opacity: 1;
 }

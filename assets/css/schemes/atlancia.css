@@ -1,6 +1,6 @@
-/* Atlancia scheme: the indigo page, the amber accent, the red that the
-   figures use for a warning. Every value is a triplet so the theme can put an
-   alpha on it, and the numbering follows Tailwind's scale.
+/* Atlancia scheme: the indigo page, the amber accent, the amber that the
+   figures use for a second voice. Every value is a triplet so the theme can
+   put an alpha on it, and the numbering follows Tailwind's scale.
 
    The page background is neutral-800 in dark mode, because the theme's body
    carries dark:bg-neutral-800. The light page background is neutral, the same
@@ -32,15 +32,15 @@
   --color-primary-800: 128, 74, 28;
   --color-primary-900: 92, 52, 18;
 
-  /* Red, the second voice: #D73A42 at 500. */
-  --color-secondary-50: 253, 242, 243;
-  --color-secondary-100: 251, 226, 228;
-  --color-secondary-200: 247, 199, 202;
-  --color-secondary-300: 240, 158, 163;
-  --color-secondary-400: 227, 106, 113;
-  --color-secondary-500: 215, 58, 66;
-  --color-secondary-600: 183, 40, 48;
-  --color-secondary-700: 152, 31, 38;
-  --color-secondary-800: 120, 25, 31;
-  --color-secondary-900: 96, 22, 27;
+  /* Amber, the second voice: a darker amber for contrast. */
+  --color-secondary-50: 255, 249, 238;
+  --color-secondary-100: 255, 242, 222;
+  --color-secondary-200: 255, 231, 196;
+  --color-secondary-300: 255, 214, 160;
+  --color-secondary-400: 240, 166, 90;
+  --color-secondary-500: 209, 134, 60;
+  --color-secondary-600: 168, 101, 40;
+  --color-secondary-700: 128, 74, 28;
+  --color-secondary-800: 92, 52, 18;
+  --color-secondary-900: 60, 34, 12;
 }

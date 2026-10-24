@@ -1,0 +1,69 @@
+{{/*
+  Atlancia: the featured-image resolver, with the appearance-pair extension.
+
+  Resolves a page's cover the way the theme's own partials do (frontmatter
+  path first, then the site default), and adds one Atlancia extension: when
+  the frontmatter points at a "-cover-light." file and a "-cover-dark."
+  sibling exists beside it, the dark sibling is resolved through the same
+  resize, so the cover can follow the reader's appearance mode.
+
+  Call with dict "page" (the page) and "spec" (a Hugo resize spec, e.g.
+  "600x" or the backgroundImageWidth store value). Returns dict "url" "dark",
+  either of which may be "".
+
+  Site copy of theme logic. The theme's page-resources fallback (posts that
+  bundle their images) is not carried over: every essay here resolves its
+  cover from frontmatter.
+*/}}
+{{ $page := .page }}
+{{ $spec := .spec | default "600x" }}
+{{ $disableImageOptimization := site.Store.Get "disableImageOptimization" }}
+{{ $url := "" }}
+{{ $darkURL := "" }}
+{{ $path := "" }}
+{{ with partial "functions/feature-image.html" $page }}
+  {{ $path = . }}
+{{ end }}
+{{ if $path }}
+  {{ if or (strings.HasPrefix $path "http:") (strings.HasPrefix $path "https:") }}
+    {{ if site.Params.hotlinkFeatureImage }}
+      {{ $url = $path }}
+    {{ else }}
+      {{ with try (resources.GetRemote $path) }}{{ with .Value }}{{ $url = .RelPermalink }}{{ end }}{{ end }}
+    {{ end }}
+  {{ else }}
+    {{ $light := $page.Resources.Get $path }}
+    {{ if not $light }}{{ $light = resources.Get $path }}{{ end }}
+    {{ if $light }}
+      {{ $url = $light.RelPermalink }}
+      {{ if not (or $disableImageOptimization (eq $light.MediaType.SubType "svg")) }}
+        {{ with try ($light.Resize $spec) }}{{ with .Value }}{{ $url = .RelPermalink }}{{ end }}{{ end }}
+      {{ end }}
+      {{ if strings.Contains $path "-cover-light." }}
+        {{ $darkPath := replace $path "-cover-light." "-cover-dark." }}
+        {{ $dark := $page.Resources.Get $darkPath }}
+        {{ if not $dark }}{{ $dark = resources.Get $darkPath }}{{ end }}
+        {{ if $dark }}
+          {{ $darkURL = $dark.RelPermalink }}
+          {{ if not (or $disableImageOptimization (eq $dark.MediaType.SubType "svg")) }}
+            {{ with try ($dark.Resize $spec) }}{{ with .Value }}{{ $darkURL = .RelPermalink }}{{ end }}{{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if not $url }}
+  {{ $default := site.Store.Get "defaultFeaturedImage" }}
+  {{ if $default.url }}
+    {{ $url = $default.url }}
+  {{ else if $default.obj }}
+    {{ with $default.obj }}
+      {{ $url = .RelPermalink }}
+      {{ if not (or $disableImageOptimization (eq .MediaType.SubType "svg")) }}
+        {{ with try (.Resize $spec) }}{{ with .Value }}{{ $url = .RelPermalink }}{{ end }}{{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return dict "url" $url "dark" $darkURL }}

@@ -1,0 +1,51 @@
+{{/* Atlancia: installs the held-until-asked motion for list thumbnails.
+
+  Emitted by article-link/simple.html for a page that sets coverMotion. The
+  guard means a page with several motion covers installs the listeners once,
+  after the document has parsed, so every card on the page is found.
+
+  The card itself is the hover target, not just the image, because the whole
+  card is what the reader points at.
+*/}}
+<script>
+(function () {
+  if (window.__atlCardMotion) return;
+  window.__atlCardMotion = true;
+
+  function init() {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('.motion-cover').forEach(function (box) {
+      var svg = box.querySelector('svg');
+      if (!svg) return;
+
+      // A layout decision, not a change to the file: the artwork is 3:1 and the
+      // thumbnail box is nearer 5:3, so it fills and crops instead of banding.
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+
+      var base = parseFloat(box.dataset.base || '0.8');
+      var host = box.closest('article') || box;
+
+      function hold() { try { svg.pauseAnimations(); svg.setCurrentTime(base); } catch (e) {} }
+      function run() { try { svg.unpauseAnimations(); } catch (e) {} }
+
+      svg.removeAttribute('style');
+      hold();
+      box.classList.add('is-ready');
+
+      if (reduced) return;
+
+      host.addEventListener('mouseenter', run);
+      host.addEventListener('mouseleave', hold);
+      host.addEventListener('focusin', run);
+      host.addEventListener('focusout', hold);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

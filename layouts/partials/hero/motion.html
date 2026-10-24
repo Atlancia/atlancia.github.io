@@ -1,0 +1,53 @@
+{{/* Atlancia: a cover that is itself an animation, held on one frame until the
+  reader asks for it.
+
+  The SVG is inlined rather than pointed at, because an <img> cannot be paused:
+  the motion has to live in the document for the page to control it. The file it
+  reads is assets/covers/<name>.svg, and the frame it rests on comes from the
+  page's coverMotionBase, defaulting to 0.8 seconds.
+
+  Called from hero/big.html with dict "page", "name", "alt".
+*/}}
+{{ $name := .name }}
+{{ $base := .page.Params.coverMotionBase | default 0.8 }}
+{{ $svg := resources.Get (printf "covers/%s.svg" $name) }}
+{{ if not $svg }}
+  {{ errorf "coverMotion %q has no file at assets/covers/%s.svg" $name $name }}
+{{ end }}
+<figure class="cover-motion" data-base="{{ $base }}" tabindex="0" role="group" aria-label="{{ .alt }}">
+  <style>
+    .cover-motion { margin:0; border-radius:.5rem; overflow:hidden; cursor:default; }
+    .cover-motion svg { display:block; width:100%; height:auto; opacity:0; transition:opacity .18s ease; }
+    .cover-motion.is-ready svg { opacity:1; }
+    .cover-motion:focus-visible { outline:2px solid var(--atl-accent,#ffc074); outline-offset:3px; }
+  </style>
+  {{ $svg.Content | safeHTML }}
+</figure>
+<script>
+(function () {
+  var fig = document.querySelector('.cover-motion');
+  if (!fig) return;
+  var svg = fig.querySelector('svg');
+  if (!svg) return;
+
+  var base = parseFloat(fig.dataset.base || '0.8');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function hold() { try { svg.pauseAnimations(); svg.setCurrentTime(base); } catch (e) {} }
+  function run() { try { svg.unpauseAnimations(); } catch (e) {} }
+
+  svg.removeAttribute('style');
+  hold();
+  fig.classList.add('is-ready');
+
+  if (reduced) return;
+
+  fig.addEventListener('mouseenter', run);
+  fig.addEventListener('mouseleave', hold);
+  fig.addEventListener('focusin', run);
+  fig.addEventListener('focusout', hold);
+  fig.addEventListener('pointerdown', function () {
+    try { if (svg.animationsPaused()) { run(); } else { hold(); } } catch (e) {}
+  });
+})();
+</script>

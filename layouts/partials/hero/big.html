@@ -1,0 +1,68 @@
+{{/* Atlancia site copy of theme hero/big.html (Blowfish). The only change
+  from the theme file is the cover resolution, which runs through
+  functions/cover.html so a "-cover-light/-cover-dark" pair can follow the
+  reader's appearance mode. Everything else is theme code. */}}
+{{ $useDefault := false }}
+{{ $featuredURL := "" }}
+{{ $darkURL := "" }}
+{{ $useDefault := "" }}
+{{ $cover := partial "functions/cover.html" (dict "page" . "spec" (site.Store.Get "backgroundImageWidth")) }}
+{{ $featuredURL = $cover.url }}
+{{ $darkURL = $cover.dark }}
+{{ if $featuredURL }}{{ $useDefault = false }}{{ end }}
+
+{{ $caption := "" }}
+{{ if .Params.featureimagecaption }}
+  {{- $caption = .Params.featureimagecaption -}}
+{{ end }}
+
+{{- $alt := .Page.Title -}}
+{{- with .Page.Params.alt }}{{ $alt = . }}{{ end -}}
+
+{{ if .Params.coverMotion }}
+  {{ partial "hero/motion.html" (dict "page" . "name" .Params.coverMotion "alt" $alt) }}
+{{ else }}
+{{ with $featuredURL }}
+  {{ $style := "" }}
+  {{ $defaultPosition := false }}
+  {{ with $.Params.imagePosition | default $defaultPosition }}
+    {{ $style = printf "object-position: %s;" . }}
+  {{ end }}
+  <figure>
+    {{ if $darkURL }}
+      <div class="cover-pair relative">
+        <img
+          src="{{ . }}"
+          alt="{{ $alt }}"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="w-full rounded-lg single_hero_round nozoom cover-pair__light"
+          {{ if $style }}style="{{ $style | safeCSS }}"{{ end }} />
+        <img
+          src="{{ $darkURL }}"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover rounded-lg single_hero_round nozoom cover-pair__dark"
+          {{ if $style }}style="{{ $style | safeCSS }}"{{ end }} />
+      </div>
+    {{ else }}
+      <img
+        src="{{ . }}"
+        alt="{{ $alt }}"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        class="w-full rounded-lg single_hero_round nozoom"
+        {{ if $style }}style="{{ $style | safeCSS }}"{{ end }} />
+    {{ end }}
+    {{ if $caption }}
+      <figcaption class="text-sm text-neutral-700 dark:text-neutral-400 hover:underline text-center">
+        {{ $caption | markdownify }}
+      </figcaption>
+    {{ end }}
+  </figure>
+{{ end }}
+{{ end }}
