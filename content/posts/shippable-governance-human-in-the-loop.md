@@ -1,7 +1,7 @@
 ---
 title: "Shippable Governance and the Human in the Loop"
 date: "2026-10-24T10:45:00-04:00"
-lastmod: "2026-10-27T09:40:00-04:00"
+lastmod: "2026-10-27T12:00:00-04:00"
 slug: "shippable-governance-human-in-the-loop"
 url: "/shippable-governance-human-in-the-loop.html"
 type: posts
@@ -11,43 +11,49 @@ showComments: true
 meta_robots: "index, follow"
 ---
 
-I have spent an inordinate amount of time over the past year experimenting with coding agents, models, and frameworks on my computer. A slightly absurd amount of time.
+I have spent an inordinate amount of time over the past month experimenting with coding agents, frameworks, and models on my computer. A silly, slightly obsessive amount of time. 
 
-I have always loved building things, turning a raw thought into something visible on a screen. Yet I have never felt drawn toward artistic expression for its own sake. My urge to build has always been about making things work better. I want to turn an ephemeral thought into a durable artifact, something I can return to and inspect.
+I have spent days building custom tooling, tearing it down, rebuilding it, and rethinking how models connect to local files. I have evaluated subscriptions, tested different reasoning engines, and wired up guardrails, completely absorbed in the mechanics of how we create software.
 
-Usually, when I look at something I built yesterday, I do not admire it. I immediately start interrogating my own blind spots: How did I fail to see a cleaner structure? Why was my initial approach so narrow?
+I have always loved building things, turning an idea in my head into something visible on a screen. Yet I have never felt drawn toward artistic expression for its own sake. My urge to build has always been about making things work better. While I enjoy turning over an interesting concept, it feels far more satisfying when a thought becomes a durable artifact; something I can return to, learn from, and refine over time. 
 
-That is why working with modern coding agents became addictive in a very specific way. It unlocked rapid, relentless learning loops. You turn an idea over in your head, watch it materialize into code within minutes, and occasionally watch it fall flat on its face. Because you did not spend three days writing boilerplate, you carry zero sunk-cost attachment to the code. You can spend forty-five minutes building an experimental tool, realize it is a dead end, delete the directory, and move on without a second of regret. What you acquired was not the script; it was the clarity that came from testing the assumption against reality.
+Even when I revisit essays on this very blog, I rarely admire what I wrote. I immediately catch blind spots: How did I miss that angle? Why was my structure so rigid? Still, I enjoy the discipline of forcing an idea into the world, suffering through the friction, and learning from the outcome.
 
-In Site Reliability Engineering, there is a technical term for repetitive, manual operational tasks that scale linearly with service growth: toil.
+Working with modern coding agents became addictive because it tapped directly into that cycle. It paired my desire to engineer away friction with rapid, relentless feedback loops. 
 
-What the zeitgeist calls vibe coding let me approach daily life with an SRE mindset. How do we engineer away the toil?
+You turn an idea in your head into running code within minutes. You watch it fail. You dig into the logs to understand why. You realize you had an obvious blind spot that you could have avoided had you read the documentation, but you were never going to read up until you felt the pain of the error. Once you recognize a dead end, you delete the directory and move on. From initial thought to working prototype to realizing the idea was flawed took thirty minutes. The cost of failure is so low that you finally get to live the old engineering principle of failing fast.
 
-I began applying autonomous agents to the operational friction of everyday life: sorting tax documentation, extracting contract clauses from opaque terms of service, navigating consumer dispute filings, and turning job applications into disciplined, evidence-based packages. Instead of spending an exhausting evening drafting an email to a customer service bureaucracy, an agent drafts the note from verified policy facts, I make two edits, and send it.
+In Site Reliability Engineering, there is a concept I have always loved: treating operations as an engineering problem. SRE calls the repetitive, manual operational tasks that scale linearly with a system toil. How do you engineer away the toil?
 
-Engineering away the irksome, administrative drag of life is a hell of a thing.
+What pop culture refers to with slight derogation as vibe coding allowed me to apply that exact engineering mindset to everyday life. My budget for this sort of tinkering has always been irrationally high; the hours I have spent over the years reconfiguring smart home automations far exceed the effort of simply getting off the couch to flip a light switch. 
 
-Yet the moment you move past personal scripts and attempt to build durable software systems with these tools, the naive dream of effortless automation collides with reality.
+Yet coding agents unlocked that problem-solving impulse across an entirely new surface. I began targeting the annoying, administrative drag of daily operations: sorting tax documentation, extracting relevant clauses from opaque terms of service, drafting responses to bureaucratic customer service disputes, and parsing arcane government regulations. Having an agent draft a response from verified policy facts, making two quick edits, and sending it frees up real mental space. 
 
-Working with an ecosystem of autonomous agents does not feel like operating a compiler, a code generator, or a spreadsheet. It feels strikingly, unmistakably like coaching an engineering delivery team.
+Engineering away the irksome drag of life is a hell of a thing.
 
-You assign an objective, observe the execution, and inspect the resulting output. When something breaks, you step in with diagnostic questions that any seasoned engineering leader would recognize: What was your foundation for that design? What sources did you lean on? Did you verify whether that dependency actually exists, or did you assume it was there because it sounded plausible?
+Along the way, I made every possible mistake. I watched my laptop bog down completely under runaway background jobs. I blew past five-hour token limits in ninety minutes. I accidentally placed too much trust in data from a model that was cheerfully hallucinating. 
 
-Working across multiple models, reasoning engines, and subagents exposes the reality of cognitive diversity in machines. One model is brilliant at creative architectural synthesis but prone to silent drift if left unmonitored. Another is pedantically literal, executing instructions with surgical precision while missing obvious systemic context. A third model hallucinates libraries with cheerful confidence unless pinned to deterministic schemas. Coaxing consistent, high-integrity outcomes from this ensemble requires constant calibration, coaching, and boundary setting.
+I began to realize that on my single laptop, I was living through a tempest in a teacup version of the exact dilemma every modern enterprise is now facing.
 
-The initial temptation for any practitioner discovering these quirks is to micro-manage the system. You configure the software to prompt you for permission before every single tool invocation, file edit, or terminal command.
+Less than two years ago, I sat on an early pilot user group at the central bank, granted early access to enterprise generative tools. My role was to experiment, communicate with the teams managing security and rollout, and champion practical use cases to skeptical colleagues. That feels like a lifetime ago. The sheer speed of change has collapsed multi-year technology lifecycles into weeks, and that feeling of continuous experimentation and failure is going to remain our reality for a long time to come.
 
-That instinct is a trap. Sitting in front of a computer screen manually approving dozens of routine function calls reduces a seasoned professional to a stressed-out clerk. You spend your day clicking "Approve" on shell commands you barely have time to read, introducing massive cognitive latency while achieving zero genuine safety. You end up doing almost nothing useful, exhausted by the illusion of control.
+As I worked through those failures, my approach to governing these agents swung wildly like a pendulum.
 
-If you cannot micro-manage every move, and you cannot let autonomous agents run wild without boundaries, how do you govern them?
+At first, I tried to micro-manage everything. I configured the environment to demand my explicit confirmation before every tool call, bash execution, or file write. Within two days, I was exhausted. Sitting in front of a laptop clicking "Approve" every twenty seconds turns a professional into a stressed-out clerk. You end up reading nothing, adding massive latency, and doing almost no real work while clinging to the illusion of control.
 
-The answer is the same answer that great engineering leaders discovered decades ago when scaling human organizations: you stop acting like a manual gatekeeper, and you start shipping the rules as code.
+Frustrated by the bottleneck, I swung the pendulum to the opposite extreme: total delegation. I removed the permission gates, gave the agents broad tool access, and let them run unattended. 
+
+That failed just as quickly. The agents did not achieve effortless execution; they drifted. They filled my terminal with circular debugging loops, burned through API credits, and generated brittle code that collapsed the moment it touched real-world constraints.
+
+Finding the right level of operational control was not an abstract design exercise. It required circulating through those feedback loops, feeling the friction of both extremes, and discovering where safety actually lives. You cannot determine the right balance of autonomy and constraint in an ivory tower; you have to be an active human in the loop, probing the boundaries of the system.
+
+That realization led me straight into the heart of an institutional battle I lived through years ago: the gatekeeper dilemma.
 
 ## The Gatekeeper Dilemma
 
-Years ago, while leading delivery modernization initiatives in central banking, I found myself sitting in an enterprise architecture review board that had become an immovable institutional bottleneck.
+During my tenure modernizing delivery in central banking, I sat across from an enterprise architecture review board that had become an immovable institutional bottleneck.
 
-Teams across the bank spent months building digital capabilities, only to have their initiatives held in limbo for weeks waiting for an architecture committee to convene, debate, and render judgment. Project managers were exasperated; business sponsors were furious. When I challenged the committee on the multi-week backlog, the chair explained that their rigorous manual review was the only barrier standing between the bank and catastrophic systemic failure.
+Teams across the bank spent months building digital systems, only to have their initiatives stalled for weeks waiting for an architecture committee to convene, debate, and render judgment. Project managers were exasperated; business sponsors were furious. When I challenged the committee on their multi-week backlog, the chair explained that their rigorous manual review was the only barrier protecting the bank from catastrophic failure.
 
 I proposed a straightforward alternative: "Tell us the exact criteria you use to evaluate these systems. Write them down as explicit principles and automated checks. We will embed those checks directly into the delivery pipelines so teams can prove compliance before they ever ask for time on your calendar."
 
