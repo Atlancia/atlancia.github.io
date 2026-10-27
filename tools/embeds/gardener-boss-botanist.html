@@ -1,0 +1,73 @@
+<!-- Atlancia embed: Difference - a boss and a botanist (interactive).
+     Fits the post Seeing the Difference Between a Boss and a Botanist.
+     Same team, different theory of control. Hover a row to isolate it.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-bossb">
+  <style>
+    .atlx-div-bossb {
+      --bb-ink: var(--atl-ink, #EEEDED);
+      --bb-text: var(--atl-figure-text, #BFBFBF);
+      --bb-dim: var(--atl-dim, #9D9D9D);
+      --bb-line: var(--atl-line, #373737);
+      --bb-surface: var(--atl-surface, #1e1e1e);
+      --bb-amber: var(--atl-accent, #FFC074);
+      --bb-green: #54A468;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--bb-surface);
+      color: var(--bb-text);
+      border: 1px solid var(--bb-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-bossb * { box-sizing: border-box; }
+    .atlx-div-bossb .atlx-bb-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--bb-ink);
+    }
+    .atlx-div-bossb .atlx-bb-sub { margin: 0 0 .9rem; color: var(--bb-dim); font-size: .95rem; max-width: 44rem; }
+    .atlx-div-bossb .atlx-bb-row {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .atlx-div-bossb .atlx-bb-side {
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--bb-dim);
+    }
+    .atlx-div-bossb .atlx-bb-row {
+      border: 1px solid var(--bb-line); border-radius: 6px; padding: .9rem 1rem;
+      margin-top: .6rem; background: rgba(255,255,255,0.02); transition: opacity .25s ease;
+    }
+    .atlx-div-bossb .atlx-bb-row > div { flex: 1 1 12rem; }
+    .atlx-div-bossb .atlx-bb-row .atlx-bb-bot { border-left: 2px solid var(--bb-green); padding-left: .8rem; }
+    .atlx-div-bossb .atlx-bb-row p { margin: .15rem 0 0; font-size: .92rem; color: var(--bb-text); line-height: 1.45; }
+    .atlx-div-bossb p { hyphens: none; }
+  </style>
+  <h3 class="atlx-bb-title">A boss and a botanist</h3>
+  <p class="atlx-bb-sub">Same team, different theory of control. Hover a row to isolate it.</p>
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: a boss moves pieces and demands the bloom, while a botanist sets the brief, prunes for space, and lets growth stay the plant's job.</p></noscript>
+  <div class="atlx-bb-row" tabindex="0"><div><p class="atlx-bb-side">The boss</p><p>Moves pieces with precision, assumed to be the most knowledgeable in the room.</p></div><div class="atlx-bb-bot"><p class="atlx-bb-side">The botanist</p><p>Assembles diverse teams, knowing the people closest to the work hold the insights.</p></div></div>
+  <div class="atlx-bb-row" tabindex="0"><div><p class="atlx-bb-side">The boss</p><p>Hands down directives and dictates outcomes.</p></div><div class="atlx-bb-bot"><p class="atlx-bb-side">The botanist</p><p>Sets the brief and the standards, then gives room to move.</p></div></div>
+  <div class="atlx-bb-row" tabindex="0"><div><p class="atlx-bb-side">The boss</p><p>Enforces rules and weeds out dissent.</p></div><div class="atlx-bb-bot"><p class="atlx-bb-side">The botanist</p><p>Prunes to create space, weeding only what threatens the garden.</p></div></div>
+  <div class="atlx-bb-row" tabindex="0"><div><p class="atlx-bb-side">The boss</p><p>Demands the bloom on schedule.</p></div><div class="atlx-bb-bot"><p class="atlx-bb-side">The botanist</p><p>Holds the conditions; the growing stays the plant's job.</p></div></div>
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-bossb') : document.querySelector('.atlx-div-bossb');
+    if(!root) return;
+    var rows = root.querySelectorAll('.atlx-bb-row');
+    rows.forEach(function(r){
+      function on(){ rows.forEach(function(o){ o.style.opacity = (o === r) ? '1' : '0.35'; }); }
+      function off(){ rows.forEach(function(o){ o.style.opacity = '1'; }); }
+      r.addEventListener('mouseenter', on);
+      r.addEventListener('mouseleave', off);
+      r.addEventListener('focus', on);
+      r.addEventListener('blur', off);
+    });
+  })();
+  </script>
+</div>

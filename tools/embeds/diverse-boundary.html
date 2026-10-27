@@ -1,0 +1,114 @@
+<!-- Atlancia embed: Diversity and complexity - knowledge boundary explorer (interactive).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     Least complex on the left, most on the right; each domain card carries its own callout.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-boundary">
+  <style>
+    .atlx-div-boundary {
+      --db-ink: var(--atl-ink, #EEEDED);
+      --db-text: var(--atl-figure-text, #BFBFBF);
+      --db-dim: var(--atl-dim, #9D9D9D);
+      --db-line: var(--atl-line, #373737);
+      --db-surface: var(--atl-surface, #1e1e1e);
+      --db-blue: var(--atl-info, #5B9ED5);
+      --db-green: var(--atl-success, #54A468);
+      --db-amber: var(--atl-accent, #FFC074);
+      --db-purple: #a78bfa;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--db-surface);
+      color: var(--db-text);
+      border: 1px solid var(--db-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-boundary * { box-sizing: border-box; }
+    .atlx-div-boundary .atlx-db-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--db-ink);
+    }
+    .atlx-div-boundary .atlx-db-sub { margin: 0 0 .3rem; color: var(--db-dim); font-size: .95rem; }
+    .atlx-div-boundary .atlx-db-flow { display: grid; gap: .6rem; margin-top: .9rem; }
+    .atlx-div-boundary .atlx-db-side {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--db-dim);
+      margin: .3rem 0 0;
+    }
+    .atlx-div-boundary .atlx-db-card {
+      width: 100%;
+      margin: 0;
+      padding: .7rem .9rem;
+      border: 1px solid var(--db-line);
+      border-top-width: 4px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+      color: var(--db-text);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .atlx-div-boundary .atlx-db-card[data-domain="simple"] { border-top-color: var(--db-amber); }
+    .atlx-div-boundary .atlx-db-card[data-domain="complicated"] { border-top-color: var(--db-blue); }
+    .atlx-div-boundary .atlx-db-card[data-domain="complex"] { border-top-color: var(--db-green); }
+    .atlx-div-boundary .atlx-db-card[data-domain="chaotic"] { border-top-color: var(--db-purple); }
+    .atlx-div-boundary .atlx-db-card .name { display: flex; align-items: center; gap: .5rem; font-weight: 600; font-size: 1.05rem; line-height: 1.3; color: var(--db-ink); min-height: 1.4em; }
+    .atlx-div-boundary .atlx-db-card .dot { width: 12px; height: 12px; border-radius: 50%; flex: 0 0 auto; }
+    .atlx-div-boundary .atlx-db-card .know { display: block; font-size: .85rem; color: var(--db-dim); font-weight: 500; margin: .1rem 0 .45rem; min-height: 1.4em; }
+    .atlx-div-boundary .atlx-db-card .body strong { color: var(--db-ink); }
+    .atlx-div-boundary .atlx-db-card .body span { display: block; margin-top: .25rem; }
+    .atlx-div-boundary .atlx-db-divline { display: flex; align-items: center; gap: .6rem; margin: .2rem 0; }
+    .atlx-div-boundary .atlx-db-divline .rule { flex: 1; height: 0; border-top: 4px dashed var(--db-dim); }
+    .atlx-div-boundary .atlx-db-divline .tag {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--db-dim);
+      white-space: nowrap;
+      border: 1px solid var(--db-dim);
+      border-radius: 999px;
+      padding: .2rem .9rem;
+    }
+  </style>
+
+  <h3 class="atlx-db-title">The Knowledge Boundary</h3>
+  <p class="atlx-db-sub">Most complex at the top, least at the bottom. The boundary sits between Complex and Complicated.</p>
+
+  <noscript><p style="font-size:.9rem;">The gist: below the Knowledge Boundary work is predictable with a stable optimum where quality means conformance, while beyond it information is created through work where quality needs experimentation and new perspectives.</p></noscript>
+
+  <div class="atlx-db-flow">
+    <p class="atlx-db-side">Beyond the boundary</p>
+    <div class="atlx-db-card" data-domain="chaotic">
+      <span class="name"><span class="dot" style="background:var(--db-purple)"></span>Chaotic</span>
+      <span class="know">Unknown</span>
+      <span class="body"><strong>No cause and effect to find in the moment.</strong><span>No stable solution exists, so rapid experimentation is the quality system.</span></span>
+    </div>
+    <div class="atlx-db-card" data-domain="complex">
+      <span class="name"><span class="dot" style="background:var(--db-green)"></span>Complex</span>
+      <span class="know">Unknowable</span>
+      <span class="body"><strong>Information is created through work.</strong><span>No optimum holds still, so experimentation and new perspectives are the method.</span></span>
+    </div>
+    <div class="atlx-db-divline" aria-hidden="true"><span class="rule"></span><span class="tag">Knowledge Boundary</span><span class="rule"></span></div>
+    <p class="atlx-db-side">Below the boundary</p>
+    <div class="atlx-db-card" data-domain="complicated">
+      <span class="name"><span class="dot" style="background:var(--db-blue)"></span>Complicated</span>
+      <span class="know">Knowable</span>
+      <span class="body"><strong>Knowable by experts through analysis.</strong><span>Several good solutions, one optimum that holds: apply good practice.</span></span>
+    </div>
+    <div class="atlx-db-card" data-domain="simple">
+      <span class="name"><span class="dot" style="background:var(--db-amber)"></span>Simple</span>
+      <span class="know">Known</span>
+      <span class="body"><strong>Cause and effect are clear.</strong><span>Apply best practice and check conformance: training reliably reproduces the result.</span></span>
+    </div>
+  </div>
+
+</div>

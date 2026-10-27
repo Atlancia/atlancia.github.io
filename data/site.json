@@ -43,14 +43,5 @@
       "target": "_self",
       "rel": ""
     }
-  ],
-  "comments": {
-    "provider": "graphcomment",
-    "shortname": "atlancia",
-    "wrapper_class": "my-comments-wrapper",
-    "inner_class": "my-comments-inner",
-    "heading_class": "custom-h2",
-    "header": "Comments",
-    "fallback": "Please enable JS to use the comments form."
-  }
+  ]
 }

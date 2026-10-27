@@ -1,0 +1,423 @@
+<!-- Atlancia embed: Trade-off mentality - team capacity allocation (interactive).
+     Fits the post Building a Trade-off Mentality.
+     Compare steady state vs transition, or use slider to explore tradeoffs.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-trade-capacity">
+  <style>
+    .atlx-trade-capacity {
+      --tc-ink: var(--atl-ink, #EEEDED);
+      --tc-text: var(--atl-figure-text, #BFBFBF);
+      --tc-dim: var(--atl-dim, #9D9D9D);
+      --tc-line: var(--atl-line, #373737);
+      --tc-surface: var(--atl-surface, #1e1e1e);
+      --tc-blue: var(--atl-info, #5B9ED5);
+      --tc-green: var(--atl-success, #54A468);
+      --tc-amber: var(--atl-accent, #FFC074);
+      --tc-pink: #f43f5e;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--tc-surface);
+      color: var(--tc-text);
+      border: 1px solid var(--tc-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-trade-capacity * { box-sizing: border-box; }
+    .atlx-trade-capacity .atlx-tc-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--tc-ink);
+    }
+    .atlx-trade-capacity .atlx-tc-sub {
+      margin: 0 0 .3rem;
+      color: var(--tc-dim);
+      font-size: .95rem;
+    }
+    .atlx-trade-capacity .atlx-tc-btns {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin: .9rem 0 1rem;
+    }
+    .atlx-trade-capacity .atlx-tc-btns button {
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--tc-text);
+      border: 1px solid var(--tc-line);
+      border-radius: 999px;
+      padding: .35rem .8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+    }
+    .atlx-trade-capacity .atlx-tc-btns button[aria-pressed="true"] {
+      color: var(--tc-ink);
+      border-color: var(--tc-dim);
+    }
+    .atlx-trade-capacity .atlx-tc-btns button:focus-visible {
+      outline: 2px solid var(--tc-amber);
+      outline-offset: 3px;
+    }
+    .atlx-trade-capacity .atlx-tc-slider {
+      display: none;
+      align-items: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin: -.4rem 0 1rem;
+      color: var(--tc-text);
+      font-size: .9rem;
+    }
+    .atlx-trade-capacity .atlx-tc-slider.active {
+      display: flex;
+    }
+    .atlx-trade-capacity .atlx-tc-slider label {
+      color: var(--tc-dim);
+    }
+    .atlx-trade-capacity .atlx-tc-slider input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: min(320px, 100%);
+      height: 28px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .atlx-trade-capacity .atlx-tc-slider input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--tc-line);
+    }
+    .atlx-trade-capacity .atlx-tc-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--tc-amber);
+      border: 3px solid var(--tc-surface);
+      margin-top: -8px;
+    }
+    .atlx-trade-capacity .atlx-tc-slider input[type="range"]::-moz-range-track {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--tc-line);
+    }
+    .atlx-trade-capacity .atlx-tc-slider input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--tc-amber);
+      border: 3px solid var(--tc-surface);
+    }
+    .atlx-trade-capacity .atlx-tc-slider output {
+      font-variant-numeric: tabular-nums;
+      color: var(--tc-amber);
+      font-weight: 600;
+      min-width: 3ch;
+      text-align: right;
+    }
+    .atlx-trade-capacity .atlx-tc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .atlx-trade-capacity .atlx-tc-panel {
+      border: 1px solid var(--tc-line);
+      border-radius: 6px;
+      background: transparent;
+      overflow: hidden;
+    }
+    .atlx-trade-capacity .atlx-tc-panel.single {
+      grid-column: 1 / -1;
+    }
+    .atlx-trade-capacity .atlx-tc-panel.is-before {
+      border-style: dashed;
+    }
+    .atlx-trade-capacity .atlx-tc-panel.is-before .atlx-tc-panel-header {
+      background: rgba(255,255,255,0.02);
+    }
+    .atlx-trade-capacity .atlx-tc-panel.is-after {
+      border-color: var(--tc-amber);
+      border-width: 1px;
+    }
+    .atlx-trade-capacity .atlx-tc-panel.is-after .atlx-tc-panel-header {
+      background: rgba(255,192,116,0.08);
+      border-bottom-color: var(--tc-amber);
+    }
+    .atlx-trade-capacity .atlx-tc-tag {
+      margin-left: auto;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--tc-dim);
+    }
+    .atlx-trade-capacity .atlx-tc-panel.is-after .atlx-tc-tag { color: var(--tc-amber); }
+    .atlx-trade-capacity .atlx-tc-panel-header {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .7rem 1rem;
+      border-bottom: 1px solid var(--tc-line);
+    }
+    .atlx-trade-capacity .atlx-tc-panel-title {
+      font-weight: 600;
+      color: var(--tc-ink);
+    }
+    .atlx-trade-capacity .atlx-tc-team {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--tc-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--tc-dim);
+    }
+    .atlx-trade-capacity .atlx-tc-body {
+      display: grid;
+      gap: .7rem;
+      padding: .9rem 1rem 1rem;
+    }
+    .atlx-trade-capacity .atlx-tc-row {
+      display: grid;
+      grid-template-columns: minmax(210px, auto) 1fr auto;
+      align-items: center;
+      gap: 1rem;
+    }
+    @media (max-width: 560px) {
+      .atlx-trade-capacity .atlx-tc-row {
+        grid-template-columns: 1fr;
+        gap: .4rem;
+      }
+      .atlx-trade-capacity .atlx-tc-percent {
+        justify-self: start;
+      }
+    }
+    .atlx-trade-capacity .atlx-tc-label {
+      color: var(--tc-text);
+      font-size: .85rem;
+      white-space: nowrap;
+    }
+    .atlx-trade-capacity .atlx-tc-track {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--tc-line);
+      overflow: hidden;
+    }
+    .atlx-trade-capacity .atlx-tc-bar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+    .atlx-trade-capacity .atlx-tc-bar.critical { background: var(--tc-pink); }
+    .atlx-trade-capacity .atlx-tc-bar.new { background: var(--tc-amber); }
+    .atlx-trade-capacity .atlx-tc-bar.growth { background: var(--tc-green); }
+    .atlx-trade-capacity .atlx-tc-percent {
+      font-variant-numeric: tabular-nums;
+      color: var(--tc-ink);
+      font-size: .85rem;
+      min-width: 3ch;
+      text-align: right;
+    }
+    .atlx-trade-capacity .atlx-tc-inline {
+      position: relative;
+      margin: .5rem 0 0;
+      padding: .6rem .9rem;
+      border: 1px solid rgba(255,192,116,0.75);
+      border-radius: 6px;
+      background: rgba(255,192,116,0.07);
+      color: var(--tc-text);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .atlx-trade-capacity .atlx-tc-inline::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 2.2rem;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid rgba(255,192,116,0.75);
+    }
+    .atlx-trade-capacity .atlx-tc-inline strong { color: var(--tc-ink); }
+    .atlx-trade-capacity .atlx-tc-inline.up {
+      border-color: rgba(244,63,94,0.8);
+      background: rgba(244,63,94,0.07);
+    }
+    .atlx-trade-capacity .atlx-tc-inline.up::before { border-bottom-color: rgba(244,63,94,0.8); }
+    .atlx-trade-capacity .atlx-tc-inline.down {
+      border-color: rgba(84,164,104,0.8);
+      background: rgba(84,164,104,0.07);
+    }
+    .atlx-trade-capacity .atlx-tc-inline.down::before { border-bottom-color: rgba(84,164,104,0.8); }
+    .atlx-trade-capacity [data-view="slider"] { display: none; }
+    .atlx-trade-capacity[data-mode="slider"] [data-view="compare"] { display: none; }
+    .atlx-trade-capacity[data-mode="slider"] [data-view="slider"] { display: grid; }
+  </style>
+
+  <h3 class="atlx-tc-title">Team Capacity During a Transition</h3>
+  <p class="atlx-tc-sub">There ain't no such thing as a free lunch. Adding work means something else gets less capacity.</p>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript. The gist: before a transition the team spends most capacity on the critical system with room for training, while in the first year of transition a new application takes half of capacity and both core work and training shrink.</p></noscript>
+
+  <div class="atlx-tc-btns">
+    <button data-action="mode" data-mode="compare" aria-pressed="true">Compare states</button>
+    <button data-action="mode" data-mode="slider" aria-pressed="false">Transition slider</button>
+  </div>
+
+  <div class="atlx-tc-slider" data-role="slider">
+    <label for="tc-intensity">Transition intensity</label>
+    <input id="tc-intensity" type="range" min="0" max="100" value="0">
+    <output for="tc-intensity">0%</output>
+  </div>
+
+  <div class="atlx-tc-grid" data-view="compare">
+    <article class="atlx-tc-panel is-before">
+      <header class="atlx-tc-panel-header">
+        <div class="atlx-tc-team">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="atlx-tc-panel-title">Before Transition</div>
+        <span class="atlx-tc-tag">Before</span>
+      </header>
+      <div class="atlx-tc-body">
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Critical System</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar critical" style="width: 80%"></div></div>
+          <div class="atlx-tc-percent">80%</div>
+        </div>
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Training &amp; Development</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar growth" style="width: 20%"></div></div>
+          <div class="atlx-tc-percent">20%</div>
+        </div>
+      </div>
+    </article>
+    <article class="atlx-tc-panel is-after">
+      <header class="atlx-tc-panel-header">
+        <div class="atlx-tc-team">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="atlx-tc-panel-title">First Year of Transition</div>
+        <span class="atlx-tc-tag">After</span>
+      </header>
+      <div class="atlx-tc-body">
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Critical System</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar critical" style="width: 40%"></div></div>
+          <div class="atlx-tc-percent">40%</div>
+        </div>
+        <p class="atlx-tc-inline up"><strong>Pushes out core work.</strong> Down from 80% to 40% to make room for the new system.</p>
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">New Low Availability Application</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar new" style="width: 50%"></div></div>
+          <div class="atlx-tc-percent">50%</div>
+        </div>
+        <p class="atlx-tc-inline"><strong>This new load is the tradeoff.</strong> It takes half of capacity, squeezing out development of people and product.</p>
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Training &amp; Development</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar growth" style="width: 10%"></div></div>
+          <div class="atlx-tc-percent">10%</div>
+        </div>
+        <p class="atlx-tc-inline down"><strong>Less room to improve.</strong> Halved from 20% to 10%, so the team has less capacity to develop its people and its product over the long run.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="atlx-tc-grid" data-view="slider">
+    <article class="atlx-tc-panel single">
+      <header class="atlx-tc-panel-header">
+        <div class="atlx-tc-team">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="atlx-tc-panel-title">Team Capacity Allocation</div>
+      </header>
+      <div class="atlx-tc-body">
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Critical System</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar critical" data-bar="critical"></div></div>
+          <div class="atlx-tc-percent" data-pct="critical">80%</div>
+        </div>
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">New Low Availability Application</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar new" data-bar="new"></div></div>
+          <div class="atlx-tc-percent" data-pct="new">0%</div>
+        </div>
+        <div class="atlx-tc-row">
+          <div class="atlx-tc-label">Training &amp; Development</div>
+          <div class="atlx-tc-track"><div class="atlx-tc-bar growth" data-bar="growth"></div></div>
+          <div class="atlx-tc-percent" data-pct="growth">20%</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-trade-capacity') : document.querySelector('.atlx-trade-capacity');
+    if(!root) return;
+    var modeBtns = root.querySelectorAll('[data-action="mode"]');
+    var slider = root.querySelector('[data-role="slider"]');
+    var range = root.querySelector('#tc-intensity');
+    var out = root.querySelector('output[for="tc-intensity"]');
+    var barC = root.querySelector('[data-bar="critical"]');
+    var barN = root.querySelector('[data-bar="new"]');
+    var barG = root.querySelector('[data-bar="growth"]');
+    var pctC = root.querySelector('[data-pct="critical"]');
+    var pctN = root.querySelector('[data-pct="new"]');
+    var pctG = root.querySelector('[data-pct="growth"]');
+    function setMode(m){
+      root.setAttribute('data-mode', m);
+      modeBtns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-mode') === m)); });
+      if(m === 'slider'){ slider.classList.add('active'); update(); }
+      else { slider.classList.remove('active'); }
+    }
+    modeBtns.forEach(function(b){ b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); }); });
+    function update(){
+      var t = parseInt(range.value, 10) || 0;
+      out.textContent = t + '%';
+      var c = Math.round(80 - (40 * t / 100));
+      var g = Math.round(20 - (10 * t / 100));
+      var n = Math.round(50 * t / 100);
+      barC.style.width = c + '%';
+      barN.style.width = n + '%';
+      barG.style.width = g + '%';
+      pctC.textContent = c + '%';
+      pctN.textContent = n + '%';
+      pctG.textContent = g + '%';
+    }
+    range.addEventListener('input', update);
+    barC.style.width = '80%'; barN.style.width = '0%'; barG.style.width = '20%';
+    setMode('compare');
+  })();
+  </script>
+</div>

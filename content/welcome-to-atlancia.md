@@ -9,7 +9,6 @@ url: "/welcome-to-atlancia.html"
 # feed stays the five essays. It kept its comment thread, which is why the
 # id is still here.
 media_id: 1
-showComments: true
 meta_robots: "index, follow"
 build:
   list: never
@@ -20,3 +19,4 @@ Visit Our Blog
 <p>&nbsp;</p>
 
 <p>&nbsp;</p>
+

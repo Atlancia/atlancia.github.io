@@ -1,0 +1,171 @@
+<!-- Atlancia embed: Difference - precious versus provisional (interactive).
+     Fits the post Difference Needs Somewhere to Go.
+     Statements versus questions across four fates. Time runs left to right.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-tempo">
+  <style>
+    .atlx-div-tempo {
+      --tp-ink: var(--atl-ink, #EEEDED);
+      --tp-text: var(--atl-figure-text, #BFBFBF);
+      --tp-dim: var(--atl-dim, #9D9D9D);
+      --tp-line: var(--atl-line, #373737);
+      --tp-surface: var(--atl-surface, #1e1e1e);
+      --tp-amber: var(--atl-accent, #FFC074);
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--tp-surface);
+      color: var(--tp-text);
+      border: 1px solid var(--tp-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-tempo * { box-sizing: border-box; }
+    .atlx-div-tempo .atlx-tp-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--tp-ink);
+    }
+    .atlx-div-tempo .atlx-tp-sub { margin: 0 0 .3rem; color: var(--tp-dim); font-size: .95rem; max-width: 44rem; }
+    .atlx-div-tempo svg { display: block; width: 100%; height: auto; }
+    .atlx-div-tempo svg text { user-select: none; }
+  </style>
+  <h3 class="atlx-tp-title">What do you believe an idea is?</h3>
+  <p class="atlx-tp-sub">Statements versus questions, across four fates. Time runs left to right. Hover a fate to isolate it.</p>
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: performed ideas drain the performer; statements that meet questions as attacks end with both sides silent; parallel play never tests anything; negotiated ideas, held loosely and questioned with care, become ours and better.</p></noscript>
+  <svg id="ddt2-svg" role="img" aria-label="Statements versus questions across four fates"></svg>
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-tempo') : document.querySelector('.atlx-div-tempo');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var INK = 'var(--tp-ink)', DIM = 'var(--tp-dim)', LINE = 'var(--tp-line)', AMBER = 'var(--tp-amber)';
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    }
+    function txt(parent, x, y, s, size, weight, fill, anchor){
+      var t = el('text', {x: x, y: y, 'font-size': size, 'font-weight': weight || 400, fill: fill || INK, 'text-anchor': anchor || 'middle', 'font-family': '"Cal Sans", sans-serif'}, parent);
+      t.textContent = s;
+      return t;
+    }
+    var MASKD = 'M760-660q17 0 28.5-11.5T800-700q0-17-11.5-28.5T760-740q-17 0-28.5 11.5T720-700q0 17 11.5 28.5T760-660Zm-160 0q17 0 28.5-11.5T640-700q0-17-11.5-28.5T600-740q-17 0-28.5 11.5T560-700q0 17 11.5 28.5T600-660Zm80 60q-29 0-55.5 11.5T586-551q-5 10 2.5 18.5T608-524h144q12 0 19.5-8.5T774-551q-12-26-38.5-37.5T680-600ZM280-80q-100 0-170-70T40-320v-200q0-33 23.5-56.5T120-600h320q33 0 56.5 23.5T520-520v200q0 100-70 170T280-80Zm0-80q66 0 113-47t47-113v-200H120v200q0 66 47 113t113 47Zm640-640v200q0 102-70 171t-171 69q-17 0-33.5-2t-32.5-7q-16-5-23-20t-2-31q5-16 20-23.5t31-2.5q11 3 21 4.5t21 1.5q66 0 112.5-47T840-600v-200H520v100q0 17-11.5 28.5T480-660q-17 0-28.5-11.5T440-700v-100q0-33 23.5-56.5T520-880h320q33 0 56.5 23.5T920-800ZM200-380q17 0 28.5-11.5T240-420q0-17-11.5-28.5T200-460q-17 0-28.5 11.5T160-420q0 17 11.5 28.5T200-380Zm160 0q17 0 28.5-11.5T400-420q0-17-11.5-28.5T360-460q-17 0-28.5 11.5T320-420q0 17 11.5 28.5T360-380Zm-80 136q28 0 53-11t39-35q5-11-1-20.5t-17-9.5H206q-11 0-17 9.5t-1 20.5q14 24 39 35t53 11Zm0-96Zm390-280Z';
+    var BOXD = 'M480-560q-17 0-28.5 11.5T440-520v128l-36-36q-11-11-28-11t-28 11q-11 11-11 28t11 28l104 104q12 12 28 12t28-12l104-104q11-11 11-28t-11-28q-11-11-28-11t-28 11l-36 36v-128q0-17-11.5-28.5T480-560Zm-280-80v440h560v-440H200Zm0 520q-33 0-56.5-23.5T120-200v-499q0-14 4.5-27t13.5-24l50-61q11-14 27.5-21.5T250-840h460q18 0 34.5 7.5T772-811l50 61q9 11 13.5 24t4.5 27v499q0 33-23.5 56.5T760-120H200Zm16-600h528l-34-40H250l-34 40Zm264 300Z';
+    var HANDSD = 'M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l108-108q11-11 27.5-11.5T398-528q11 11 11 28t-11 28L291-364q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l108-107q11-11 27.5-11.5T483-443q11 11 11 28t-11 28L376-279q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l108-107q11-11 27.5-11.5T568-358q11 11 11 28t-11 28L460-194q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l175-175q23-23 56.5-23t56.5 23l75 75q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-14 14-20 33t-3 38q3 17-7 30t-27 15q-17 2-30-7.5T42-553q-6-38 5.5-74.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-98-560Z';
+    var FORUMD = 'M280-240q-17 0-28.5-11.5T240-280v-80h520v-360h80q17 0 28.5 11.5T880-680v503q0 27-24.5 37.5T812-148l-92-92H280Zm-40-200-92 92q-19 19-43.5 8.5T80-377v-463q0-17 11.5-28.5T120-880h520q17 0 28.5 11.5T680-840v360q0 17-11.5 28.5T640-440H240Zm360-80v-280H160v280h440Zm-440 0v-280 280Z';
+    function micon(parent, d, x, y, s, color){
+      var sc = s / 960;
+      return el('path', {d: d, fill: color, transform: 'translate(' + x + ',' + (y + s) + ') scale(' + sc + ')'}, parent);
+    }
+    var W = 720, T0 = 128, T1 = 704, MIN = 60;
+    function X(m){ return T0 + (m / MIN) * (T1 - T0); }
+    var MODES = [
+      {id: 'assim', name: 'Assimilate', move: 'perform finished ideas', icon: 'mask',
+       prep: [{m: [0,15]}, {m: [18,33]}, {m: [36,60]}],
+       eng: [{m: [5,12], o: 1}, {m: [20,27], o: 0.7}, {m: [38,45], o: 0.5}],
+       prepE: 85, engE: 25,
+       out: 'polite, nothing real'},
+      {id: 'impasse', name: 'The impasse', move: 'statements meet questions', icon: 'forum',
+       prep: [{m: [0,14]}],
+       eng: [{m: [16,20], q: true}, {m: [22,26], q: true}],
+       flat: [27],
+       prepE: 30, engE: 20,
+       out: 'nothing survives contact'},
+      {id: 'contain', name: 'Contain', move: 'parallel play', icon: 'box',
+       prep: [{m: [0,20]}],
+       eng: [],
+       prepE: 75, engE: 65, emptyNote: 'no questions asked',
+       out: 'presented, never tested'},
+      {id: 'channel', name: 'Channel', move: 'negotiate the theory', icon: 'hands',
+       prep: [{m: [0,8], dash: true}, {m: [30,36], dash: true}],
+       eng: [{m: [12,18], q: true}, {m: [40,48], q: true}],
+       prepE: 80, engE: 85, prepTag: true, pauses: [[8,12],[36,40]],
+       out: 'ours and better'}
+    ];
+    var svg = root.querySelector('#ddt2-svg');
+    var MH = 196, MGAP = 24;
+    function block(g, y, m, o, style, color){
+      if(style === 'hollow'){
+        el('rect', {x: X(m[0]), y: y - 3, width: Math.max(3, X(m[1]) - X(m[0])), height: 16, rx: 3, fill: 'none', stroke: color, 'stroke-width': 1.5, opacity: o}, g);
+      } else if(style === 'q'){
+        el('rect', {x: X(m[0]), y: y - 3, width: Math.max(3, X(m[1]) - X(m[0])), height: 16, rx: 3, fill: 'none', stroke: color, 'stroke-width': 1.5, opacity: o}, g);
+        txt(g, (X(m[0]) + X(m[1])) / 2, y + 10, '?', 11, 700, color, 'middle').setAttribute('opacity', o);
+      } else if(style === 'dash'){
+        el('rect', {x: X(m[0]), y: y - 3, width: Math.max(3, X(m[1]) - X(m[0])), height: 16, rx: 3, fill: 'none', stroke: color, 'stroke-width': 1.5, 'stroke-dasharray': '5 3'}, g);
+      } else {
+        el('rect', {x: X(m[0]), y: y - 3, width: Math.max(3, X(m[1]) - X(m[0])), height: 16, rx: 3, fill: color, opacity: o}, g);
+      }
+    }
+    function lane(g, y, label, blocks, color, kind){
+      txt(g, 4, y + 13, label, 11, 600, INK, 'start');
+      el('line', {x1: T0, y1: y + 6, x2: T1, y2: y + 6, stroke: LINE, 'stroke-width': 1, opacity: 0.5}, g);
+      blocks.forEach(function(b){
+        var m = b.m || b, o = (b.o == null) ? 1 : b.o;
+        block(g, y, m, o, kind, color);
+      });
+    }
+    function energy(g, y, who, pct, color){
+      txt(g, 4, y + 11, who, 10.5, 400, DIM, 'start');
+      el('rect', {x: T0, y: y + 2, width: 200, height: 7, rx: 3.5, fill: 'none', stroke: LINE, 'stroke-width': 1}, g);
+      el('rect', {x: T0 + 1, y: y + 3, width: Math.max(0, 198 * pct / 100), height: 5, rx: 2.5, fill: color}, g);
+      txt(g, T0 + 210, y + 11, pct + '% left', 10.5, 400, DIM, 'start');
+    }
+    function build(){
+      svg.innerHTML = '';
+      var groups = [];
+      MODES.forEach(function(mode, mi){
+        var y = 8 + mi * (MH + MGAP);
+        var g = el('g', {'class': 'atlx-tp-mode', tabindex: '0'}, svg);
+        groups.push(g);
+        var dd = mode.icon === 'mask' ? MASKD : (mode.icon === 'box' ? BOXD : (mode.icon === 'hands' ? HANDSD : FORUMD));
+        micon(g, dd, 4, y + 2, 20, INK);
+        txt(g, 32, y + 16, mode.name, 13, 700, INK, 'start');
+        txt(g, 32, y + 31, mode.move, 10.5, 400, DIM, 'start');
+        var ly = y + 46;
+        if(mode.prepTag){
+          el('rect', {x: T0, y: ly - 24, width: 176, height: 18, rx: 9, fill: 'none', stroke: DIM, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, g);
+          txt(g, T0 + 88, ly - 11, 'Topics shared in advance', 10, 400, DIM);
+        }
+        lane(g, ly, 'Brings answers', mode.prep, INK, mode.id === 'channel' ? 'dash' : 'solid');
+        lane(g, ly + 30, 'Brings questions', mode.eng, AMBER, mode.id === 'assim' ? 'hollow' : 'q');
+        if(mode.flat){
+          mode.flat.forEach(function(m){
+            txt(g, X(m), ly + 42, '…', 14, 700, DIM);
+          });
+        }
+        if(mode.pauses){
+          mode.pauses.forEach(function(p){
+            var px0 = X(p[0]), px1 = X(p[1]);
+            el('rect', {x: px0, y: ly - 14, width: px1 - px0, height: 56, fill: 'none', stroke: DIM, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, g);
+          });
+          txt(g, (X(mode.pauses[0][0]) + X(mode.pauses[0][1])) / 2, ly + 52, 'Held pause', 10, 400, DIM);
+        }
+        if(mode.emptyNote){
+          txt(g, T0 + 40, ly + 44, '— ' + mode.emptyNote, 10.5, 400, DIM, 'start');
+        }
+        energy(g, ly + 68, 'Answers', mode.prepE, INK);
+        energy(g, ly + 84, 'Questions', mode.engE, AMBER);
+        txt(g, T0 + 330, ly + 95, 'The work gets: ' + mode.out, 11.5, 700, INK, 'start');
+      });
+      groups.forEach(function(g){
+        function on(){ groups.forEach(function(o){ o.setAttribute('opacity', o === g ? '1' : '0.3'); }); }
+        function off(){ groups.forEach(function(o){ o.setAttribute('opacity', '1'); }); }
+        g.addEventListener('mouseenter', on);
+        g.addEventListener('mouseleave', off);
+        g.addEventListener('focus', on);
+        g.addEventListener('blur', off);
+      });
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + (8 + MODES.length * MH + (MODES.length - 1) * MGAP + 8));
+    }
+    build();
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  })();
+  </script>
+</div>

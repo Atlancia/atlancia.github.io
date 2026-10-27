@@ -1,0 +1,278 @@
+<!-- Atlancia embed: Difference - the expanding room (interactive).
+     Fits the post Difference Needs Somewhere to Go.
+     Four teammates hold twelve things only they bring. Share them into the middle
+     and the room stretches toward everyone; hold them back and the gap stays wide.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-room">
+  <style>
+    .atlx-div-room {
+      --dr-ink: var(--atl-ink, #EEEDED);
+      --dr-text: var(--atl-figure-text, #BFBFBF);
+      --dr-dim: var(--atl-dim, #9D9D9D);
+      --dr-line: var(--atl-line, #373737);
+      --dr-surface: var(--atl-surface, #1e1e1e);
+      --dr-amber: var(--atl-accent, #FFC074);
+      --dr-code: "Monaspace Neon", ui-monospace, monospace;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--dr-surface);
+      color: var(--dr-text);
+      border: 1px solid var(--dr-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-room * { box-sizing: border-box; }
+    .atlx-div-room .atlx-dr-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--dr-ink);
+    }
+    .atlx-div-room .atlx-dr-sub { margin: 0 0 .3rem; color: var(--dr-dim); font-size: .95rem; max-width: 44rem; }
+    .atlx-div-room .atlx-dr-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 1.25rem; align-items: start; margin-top: .9rem; }
+    @media (max-width: 760px) { .atlx-div-room .atlx-dr-grid { grid-template-columns: 1fr; } }
+    .atlx-div-room svg.atlx-dr-svg { display: block; width: 100%; height: auto; }
+    .atlx-div-room .atlx-dr-presets { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 1rem; }
+    .atlx-div-room .atlx-dr-presets button {
+      font: inherit;
+      background: transparent;
+      border: 1px solid var(--dr-line);
+      border-radius: 6px;
+      padding: .5rem .7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      text-align: left;
+      flex: 1 1 8rem;
+    }
+    .atlx-div-room .atlx-dr-presets button svg { width: 22px; height: 22px; flex: none; }
+    .atlx-div-room .atlx-dr-presets button svg path { fill: var(--dr-ink, #EEEDED); }
+    .atlx-div-room .atlx-dr-presets button[aria-pressed="true"] { border-color: var(--dr-dim); }
+    .atlx-div-room .atlx-dr-presets button:focus-visible { outline: 2px solid var(--dr-amber); outline-offset: 3px; }
+    .atlx-div-room .atlx-dr-name { display: block; font-size: .85rem; font-weight: 600; color: var(--dr-ink); }
+    .atlx-div-room .atlx-dr-move { display: block; font-size: .76rem; font-weight: 400; color: var(--dr-dim); }
+    .atlx-div-room .atlx-dr-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1rem; }
+    .atlx-div-room .atlx-dr-member { border: 1px solid var(--dr-line); border-radius: 6px; padding: .55rem .7rem; }
+    .atlx-div-room .atlx-dr-member-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .45rem; }
+    .atlx-div-room .atlx-dr-member-name { font-size: .86rem; font-weight: 600; color: var(--dr-ink); }
+    .atlx-div-room .atlx-dr-status { font-size: .72rem; color: var(--dr-dim); border: 1px solid var(--dr-line); border-radius: 999px; padding: .1rem .5rem; white-space: nowrap; }
+    .atlx-div-room .atlx-dr-status.sharing { color: var(--dr-amber); border-color: var(--dr-amber); }
+    .atlx-div-room .atlx-dr-status.inside { color: #181818; background: var(--dr-amber); border-color: var(--dr-amber); font-weight: 600; }
+    .atlx-div-room .atlx-dr-tokens { display: flex; gap: .35rem; flex-wrap: wrap; }
+    .atlx-div-room .atlx-dr-token {
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .3rem .55rem;
+      border-radius: 999px;
+      border: 1px solid var(--dr-line);
+      background: transparent;
+      color: var(--dr-text);
+      cursor: pointer;
+    }
+    .atlx-div-room .atlx-dr-token:focus-visible { outline: 2px solid var(--dr-amber); outline-offset: 2px; }
+    .atlx-div-room .atlx-dr-token.shared { border-color: var(--dr-amber); color: var(--dr-ink); background: rgba(255,192,116,0.12); }
+    .atlx-div-room .atlx-dr-stats { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .8rem; border: 1px solid var(--dr-line); border-radius: 6px; padding: .7rem .8rem; margin-bottom: .2rem; }
+    .atlx-div-room .atlx-dr-stat-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--dr-dim); }
+    .atlx-div-room .atlx-dr-stat-val { font-family: var(--dr-code); font-size: 1rem; font-weight: 700; color: var(--dr-ink); margin-top: .1rem; }
+    .atlx-div-room .atlx-dr-stat-note { font-size: .78rem; color: var(--dr-dim); margin: .45rem 0 1rem; }
+    .atlx-div-room .atlx-dr-callout {
+      position: relative;
+      margin: 1rem 0 0;
+      padding: .7rem .9rem;
+      border: 1px solid rgba(255,192,116,0.75);
+      border-radius: 6px;
+      color: var(--dr-text);
+      font-size: .92rem;
+    }
+    .atlx-div-room .atlx-dr-callout::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 2.2rem;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid rgba(255,192,116,0.75);
+    }
+    .atlx-div-room .atlx-dr-callout strong { color: var(--dr-ink); }
+  </style>
+  <h3 class="atlx-dr-title">Bring it into the room</h3>
+  <p class="atlx-dr-sub">Four teammates hold twelve things only they bring. Click one to share it into the middle and watch the room stretch toward everyone. Hold them back and the gap stays wide.</p>
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: every difference shared into the middle stretches the room toward the team and shrinks the gap to enter; everything held back leaves the room small.</p></noscript>
+  <div class="atlx-dr-grid">
+    <div><svg class="atlx-dr-svg" id="ddr-svg" viewBox="0 0 720 440" role="img" aria-label="A room that expands as differences are shared into it"></svg></div>
+    <div>
+      <div class="atlx-dr-presets" role="group" aria-label="Starting points">
+        <button data-preset="assimilate" aria-pressed="true"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M760-660q17 0 28.5-11.5T800-700q0-17-11.5-28.5T760-740q-17 0-28.5 11.5T720-700q0 17 11.5 28.5T760-660Zm-160 0q17 0 28.5-11.5T640-700q0-17-11.5-28.5T600-740q-17 0-28.5 11.5T560-700q0 17 11.5 28.5T600-660Zm80 60q-29 0-55.5 11.5T586-551q-5 10 2.5 18.5T608-524h144q12 0 19.5-8.5T774-551q-12-26-38.5-37.5T680-600ZM280-80q-100 0-170-70T40-320v-200q0-33 23.5-56.5T120-600h320q33 0 56.5 23.5T520-520v200q0 100-70 170T280-80Zm0-80q66 0 113-47t47-113v-200H120v200q0 66 47 113t113 47Zm640-640v200q0 102-70 171t-171 69q-17 0-33.5-2t-32.5-7q-16-5-23-20t-2-31q5-16 20-23.5t31-2.5q11 3 21 4.5t21 1.5q66 0 112.5-47T840-600v-200H520v100q0 17-11.5 28.5T480-660q-17 0-28.5-11.5T440-700v-100q0-33 23.5-56.5T520-880h320q33 0 56.5 23.5T920-800ZM200-380q17 0 28.5-11.5T240-420q0-17-11.5-28.5T200-460q-17 0-28.5 11.5T160-420q0 17 11.5 28.5T200-380Zm160 0q17 0 28.5-11.5T400-420q0-17-11.5-28.5T360-460q-17 0-28.5 11.5T320-420q0 17 11.5 28.5T360-380Zm-80 136q28 0 53-11t39-35q5-11-1-20.5t-17-9.5H206q-11 0-17 9.5t-1 20.5q14 24 39 35t53 11Zm0-96Zm390-280Z"/></svg><span><span class="atlx-dr-name">Assimilate</span><span class="atlx-dr-move">Wear the mask</span></span></button>
+        <button data-preset="contain" aria-pressed="false"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-560q-17 0-28.5 11.5T440-520v128l-36-36q-11-11-28-11t-28 11q-11 11-11 28t11 28l104 104q12 12 28 12t28-12l104-104q11-11 11-28t-11-28q-11-11-28-11t-28 11l-36 36v-128q0-17-11.5-28.5T480-560Zm-280-80v440h560v-440H200Zm0 520q-33 0-56.5-23.5T120-200v-499q0-14 4.5-27t13.5-24l50-61q11-14 27.5-21.5T250-840h460q18 0 34.5 7.5T772-811l50 61q9 11 13.5 24t4.5 27v499q0 33-23.5 56.5T760-120H200Zm16-600h528l-34-40H250l-34 40Zm264 300Z"/></svg><span><span class="atlx-dr-name">Contain</span><span class="atlx-dr-move">Give the acceptable part</span></span></button>
+        <button data-preset="channel" aria-pressed="false"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l108-108q11-11 27.5-11.5T398-528q11 11 11 28t-11 28L291-364q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l108-107q11-11 27.5-11.5T483-443q11 11 11 28t-11 28L376-279q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l108-107q11-11 27.5-11.5T568-358q11 11 11 28t-11 28L460-194q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l175-175q23-23 56.5-23t56.5 23l75 75q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-14 14-20 33t-3 38q3 17-7 30t-27 15q-17 2-30-7.5T42-553q-6-38 5.5-74.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-98-560Z"/></svg><span><span class="atlx-dr-name">Channel</span><span class="atlx-dr-move">Move toward each other</span></span></button>
+      </div>
+      <div class="atlx-dr-list" id="ddr-team"></div>
+      <div class="atlx-dr-stats">
+        <div><div class="atlx-dr-stat-label">Room size</div><div class="atlx-dr-stat-val" id="ddr-stat-room"></div></div>
+        <div><div class="atlx-dr-stat-label">In the room</div><div class="atlx-dr-stat-val" id="ddr-stat-shared"></div></div>
+        <div><div class="atlx-dr-stat-label">Held back</div><div class="atlx-dr-stat-val" id="ddr-stat-held"></div></div>
+        <div><div class="atlx-dr-stat-label">Gap to cross</div><div class="atlx-dr-stat-val" id="ddr-stat-gap"></div></div>
+      </div>
+      <p class="atlx-dr-stat-note">The smaller the gap, the easier it is to enter.</p>
+      <div class="atlx-dr-callout" id="ddr-callout" aria-live="polite"></div>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-room') : document.querySelector('.atlx-div-room');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var INK = 'var(--dr-ink)', DIM = 'var(--dr-dim)', LINE = 'var(--dr-line)', AMBER = 'var(--dr-amber)';
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    }
+    function txt(parent, x, y, s, size, weight, fill, anchor){
+      var t = el('text', {x: x, y: y, 'font-size': size, 'font-weight': weight || 400, fill: fill || INK, 'text-anchor': anchor || 'middle', 'font-family': '"Cal Sans", sans-serif'}, parent);
+      t.textContent = s;
+      return t;
+    }
+    var MEMBERS = [
+      {id: 'dev', code: 'SD', name: 'Senior Developer', tokens: ['English Lit. Degree', 'DBA Background', 'Writing & Feedback']},
+      {id: 'test', code: 'TA', name: 'Testing Analyst', tokens: ['Tech Writer Past', 'Data Analysis', 'Manual Testing']},
+      {id: 'ux', code: 'UX', name: 'UI/UX Analyst', tokens: ['Design Thinking', 'Cust. Journey Mapping', 'Persona Development']},
+      {id: 'po', code: 'PO', name: 'Product Owner', tokens: ['Watchmaking Past', 'Personal Connections', 'Value Stream Mapping']}
+    ];
+    MEMBERS.forEach(function(m){ m.state = [false, false, false]; });
+    var CX = 360, CY = 220, ORBIT = 160, RBASE = 50, RMAX = 195;
+    var svg = root.querySelector('#ddr-svg');
+    var teamBox = root.querySelector('#ddr-team');
+    var statRoom = root.querySelector('#ddr-stat-room'), statShared = root.querySelector('#ddr-stat-shared');
+    var statHeld = root.querySelector('#ddr-stat-held'), statGap = root.querySelector('#ddr-stat-gap');
+    var callout = root.querySelector('#ddr-callout');
+    var presetBtns = root.querySelectorAll('[data-preset]');
+    function coords(i){
+      var a = (i * 2 * Math.PI / MEMBERS.length) - (Math.PI / 2);
+      return {x: CX + ORBIT * Math.cos(a), y: CY + ORBIT * Math.sin(a), a: a};
+    }
+    function renderControls(){
+      teamBox.innerHTML = '';
+      MEMBERS.forEach(function(m){
+        var row = document.createElement('div');
+        row.className = 'atlx-dr-member';
+        var head = document.createElement('div');
+        head.className = 'atlx-dr-member-head';
+        var nm = document.createElement('span');
+        nm.className = 'atlx-dr-member-name';
+        nm.textContent = m.name;
+        var st = document.createElement('span');
+        st.className = 'atlx-dr-status';
+        st.id = 'dr-status-' + m.id;
+        st.textContent = 'Holding back';
+        head.appendChild(nm);
+        head.appendChild(st);
+        row.appendChild(head);
+        var toks = document.createElement('div');
+        toks.className = 'atlx-dr-tokens';
+        m.tokens.forEach(function(tn, ti){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'atlx-dr-token' + (m.state[ti] ? ' shared' : '');
+          b.textContent = tn;
+          b.setAttribute('aria-pressed', String(m.state[ti]));
+          b.addEventListener('click', function(){
+            m.state[ti] = !m.state[ti];
+            b.classList.toggle('shared', m.state[ti]);
+            b.setAttribute('aria-pressed', String(m.state[ti]));
+            clearPresets();
+            updateAll();
+          });
+          toks.appendChild(b);
+        });
+        row.appendChild(toks);
+        teamBox.appendChild(row);
+      });
+    }
+    function clearPresets(){
+      presetBtns.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+    }
+    function updateAll(){
+      var shared = 0;
+      MEMBERS.forEach(function(m){ m.state.forEach(function(s){ if(s) shared++; }); });
+      var total = 12, held = total - shared;
+      var radius = RBASE + (shared / total) * (RMAX - RBASE);
+      var gap = Math.max(0, Math.round(ORBIT - radius));
+      statRoom.textContent = Math.round(radius);
+      statShared.textContent = shared + ' / 12';
+      statHeld.textContent = String(held);
+      statGap.textContent = String(gap);
+      if(shared === 0){
+        callout.innerHTML = '<strong>Held back:</strong> nothing enters. The room stays small and the gap to cross stays wide.';
+      } else if(shared < 6){
+        callout.innerHTML = '<strong>Stirring:</strong> ' + shared + ' in the middle. The room stretches toward the people who shared, and the gap shrinks for everyone.';
+      } else if(shared < total){
+        callout.innerHTML = '<strong>Opening:</strong> ' + shared + ' in the middle. The boundary touches contributors now; friction has somewhere to go.';
+      } else {
+        callout.innerHTML = '<strong>All in:</strong> everything the team brings is in the middle. No gap left to cross.';
+      }
+      svg.innerHTML = '';
+      el('circle', {cx: CX, cy: CY, r: ORBIT, fill: 'none', stroke: LINE, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, svg);
+      el('circle', {cx: CX, cy: CY, r: radius, fill: AMBER, 'fill-opacity': 0.08}, svg);
+      el('circle', {cx: CX, cy: CY, r: radius, fill: 'none', stroke: AMBER, 'stroke-width': 2}, svg);
+      txt(svg, CX, CY - 2, 'The room', 12, 700, INK);
+      txt(svg, CX, CY + 15, shared + ' in', 11, 400, DIM);
+      var pi = 0;
+      MEMBERS.forEach(function(m, idx){
+        var pos = coords(idx);
+        var inRoom = radius >= ORBIT - 12;
+        var sharing = m.state.some(function(s){ return s; });
+        var badge = root.querySelector('#dr-status-' + m.id);
+        if(badge){
+          badge.textContent = inRoom ? 'In the room' : (sharing ? 'Sharing' : 'Holding back');
+          badge.className = 'atlx-dr-status' + (inRoom ? ' inside' : (sharing ? ' sharing' : ''));
+        }
+        var ex = CX + radius * Math.cos(pos.a), ey = CY + radius * Math.sin(pos.a);
+        el('line', {x1: pos.x, y1: pos.y, x2: ex, y2: ey, stroke: sharing ? AMBER : DIM, 'stroke-width': sharing ? 2 : 1.5, 'stroke-dasharray': sharing ? 'none' : '3 3'}, svg);
+        el('circle', {cx: pos.x, cy: pos.y, r: inRoom ? 18 : 15, fill: 'var(--dr-surface)', stroke: inRoom ? AMBER : INK, 'stroke-width': inRoom ? 2.5 : 2}, svg);
+        txt(svg, pos.x, pos.y + 4, m.code, 10, 700, inRoom ? AMBER : INK);
+        var lx = CX + (ORBIT + 28) * Math.cos(pos.a), ly = CY + (ORBIT + 28) * Math.sin(pos.a);
+        txt(svg, lx, ly + 3, m.name, 10, 600, inRoom ? AMBER : DIM);
+      });
+      MEMBERS.forEach(function(m){
+        m.state.forEach(function(on){
+          if(!on) return;
+          var pa = (pi * 2 * Math.PI / Math.max(1, shared)) + 0.35;
+          var pd = 16 + ((pi % 3) * (radius * 0.22));
+          el('circle', {cx: CX + pd * Math.cos(pa), cy: CY + pd * Math.sin(pa), r: 4.5, fill: AMBER}, svg);
+          pi++;
+        });
+      });
+      svg.setAttribute('viewBox', '0 0 720 440');
+    }
+    function applyPreset(mode){
+      presetBtns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-preset') === mode)); });
+      MEMBERS.forEach(function(m, i){
+        if(mode === 'assimilate'){ m.state = [false, false, false]; }
+        else if(mode === 'channel'){ m.state = [true, true, true]; }
+        else {
+          if(i === 0) m.state = [false, true, true];
+          else if(i === 1) m.state = [false, true, true];
+          else if(i === 2) m.state = [true, true, false];
+          else m.state = [false, true, true];
+        }
+      });
+      renderControls();
+      updateAll();
+    }
+    presetBtns.forEach(function(b){
+      b.addEventListener('click', function(){ applyPreset(b.getAttribute('data-preset')); });
+    });
+    renderControls();
+    updateAll();
+  })();
+  </script>
+</div>

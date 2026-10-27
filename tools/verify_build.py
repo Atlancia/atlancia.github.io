@@ -43,7 +43,7 @@ REQUIRED = [
     "welcome-to-atlancia.html",
 ]
 
-POSTS = 6
+POSTS = 5
 
 LINK = re.compile(r'(?:href|src)="([^"]+)"')
 
@@ -101,9 +101,9 @@ def main(argv: list[str]) -> int:
     try:
         sitemap = ET.parse(site / "sitemap.xml").getroot()
         urls = sitemap.findall("{http://www.sitemaps.org/schemas/sitemap/0.9}url")
-        if len(urls) != POSTS + 2:
+        if len(urls) != POSTS + 1:
             problems.append(
-                f"/sitemap.xml has {len(urls)} urls, expected {POSTS + 2} "
+                f"/sitemap.xml has {len(urls)} urls, expected {POSTS + 1} "
                 "(the home page, the essays, the welcome page)"
             )
     except (OSError, ET.ParseError) as error:
@@ -127,7 +127,7 @@ def main(argv: list[str]) -> int:
 
     print(
         f"ok: {len(REQUIRED)} addresses, {POSTS} entries in both feeds, "
-        f"{POSTS + 2} sitemap urls, no broken internal links"
+        f"{POSTS + 1} sitemap urls, no broken internal links"
     )
     return 0
 

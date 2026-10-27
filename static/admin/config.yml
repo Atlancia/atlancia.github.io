@@ -37,6 +37,5 @@ collections:
       - { label: Address, name: slug, widget: string, hint: "The last part of the address. /leaders-gardeners.html comes from slug leaders-gardeners." }
       - { label: Hero image, name: featureimage, widget: image, required: false, choose_url: false, hint: "The image at the top of the essay and beside it in the lists." }
       - { label: Author, name: authors, widget: select, multiple: true, default: [liam], options: [liam] }
-      - { label: Show the comments, name: showComments, widget: boolean, default: true, required: false }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
       - { label: Body, name: body, widget: markdown }

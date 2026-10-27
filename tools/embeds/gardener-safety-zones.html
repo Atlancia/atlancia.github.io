@@ -1,0 +1,122 @@
+<!-- Atlancia embed: Gardener - the four zones (interactive).
+     Fits the post Seeing the Difference Between a Boss and a Botanist.
+     Psychological safety against performance standards, after Amy Edmondson.
+     Hover a zone to isolate it.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-safety">
+  <style>
+    .atlx-div-safety {
+      --sf-ink: var(--atl-ink, #EEEDED);
+      --sf-text: var(--atl-figure-text, #BFBFBF);
+      --sf-dim: var(--atl-dim, #9D9D9D);
+      --sf-line: var(--atl-line, #373737);
+      --sf-surface: var(--atl-surface, #1e1e1e);
+      --sf-amber: var(--atl-accent, #FFC074);
+      --sf-green: #54A468;
+      --sf-purple: #a78bfa;
+      --sf-gray: #9ca3af;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--sf-surface);
+      color: var(--sf-text);
+      border: 1px solid var(--sf-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-safety * { box-sizing: border-box; }
+    .atlx-div-safety p { hyphens: none; }
+    .atlx-div-safety .atlx-sf-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--sf-ink);
+    }
+    .atlx-div-safety .atlx-sf-sub { margin: 0 0 .9rem; color: var(--sf-dim); font-size: .95rem; max-width: 44rem; }
+    .atlx-div-safety .atlx-sf-grid { display: flex; gap: .6rem; align-items: stretch; }
+    .atlx-div-safety .atlx-sf-vaxis {
+      display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+      padding: .4rem 0;
+    }
+    .atlx-div-safety .atlx-sf-vaxis .atlx-sf-lo, .atlx-div-safety .atlx-sf-vaxis .atlx-sf-hi {
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sf-dim);
+    }
+    .atlx-div-safety .atlx-sf-vaxis .atlx-sf-cap {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sf-dim);
+      white-space: nowrap;
+    }
+    .atlx-div-safety .atlx-sf-cells { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; min-width: 0; }
+    .atlx-div-safety .atlx-sf-cell {
+      border: 1px solid var(--sf-line); border-left-width: 3px; border-radius: 6px;
+      padding: .9rem 1rem; background: rgba(255,255,255,0.02); transition: opacity .25s ease;
+    }
+    .atlx-div-safety .atlx-sf-cell h4 {
+      margin: 0 0 .3rem; font-family: "Young Serif", Georgia, serif;
+      font-weight: 500; font-size: 1.15rem; color: var(--sf-ink);
+    }
+    .atlx-div-safety .atlx-sf-cell p { margin: 0; font-size: .92rem; color: var(--sf-text); line-height: 1.45; }
+    .atlx-div-safety .atlx-sf-cell.atlx-sf-comfort { border-left-color: var(--sf-amber); }
+    .atlx-div-safety .atlx-sf-cell.atlx-sf-learning { border-left-color: var(--sf-green); }
+    .atlx-div-safety .atlx-sf-cell.atlx-sf-apathy { border-left-color: var(--sf-gray); }
+    .atlx-div-safety .atlx-sf-cell.atlx-sf-anxiety { border-left-color: var(--sf-purple); }
+    .atlx-div-safety .atlx-sf-haxis {
+      display: flex; justify-content: space-between; align-items: center; gap: .6rem;
+      margin: .6rem 0 0 .0rem; padding-left: 2.2rem;
+    }
+    .atlx-div-safety .atlx-sf-haxis .atlx-sf-lo, .atlx-div-safety .atlx-sf-haxis .atlx-sf-hi {
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--sf-dim); flex: none;
+    }
+    .atlx-div-safety .atlx-sf-haxis .atlx-sf-cap {
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sf-dim);
+      white-space: nowrap;
+    }
+    .atlx-div-safety .atlx-sf-credit { margin: .8rem 0 0; font-size: .8rem; color: var(--sf-dim); }
+    .atlx-div-safety .atlx-sf-cell .atlx-sf-ic { width: 28px; height: 28px; margin-bottom: .35rem; }
+    .atlx-div-safety .atlx-sf-cell .atlx-sf-ic use { fill: var(--sf-dim); }
+    .atlx-div-safety .atlx-sf-comfort .atlx-sf-ic use { fill: var(--sf-amber); }
+    .atlx-div-safety .atlx-sf-learning .atlx-sf-ic use { fill: var(--sf-green); }
+    .atlx-div-safety .atlx-sf-apathy .atlx-sf-ic use { fill: var(--sf-gray); }
+    .atlx-div-safety .atlx-sf-anxiety .atlx-sf-ic use { fill: var(--sf-purple); }
+  </style>
+  <h3 class="atlx-sf-title">Safety is one axis, not the whole story</h3>
+  <p class="atlx-sf-sub">Psychological safety against performance standards. Hover a zone to isolate it.</p>
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: comfort is safe and unchallenged, learning is safe and stretched, apathy is neither, and anxiety is stretched without safety. (studio test)</p></noscript>
+    <div class="atlx-sf-grid">
+    <div class="atlx-sf-vaxis" aria-hidden="true">
+      <span class="atlx-sf-hi">High</span>
+      <span class="atlx-sf-cap">Psychological safety</span>
+      <span class="atlx-sf-lo">Low</span>
+    </div>
+    <div class="atlx-sf-cells">
+      <div class="atlx-sf-cell atlx-sf-comfort" tabindex="0"><svg class="atlx-sf-ic" viewBox="0 -960 960 960" width="28" height="28" aria-hidden="true"><path d="M480-260q34 0 64-12.5t56-35.5q9-8 9-21t-9-21q-9-8-21.5-8t-22.5 8q-17 13-36 21t-40 8q-21 0-40-8t-36-21q-10-8-22.5-8t-21.5 8q-9 8-9 21t9 21q26 22 56 35t64 13Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93ZM340-480q32 0 57.5-20t39.5-49q5-13 .5-25.5T420-590q-11-3-22 2.5T382-571q-7 13-17.5 22t-24.5 9q-14 0-25-9.5T298-572q-5-11-16-16t-22-2q-13 3-17.5 15.5T244-549q12 30 38 49.5t58 19.5Zm280 0q32 0 57.5-20t39.5-49q5-13 .5-25.5T700-590q-11-3-22 2.5T662-571q-7 13-17.5 22t-24.5 9q-14 0-25-9.5T578-572q-5-11-16-16t-22-2q-13 3-17.5 15.5T524-549q12 30 38 49.5t58 19.5Z" fill="#FFC074"/></svg><h4>Comfort</h4><p>Open and collegial, never challenged. Nobody expects your best, so nobody risks it.</p></div>
+      <div class="atlx-sf-cell atlx-sf-learning" tabindex="0"><svg class="atlx-sf-ic" viewBox="0 -960 960 960" width="28" height="28" aria-hidden="true"><path d="M480-80q-26 0-47-12.5T400-126q-33 0-56.5-23.5T320-206v-142q-59-39-94.5-103T190-590q0-121 84.5-205.5T480-880q121 0 205.5 84.5T770-590q0 77-35.5 140T640-348v142q0 33-23.5 56.5T560-126q-12 21-33 33.5T480-80Zm-80-126h160v-36H400v36Zm0-76h160v-38H400v38Zm-8-118h58v-108l-67-67q-9-9-9-21t9-21q9-9 21-9t21 9l55 55 55-55q9-9 21-9t21 9q9 9 9 21t-9 21l-67 67v108h58q54-26 88-76.5T690-590q0-88-61-149t-149-61q-88 0-149 61t-61 149q0 63 34 113.5t88 76.5Zm88-162Zm0-38Z" fill="#54A468"/></svg><h4>Learning</h4><p>Challenge is normal and help is certain. Telling someone this is not their best work is easy, and delivery is great.</p></div>
+      <div class="atlx-sf-cell atlx-sf-apathy" tabindex="0"><svg class="atlx-sf-ic" viewBox="0 -960 960 960" width="28" height="28" aria-hidden="true"><path d="M524-40q-84 0-157.5-32t-128-86.5Q184-213 152-286.5T120-444q0-128 72-232t193-146q22-8 41 5.5t18 36.5q-3 85 27 162t90 137q60 60 137 90t162 27q26-1 38.5 17.5T903-305q-44 120-147.5 192.5T524-40Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T504-425q-61-61-97-138t-43-163q-77 43-120.5 118.5T200-444q0 135 94.5 229.5T524-120Zm-20-305Z" fill="#9ca3af"/></svg><h4>Apathy</h4><p>Keep your head down and do not make noise. Hearts and minds are elsewhere.</p></div>
+      <div class="atlx-sf-cell atlx-sf-anxiety" tabindex="0"><svg class="atlx-sf-ic" viewBox="0 -960 960 960" width="28" height="28" aria-hidden="true"><path d="m480-338 46 46q6 6 14 6t14-6l46-46 18 18q9 9 21 9t21-9q9-9 9-21t-9-21l-46-46q-6-6-14-6t-14 6l-46 46-46-46q-6-6-14-6t-14 6l-46 46-46-46q-6-6-14-6t-14 6l-46 46q-9 9-9 21t9 21q9 9 21 9t21-9l18-18 46 46q6 6 14 6t14-6l46-46ZM339-560l-52 38q-10 8-12.5 20t5.5 22q8 10 20 12.5t22-5.5l97-71q8-6 8-16t-8-16l-97-71q-10-8-22-5.5T280-640q-8 10-6 22t13 20l52 38Zm282 0 52-38q10-8 12.5-20t-5.5-22q-8-10-20-12.5t-22 5.5l-97 71q-8 6-8 16t8 16l97 71q10 8 22 5.5t20-12.5q8-10 6-22t-13-20l-52-38ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" fill="#a78bfa"/></svg><h4>Anxiety</h4><p>Do your best and never admit you need help. Every day is already a challenge.</p></div>
+    </div>
+  </div>
+  <div class="atlx-sf-haxis" aria-hidden="true">
+    <span class="atlx-sf-lo">Low</span>
+    <span class="atlx-sf-cap">Performance standards</span>
+    <span class="atlx-sf-hi">High</span>
+  </div>
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-safety') : document.querySelector('.atlx-div-safety');
+    if(!root) return;
+    var cells = root.querySelectorAll('.atlx-sf-cell');
+    cells.forEach(function(c){
+      function on(){ cells.forEach(function(o){ o.style.opacity = (o === c) ? '1' : '0.35'; }); }
+      function off(){ cells.forEach(function(o){ o.style.opacity = '1'; }); }
+      c.addEventListener('mouseenter', on);
+      c.addEventListener('mouseleave', off);
+      c.addEventListener('focus', on);
+      c.addEventListener('blur', off);
+    });
+  })();
+  </script>
+</div>

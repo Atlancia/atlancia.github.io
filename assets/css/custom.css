@@ -41,6 +41,30 @@
   font-display: swap;
 }
 
+/*
+ * Monaspace Neon carries code and anything set in monospace: skills chips in
+ * the figures, and anywhere else a fixed-width voice is needed. Self-hosted
+ * from the GitHub Next release under the OFL, license beside the files.
+ * Width axis pinned at 100 (normal); Regular and Bold only.
+ */
+@font-face {
+  font-family: "Monaspace Neon";
+  src: url("/assets/dynamic/fonts/monaspace/monaspace-neon-regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Monaspace Neon";
+  src: url("/assets/dynamic/fonts/monaspace/monaspace-neon-bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font-body: "Cal Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, sans-serif;
@@ -192,104 +216,6 @@ html:not(.dark) img.logo {
   display: none;
 }
 
-/* -- The figures ---------------------------------------------------------- */
-
-/*
- * A figure is inlined into the page, so it inherits the page's type and the
- * page's colour mode. It carries its own <style> block for everything inside
- * it; this is only the box around it.
- */
-.atlx {
-  max-width: 100%;
-  margin: 2.5rem 0;
-  /* A few figures are wider than the column. They scroll inside their own box
-     rather than pushing the page sideways. */
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-
-  /*
-   * A figure is drawn on its own plate, in its own palette, in both modes.
-   *
-   * The essays' figures were built against a dark surface, and each one draws
-   * its inner boxes with literal dark greys rather than with the tokens. If the
-   * tokens went light while those greys stayed dark, a figure would come out
-   * half cream and half charcoal with the text unreadable in the places where
-   * the two met. Keeping the plate dark is the one choice that stays legible
-   * everywhere, and it reads as deliberate: a dark plate on a light page, the
-   * same way a code block does.
-   *
-   * Repainting the inside of each figure is a separate piece of work, one
-   * figure at a time, not something a stylesheet can decide for all of them.
-   */
-  --atl-ink: #eeeded;
-  --atl-text: #bfbfbf;
-  --atl-dim: #9d9d9d;
-  --atl-line: #373737;
-  --atl-bg: #141418;
-  --atl-surface: #1e1e1e;
-  --atl-accent: #ffc074;
-  --atl-success: #54a468;
-  --atl-warning: #fb6762;
-  --atl-info: #5b9ed5;
-  --atl-highlight: #f6dc90;
-}
-
-html:not(.dark) .atlx {
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgb(22 22 26 / 0.06), 0 8px 24px rgb(22 22 26 / 0.06);
-}
-
-.prose .atlx {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-}
-
-/* The interactive controls were drawn on a dark surface, which they keep. */
-
-/* -- Comments ------------------------------------------------------------- */
-
-/*
- * GraphComment brings its own frame and its own background. The wrapper only
- * gives it the site's surface and enough room to breathe.
- */
-.my-comments-wrapper {
-  background: var(--atl-surface);
-  border: 1px solid var(--atl-rule);
-  border-radius: 8px;
-  padding: 1.5rem;
-}
-
-.my-comments-inner {
-  padding: 0;
-}
-
-.custom-h2 {
-  font-family: var(--font-body);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--atl-heading);
-  margin: 0 0 1rem;
-}
-
-/* -- The gallery of figures ----------------------------------------------- */
-
-.atlx-gallery__item {
-  border-top: 1px solid var(--atl-rule);
-  margin-top: 4rem;
-  padding-top: 2.5rem;
-}
-
-.atlx-gallery__item > h2 {
-  margin-top: 0;
-  font-size: 1.6rem;
-}
-
-.atlx-gallery__meta {
-  color: var(--atl-dim);
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-
 /* -- Text selection ------------------------------------------------------- */
 
 ::selection {
@@ -303,12 +229,12 @@ html:not(.dark) .atlx {
 }
 
 /*
- * The essay body reads at the theme's default (1rem). Bumping it ~50%
- * (to 1.5rem) makes the long-form reading significantly more comfortable
- * without touching headings, captions, or figure text.
+ * The essay body reads at the theme's default (1rem). Bumping it to 1.3rem
+ * makes the long-form reading more comfortable without touching headings,
+ * captions, or figure text. (1.5rem was tried and read too big.)
  */
 .article-content {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

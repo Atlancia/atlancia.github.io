@@ -8,6 +8,7 @@
 # "atlancia" is the site's own scheme, in assets/css/schemes/atlancia.css.
 # The theme also ships seventeen others, listed in the theme's stylesheets.
 colorScheme = "atlancia"
+copyright = "&copy; { year } Atlancia Ltd."
 
 # "Follow the reader's system" is the default here: the default starts light,
 # and autoSwitchAppearance hands the decision to the OS, live, before the
@@ -87,8 +88,9 @@ autoSwitchAppearance = true
   featureImageHover = false
 
 # -- The footer ------------------------------------------------------------
+
 [footer]
-  showMenu = true
+  showMenu = false
   showCopyright = true
   showThemeAttribution = false
   showAppearanceSwitcher = true

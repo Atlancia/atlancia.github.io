@@ -1,0 +1,146 @@
+<!-- Atlancia embed: Difference - set the weather, not the plant (interactive).
+     Fits the post Seeing the Difference Between a Boss and a Botanist.
+     Three conditions the gardener holds; growth itself stays capped.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-grow">
+  <style>
+    .atlx-div-grow {
+      --gr-ink: var(--atl-ink, #EEEDED);
+      --gr-text: var(--atl-figure-text, #BFBFBF);
+      --gr-dim: var(--atl-dim, #9D9D9D);
+      --gr-line: var(--atl-line, #373737);
+      --gr-surface: var(--atl-surface, #1e1e1e);
+      --gr-amber: var(--atl-accent, #FFC074);
+      --gr-track: #2b2b2b;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--gr-surface);
+      color: var(--gr-text);
+      border: 1px solid var(--gr-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-grow * { box-sizing: border-box; }
+    .atlx-div-grow .atlx-gr-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--gr-ink);
+    }
+    .atlx-div-grow .atlx-gr-sub { margin: 0 0 1rem; color: var(--gr-dim); font-size: .95rem; max-width: 44rem; }
+    .atlx-div-grow .atlx-gr-ctl { margin: 0 0 .9rem; }
+    .atlx-div-grow .atlx-gr-ctl label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-weight: 600; color: var(--gr-ink); font-size: .95rem; margin-bottom: .15rem;
+    }
+    .atlx-div-grow output { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gr-amber); font-size: .95rem; }
+    .atlx-div-grow input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 26px;
+      background: transparent; margin: 0; cursor: pointer;
+    }
+    .atlx-div-grow input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: var(--gr-track); }
+    .atlx-div-grow input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--gr-amber); border: 3px solid #181818; margin-top: -7px;
+    }
+    .atlx-div-grow input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: var(--gr-track); }
+    .atlx-div-grow input[type="range"]::-moz-range-thumb {
+      width: 15px; height: 15px; border-radius: 50%; background: var(--gr-amber); border: 3px solid #181818;
+    }
+    .atlx-div-grow input[type="range"]:focus-visible { outline: 2px solid var(--gr-amber); outline-offset: 4px; border-radius: 999px; }
+    .atlx-div-grow .atlx-gr-meter { margin: 1.1rem 0 .4rem; padding-top: 1.3rem; }
+    .atlx-div-grow .atlx-gr-track {
+      position: relative; height: 14px; border-radius: 999px; background: var(--gr-track);
+      border: 1px solid var(--gr-line);
+    }
+    .atlx-div-grow .atlx-gr-fill {
+      height: 100%; width: 60%; border-radius: 999px; background: var(--gr-amber);
+      transition: width .35s ease;
+    }
+    .atlx-div-grow .atlx-gr-ceil { position: absolute; right: 3%; top: -1.5rem; bottom: -4px; width: 0; border-left: 1px dashed #6a6a6a; }
+    .atlx-div-grow .atlx-gr-ceil span {
+      position: absolute; right: 6px; top: 0; transform: none; white-space: nowrap;
+      font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gr-dim);
+    }
+    .atlx-div-grow .atlx-gr-read { font-variant-numeric: tabular-nums; color: var(--gr-ink); margin: .5rem 0 .7rem; font-size: .98rem; }
+    .atlx-div-grow .atlx-gr-read .dim { color: var(--gr-dim); }
+    .atlx-div-grow button.atlx-gr-btn {
+      font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+      color: var(--gr-ink); background: transparent; border: 1px solid var(--gr-line);
+      border-radius: 999px; padding: .42rem 1rem;
+    }
+    .atlx-div-grow button.atlx-gr-btn:hover { border-color: var(--gr-amber); color: var(--gr-amber); }
+    .atlx-div-grow .atlx-gr-note { margin: .65rem 0 0; font-size: .9rem; color: var(--gr-dim); min-height: 2.4em; }
+    .atlx-div-grow.shake .atlx-gr-track { animation: atlx-gr-shake .3s ease; }
+    @keyframes atlx-gr-shake {
+      25% { transform: translateX(3px); } 50% { transform: translateX(-3px); } 75% { transform: translateX(2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .atlx-div-grow.shake .atlx-gr-track { animation: none; }
+    }
+  </style>
+  <h3 class="atlx-gr-title">Set the weather, not the plant</h3>
+  <p class="atlx-gr-sub">Three conditions a gardener holds. Watch what responds, and what will not.</p>
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: a gardener sets light, soil and pruning, and no amount of commanding moves the line marked growth itself.</p></noscript>
+  <div class="atlx-gr-ctl"><label for="atlx-gr-cl">Clarity of the brief <output id="atlx-gr-cl-o" for="atlx-gr-cl">60</output></label><input id="atlx-gr-cl" type="range" min="0" max="100" step="1" value="60"></div>
+  <div class="atlx-gr-ctl"><label for="atlx-gr-st">Standards of the work <output id="atlx-gr-st-o" for="atlx-gr-st">65</output></label><input id="atlx-gr-st" type="range" min="0" max="100" step="1" value="65"></div>
+  <div class="atlx-gr-ctl"><label for="atlx-gr-au">Room to move <output id="atlx-gr-au-o" for="atlx-gr-au">55</output></label><input id="atlx-gr-au" type="range" min="0" max="100" step="1" value="55"></div>
+  <div class="atlx-gr-meter"><div class="atlx-gr-track"><div class="atlx-gr-fill" id="atlx-gr-fill"></div><div class="atlx-gr-ceil"><span>Growth itself</span></div></div></div>
+  <p class="atlx-gr-read" id="atlx-gr-read" aria-live="polite"></p>
+  <button type="button" class="atlx-gr-btn" id="atlx-gr-force">Command the bloom</button>
+  <p class="atlx-gr-note" id="atlx-gr-note">The gardener sets light, soil and pruning. The growing stays the plant's job.</p>
+  <script>
+  (function () {
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-grow') : document.querySelector('.atlx-div-grow');
+    if (!root) return;
+    function qs(sel) { return root.querySelector(sel); }
+    var cl = qs('#atlx-gr-cl'), st = qs('#atlx-gr-st'), au = qs('#atlx-gr-au');
+    var clO = qs('#atlx-gr-cl-o'), stO = qs('#atlx-gr-st-o'), auO = qs('#atlx-gr-au-o');
+    var fill = qs('#atlx-gr-fill');
+    var read = qs('#atlx-gr-read');
+    var note = qs('#atlx-gr-note');
+    var btn = qs('#atlx-gr-force');
+    var CEIL = 92;
+    var CLEAR = 'The gardener sets light, soil and pruning. The growing stays the plant\'s job.';
+    var PUSHED = 'The meter stops at the line. Conditions can be set; the bloom cannot be ordered.';
+    var forced = false;
+    var timer = null;
+    function health() { return Math.round(0.34 * Number(cl.value) + 0.33 * Number(st.value) + 0.33 * Number(au.value)); }
+    function render() {
+      var h = health();
+      var shown = forced ? Math.min(h + 14, CEIL) : h;
+      fill.style.width = shown + '%';
+      read.innerHTML = '<span class="dim">Conditions:</span> ' + shown + ' of 100' + (forced ? ', pushing at the line' : '');
+      clO.textContent = cl.value; stO.textContent = st.value; auO.textContent = au.value;
+      note.textContent = forced ? PUSHED : CLEAR;
+    }
+    [cl, st, au].forEach(function (input) {
+      input.addEventListener('input', function () {
+        if (timer) { clearTimeout(timer); timer = null; }
+        forced = false;
+        root.classList.remove('shake');
+        render();
+      });
+    });
+    btn.addEventListener('click', function () {
+      forced = true;
+      render();
+      root.classList.remove('shake');
+      void root.offsetWidth;
+      root.classList.add('shake');
+      if (timer) { clearTimeout(timer); }
+      timer = setTimeout(function () {
+        forced = false;
+        timer = null;
+        render();
+      }, 2400);
+    });
+    render();
+  })();
+  </script>
+</div>

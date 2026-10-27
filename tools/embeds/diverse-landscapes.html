@@ -1,0 +1,248 @@
+<!-- Atlancia embed: Diversity and complexity - fitness landscapes explorer (interactive).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     Three true isometric surface meshes; the dancing one morphs on its own until paused.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-land">
+  <style>
+    .atlx-div-land {
+      --dl-ink: var(--atl-ink, #EEEDED);
+      --dl-text: var(--atl-figure-text, #BFBFBF);
+      --dl-dim: var(--atl-dim, #9D9D9D);
+      --dl-line: var(--atl-line, #373737);
+      --dl-surface: var(--atl-surface, #1e1e1e);
+      --dl-blue: var(--atl-info, #5B9ED5);
+      --dl-green: var(--atl-success, #54A468);
+      --dl-amber: var(--atl-accent, #FFC074);
+      --dl-purple: #a78bfa;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--dl-surface);
+      color: var(--dl-text);
+      border: 1px solid var(--dl-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-land * { box-sizing: border-box; }
+    .atlx-div-land .atlx-dl-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--dl-ink);
+    }
+    .atlx-div-land svg { display: block; width: 100%; height: auto; }
+    .atlx-div-land .atlx-dl-panels { display: grid; grid-template-columns: 1fr; gap: .6rem; margin-top: .9rem; }
+    .atlx-div-land .atlx-dl-panel { margin: 0 0 1rem; }
+    .atlx-div-land .atlx-dl-panel:last-child { margin-bottom: 0; }
+    .atlx-div-land .atlx-dl-cap { margin: 0 0 .45rem; font-size: .95rem; color: var(--dl-dim); }
+    .atlx-div-land .atlx-dl-cap strong { color: var(--dl-ink); }
+    .atlx-div-land .atlx-dl-cap .dot { display: inline-block; width: .62em; height: .62em; border-radius: 50%; margin-right: .45em; }
+    .atlx-div-land .atlx-dl-rule { border: none; border-top: 1px solid var(--dl-line); margin: 0 0 .6rem; }
+    .atlx-div-land .atlx-dl-slider { display: flex; align-items: center; gap: .6rem; margin-top: .3rem; font-size: .85rem; color: var(--dl-dim); }
+    .atlx-div-land .atlx-dl-slider input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 28px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .atlx-div-land .atlx-dl-slider input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: var(--dl-line); }
+    .atlx-div-land .atlx-dl-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--dl-purple);
+      border: 3px solid var(--dl-surface);
+      margin-top: -8px;
+    }
+    .atlx-div-land .atlx-dl-slider input[type="range"]::-moz-range-track { height: 6px; border-radius: 999px; background: var(--dl-line); }
+    .atlx-div-land .atlx-dl-slider input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--dl-purple);
+      border: 3px solid var(--dl-surface);
+    }
+    .atlx-div-land .atlx-dl-play {
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--dl-ink);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--dl-line);
+      border-radius: 999px;
+      padding: .25rem .9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .atlx-div-land .atlx-dl-play:hover { background: rgba(255,255,255,0.1); }
+    .atlx-div-land .atlx-dl-play:focus-visible { outline: 2px solid var(--dl-purple); outline-offset: 2px; }
+  </style>
+
+  <h3 class="atlx-dl-title">Peaked, Rugged, Dancing</h3>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript. The gist: a peaked landscape has one optimum a simple search finds, a rugged one traps fixed searches on local peaks, and a dancing one moves its peaks while you search, so only continuous adaptation works.</p></noscript>
+
+  <div class="atlx-dl-panels">
+    <div class="atlx-dl-panel" data-panel="peaked">
+      <div class="atlx-dl-rule"></div>
+      <p class="atlx-dl-cap"><strong><span class="dot" style="background:var(--dl-green)"></span>Peaked: one optimum.</strong> Hill climbing always finds it. The textbook case.</p>
+      <svg id="ddl-svg-p" viewBox="0 190 660 280" role="img" aria-label="Peaked 3D fitness landscape"></svg>
+    </div>
+    <div class="atlx-dl-panel" data-panel="rugged">
+      <div class="atlx-dl-rule"></div>
+      <p class="atlx-dl-cap"><strong><span class="dot" style="background:var(--dl-amber)"></span>Rugged: many local optima.</strong> The highest peak wins, but good enough is often good enough.</p>
+      <svg id="ddl-svg-r" viewBox="0 190 660 280" role="img" aria-label="Rugged 3D fitness landscape with marked peaks"></svg>
+    </div>
+    <div class="atlx-dl-panel" data-panel="dancing">
+      <div class="atlx-dl-rule"></div>
+      <p class="atlx-dl-cap"><strong><span class="dot" style="background:var(--dl-purple)"></span>Dancing: optima move.</strong> Two points pinned: watch the valley rise above the peak while the peak falls and climbs back lower.</p>
+      <svg id="ddl-svg-d" viewBox="0 190 660 280" role="img" aria-label="Dancing 3D fitness landscape"></svg>
+      <div class="atlx-dl-slider">
+        <button type="button" class="atlx-dl-play" data-role="play" aria-pressed="true">Pause</button>
+        <label for="ddl-time">Time</label>
+        <input id="ddl-time" type="range" min="0" max="100" value="15">
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-land') : document.querySelector('.atlx-div-land');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var AMP = [0.62, 0.85, 1.0, 0.9, 0.78];
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    }
+    function gauss(x, c, w){ var z = (x - c) / w; return Math.exp(-z * z); }
+    function peakedY(x, li){ return 240 - 190 * AMP[li] * gauss(x, 270 + (li - 2) * 22, 90 + li * 3); }
+    function ruggedY(x, li){
+      var ph = li * 16;
+      return 240 - (34 * Math.sin((x + ph) / 26) + 22 * Math.sin((x + ph) / 11 + 1.3) + 64 * gauss(x, 150 + li * 8, 45) + 74 * gauss(x, 380 - li * 8, 55) + 52 * gauss(x, 505, 30));
+    }
+    function g2(x, j, cx, cj, wx, wj){
+      var zx = (x - cx) / wx, zj = (j - cj) / wj;
+      return Math.exp(-(zx * zx + zj * zj));
+    }
+    function smooth01(t){ return t * t * (3 - 2 * t); }
+    function proj(x, j, h){
+      return [200 + (x - j * 46) * 0.72, 352 + j * 14 + x * 0.06 - h * 0.9];
+    }
+    function surfH(hFn, x, j){ return Math.max(0, hFn(x, j)); }
+    function buildIso(svg, hFn, hmax, low, high, edgeCss, dotCss, labels, n, pins){
+      while(svg.firstChild) svg.removeChild(svg.firstChild);
+      var J = 4, NX = 30, STEP = 540 / NX;
+      var floor = el('g', {stroke: 'rgba(255,255,255,0.16)', 'stroke-width': 1, fill: 'none'}, svg);
+      el('path', {d: 'M' + proj(0, 0, 0) + 'L' + proj(540, 0, 0) + 'L' + proj(540, J, 0) + 'L' + proj(0, J, 0) + 'Z'}, floor);
+      for(var gx = 0; gx <= 540; gx += 54){
+        var ga = proj(gx, 0, 0), gb = proj(gx, J, 0);
+        el('line', {x1: ga[0], y1: ga[1], x2: gb[0], y2: gb[1]}, floor);
+      }
+      for(var gj = 0; gj <= J; gj++){
+        var gc = proj(0, gj, 0), gd = proj(540, gj, 0);
+        el('line', {x1: gc[0], y1: gc[1], x2: gd[0], y2: gd[1]}, floor);
+      }
+      var f0 = proj(0, J, 0), f1 = proj(540, J, 0), DEP = 24;
+      el('path', {d: 'M' + f0[0] + ',' + f0[1] + ' L' + f1[0] + ',' + f1[1] + ' L' + f1[0] + ',' + (f1[1] + DEP) + ' L' + f0[0] + ',' + (f0[1] + DEP) + ' Z', fill: 'rgba(0,0,0,0.55)', stroke: 'var(--dl-line)', 'stroke-width': 1}, svg);
+      for(var j = 0; j < J; j++){
+        for(var i = 0; i < NX; i++){
+          var x0 = i * STEP, x1 = x0 + STEP;
+          var h00 = surfH(hFn, x0, j), h10 = surfH(hFn, x1, j);
+          var h11 = surfH(hFn, x1, j + 1), h01 = surfH(hFn, x0, j + 1);
+          var p00 = proj(x0, j, h00), p10 = proj(x1, j, h10);
+          var p11 = proj(x1, j + 1, h11), p01 = proj(x0, j + 1, h01);
+          var st = Math.min(1, (h00 + h10 + h11 + h01) / 4 / hmax);
+          var sR = Math.round(low[0] + (high[0] - low[0]) * st);
+          var sG = Math.round(low[1] + (high[1] - low[1]) * st);
+          var sB = Math.round(low[2] + (high[2] - low[2]) * st);
+          el('path', {d: 'M' + p00 + 'L' + p10 + 'L' + p11 + 'L' + p01 + 'Z', fill: 'rgb(' + sR + ',' + sG + ',' + sB + ')', stroke: edgeCss, 'stroke-width': 0.5}, svg);
+        }
+      }
+      var cands = [];
+      for(var jj = 0; jj <= J; jj++){
+        var bx = 0, bh = -1;
+        for(var x = 0; x <= 540; x += 6){ var h = surfH(hFn, x, jj); if(h > bh){ bh = h; bx = x; } }
+        cands.push({x: bx, j: jj, h: bh});
+      }
+      var tops = [];
+      if(pins){
+        pins.forEach(function(c){ tops.push({x: c.x, j: c.j, h: surfH(hFn, c.x, c.j)}); });
+      } else {
+        cands.sort(function(p, q){ return q.h - p.h; });
+        cands.forEach(function(c){ if(tops.length < n && tops.every(function(t){ return Math.abs(t.x - c.x) > 70; })) tops.push(c); });
+      }
+      var G = el('g', {'font-family': '"Cal Sans", sans-serif', 'font-size': 17, 'font-weight': 600, 'text-anchor': 'middle'}, svg);
+      tops.forEach(function(c, i){
+        var p = proj(c.x, c.j, c.h);
+        el('circle', {cx: p[0], cy: p[1], r: 7, fill: '#ffffff', stroke: dotCss, 'stroke-width': 2}, G);
+        var t = el('text', {x: p[0], y: p[1] - 12, fill: 'var(--dl-ink)', 'paint-order': 'stroke', stroke: 'var(--dl-surface)', 'stroke-width': 3}, G);
+        t.textContent = labels[Math.min(i, labels.length - 1)];
+      });
+    }
+    var svgP = root.querySelector('#ddl-svg-p');
+    var svgR = root.querySelector('#ddl-svg-r');
+    var svgD = root.querySelector('#ddl-svg-d');
+    function peakedH(x, j){ return Math.max(0, 240 - peakedY(x, j)); }
+    function ruggedH(x, j){ return Math.max(0, 240 - ruggedY(x, j)); }
+    buildIso(svgP, peakedH, 200, [34, 62, 40], [84, 164, 104], 'rgba(84,164,104,0.3)', 'var(--dl-green)', ['the peak'], 1);
+    buildIso(svgR, ruggedH, 270, [110, 70, 36], [255, 192, 116], 'rgba(255,192,116,0.3)', 'var(--dl-amber)', ['highest', 'good enough'], 2);
+    var slider = root.querySelector('#ddl-time');
+    var playBtn = root.querySelector('[data-role="play"]');
+    var dance = {t: 0.15, dir: 1, playing: true, raf: 0, last: 0};
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) dance.playing = false;
+    function danceH(x, j){
+      var t = dance.t;
+      var env1 = 0.55 + 0.45 * Math.cos(t * 2 * Math.PI) - 0.25 * t;
+      var env2 = 0.06 + smooth01(t);
+      var h = 100 * g2(x, j, 300, 2, 110, 2.0) * env1
+            + 130 * g2(x, j, 150, 3, 100, 2.0) * env2
+            + 20 * Math.sin(x / 24 + t * 2.5 + j * j * 0.4 + j * 0.3)
+            + 12 * Math.sin(x / 11 + 1.1 - t * 3.4 + j * 1.9);
+      return Math.max(0, h);
+    }
+    function drawDancing(){
+      buildIso(svgD, danceH, 240, [52, 44, 86], [167, 139, 250], 'rgba(167,139,250,0.3)', 'var(--dl-purple)', ['peak', 'valley'], 2, [{x: 300, j: 2}, {x: 150, j: 3}]);
+      slider.value = String(Math.round(dance.t * 100));
+    }
+    function tick(now){
+      if(!dance.playing) return;
+      var dt = dance.last ? (now - dance.last) / 1000 : 0.05;
+      dance.last = now;
+      dance.t += dance.dir * dt * 0.12;
+      if(dance.t >= 1){ dance.t = 1; dance.dir = -1; }
+      if(dance.t <= 0){ dance.t = 0; dance.dir = 1; }
+      drawDancing();
+      dance.raf = window.requestAnimationFrame(tick);
+    }
+    function setPlaying(on){
+      dance.playing = on;
+      dance.last = 0;
+      playBtn.textContent = on ? 'Pause' : 'Play';
+      playBtn.setAttribute('aria-pressed', String(on));
+      if(on) dance.raf = window.requestAnimationFrame(tick);
+      else if(dance.raf) window.cancelAnimationFrame(dance.raf);
+    }
+    playBtn.addEventListener('click', function(){ setPlaying(!dance.playing); });
+    slider.addEventListener('input', function(){
+      dance.t = (parseInt(slider.value, 10) || 0) / 100;
+      setPlaying(false);
+      drawDancing();
+    });
+    drawDancing();
+    setPlaying(dance.playing);
+    playBtn.textContent = dance.playing ? 'Pause' : 'Play';
+    playBtn.setAttribute('aria-pressed', String(dance.playing));
+  })();
+  </script>
+</div>

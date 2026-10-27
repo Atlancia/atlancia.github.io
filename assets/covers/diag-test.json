@@ -1,0 +1,104 @@
+{
+  "version": 4,
+  "a": {
+    "type": "dgrad",
+    "c1": "#ffc074",
+    "c2": "#23233d",
+    "angle": 30,
+    "glowX": 300,
+    "glowY": 100,
+    "glowR": 180,
+    "alpha": 100,
+    "img": {
+      "src": "",
+      "name": "",
+      "fit": "cover",
+      "x": 50,
+      "y": 50,
+      "zoom": 100,
+      "blur": 0,
+      "mode": "none",
+      "embedded": false
+    }
+  },
+  "divider": {
+    "kind": "circle",
+    "position": 50,
+    "angle": 45,
+    "size": 62,
+    "x": 50,
+    "y": 50,
+    "waveAmp": 26,
+    "waveFreq": 3,
+    "rotation": 0,
+    "band": 20,
+    "rings": 4,
+    "softness": 0,
+    "edge": 0,
+    "invert": true,
+    "motion": "breathe",
+    "sweep": 25,
+    "seed": 1,
+    "shapes": 12,
+    "b": {
+      "type": "solid",
+      "c1": "#23233d",
+      "c2": "#ffc074",
+      "angle": 45,
+      "glowX": 300,
+      "glowY": 100,
+      "glowR": 180,
+      "alpha": 100,
+      "img": {
+        "src": "",
+        "name": "",
+        "fit": "cover",
+        "x": 50,
+        "y": 50,
+        "zoom": 100,
+        "blur": 0,
+        "mode": "none",
+        "embedded": false
+      }
+    }
+  },
+  "icons": [
+    {
+      "name": "compass",
+      "x": 300,
+      "y": 100,
+      "size": 70,
+      "color": "#fbfaf7"
+    }
+  ],
+  "icon": {
+    "color": "#23233d",
+    "size": 64
+  },
+  "treat": {
+    "type": "none",
+    "intensity": 50,
+    "cell": 2,
+    "c1": "#23233d",
+    "c2": "#ffc074",
+    "seed": 1,
+    "shapes": 14
+  },
+  "anim": {
+    "base": "none",
+    "icon": "none",
+    "treat": false,
+    "cycles": 1,
+    "duration": 3,
+    "fps": 24
+  },
+  "out": {
+    "scale": 3,
+    "exportPoint": 0.8,
+    "restTime": 0
+  },
+  "meta": {
+    "tool": "cover-lab",
+    "at": "2026-10-25T10:45:24.047Z"
+  }
+}

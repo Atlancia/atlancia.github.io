@@ -4,6 +4,7 @@ weight = 1
 title = "Atlancia"
 
 [params]
+  copyright = "&copy; { year } Atlancia Ltd."
   displayName = "Atlancia"
   isoCode = "en"
   rtl = false

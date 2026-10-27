@@ -1,0 +1,171 @@
+<!-- Atlancia embed: Diversity and complexity - Stacey matrix zone explorer (interactive).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     Click a zone to see what it means, with examples from the essay.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-stacey">
+  <style>
+    .atlx-div-stacey {
+      --ds-ink: var(--atl-ink, #EEEDED);
+      --ds-text: var(--atl-figure-text, #BFBFBF);
+      --ds-dim: var(--atl-dim, #9D9D9D);
+      --ds-line: var(--atl-line, #373737);
+      --ds-surface: var(--atl-surface, #1e1e1e);
+      --ds-blue: var(--atl-info, #5B9ED5);
+      --ds-green: var(--atl-success, #54A468);
+      --ds-amber: var(--atl-accent, #FFC074);
+      --ds-purple: #a78bfa;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--ds-surface);
+      color: var(--ds-text);
+      border: 1px solid var(--ds-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-stacey * { box-sizing: border-box; }
+    .atlx-div-stacey .atlx-ds-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--ds-ink);
+    }
+    .atlx-div-stacey .atlx-ds-sub {
+      margin: 0 0 .3rem;
+      color: var(--ds-dim);
+      font-size: .95rem;
+    }
+    .atlx-div-stacey svg { display: block; width: 100%; height: auto; margin: .6rem 0 .3rem; }
+    .atlx-div-stacey .atlx-ds-zone { cursor: pointer; transition: opacity .25s ease; }
+    .atlx-div-stacey .atlx-ds-zone:hover { opacity: .85; }
+    .atlx-div-stacey .atlx-ds-zone:focus-visible { outline: 2px solid var(--ds-ink); outline-offset: 2px; }
+    .atlx-div-stacey .atlx-ds-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin: 1rem 0 0; }
+    @media (max-width: 700px) { .atlx-div-stacey .atlx-ds-cards { grid-template-columns: 1fr; } }
+    .atlx-div-stacey .atlx-ds-card {
+      width: 100%;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      margin: 0;
+      padding: .6rem .8rem;
+      border: 1px solid var(--ds-line);
+      border-left-width: 4px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+      color: var(--ds-text);
+      font-size: .9rem;
+      line-height: 1.5;
+      opacity: .55;
+      transition: opacity .2s ease;
+    }
+    .atlx-div-stacey .atlx-ds-card[data-active="true"] { opacity: 1; }
+    .atlx-div-stacey .atlx-ds-card[data-zone="simple"] { border-left-color: var(--ds-amber); }
+    .atlx-div-stacey .atlx-ds-card[data-zone="complicated"] { border-left-color: var(--ds-blue); }
+    .atlx-div-stacey .atlx-ds-card[data-zone="complex"] { border-left-color: var(--ds-green); }
+    .atlx-div-stacey .atlx-ds-card[data-zone="chaotic"] { border-left-color: var(--ds-purple); }
+    .atlx-div-stacey .atlx-ds-card[data-active="true"][data-zone="simple"] { background: rgba(255,192,116,0.07); }
+    .atlx-div-stacey .atlx-ds-card[data-active="true"][data-zone="complicated"] { background: rgba(91,158,213,0.07); }
+    .atlx-div-stacey .atlx-ds-card[data-active="true"][data-zone="complex"] { background: rgba(84,164,104,0.07); }
+    .atlx-div-stacey .atlx-ds-card[data-active="true"][data-zone="chaotic"] { background: rgba(167,139,250,0.07); }
+    .atlx-div-stacey .atlx-ds-card strong { color: var(--ds-ink); }
+    .atlx-div-stacey .atlx-ds-card:focus-visible { outline: 2px solid var(--ds-amber); outline-offset: 3px; }
+  </style>
+
+  <h3 class="atlx-ds-title">The Stacey Matrix: How Certain Are You?</h3>
+  <p class="atlx-ds-sub">Certainty about methods runs left to right. Certainty about outcomes runs bottom to top. Select a zone.</p>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript. The gist: simple work has one stable optimum, complicated work has an optimum experts can find, complex work has only temporary optimums, and chaotic work has none at all.</p></noscript>
+
+  <svg id="dst-svg" viewBox="0 0 440 430" role="img" aria-label="Stacey matrix with four zones: simple, complicated, complex, chaotic"></svg>
+
+  <div class="atlx-ds-cards">
+    <button type="button" class="atlx-ds-card" data-zone="simple" data-active="true"><strong>Simple: one optimal peak.</strong> Example: the optimal weight of a shovel-full of coal. Once found, the answer stays the answer, and training reliably reproduces it.</button>
+    <button type="button" class="atlx-ds-card" data-zone="complicated" data-active="false"><strong>Complicated: several good solutions, one optimum that holds.</strong> Example: watch repair. With enough experience a repairer finds a personal optimum, and it remains optimal.</button>
+    <button type="button" class="atlx-ds-card" data-zone="complex" data-active="false"><strong>Complex: optimums are temporary.</strong> A peak today may not be a peak tomorrow. Example: financial markets, where a good strategy stops working once other parties copy it.</button>
+    <button type="button" class="atlx-ds-card" data-zone="chaotic" data-active="false"><strong>Chaotic: no stable optimum at all.</strong> Peaks move while you search. Problem and solution co-evolve, so only rapid experimentation tells you anything.</button>
+  </div>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-stacey') : document.querySelector('.atlx-div-stacey');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = root.querySelector('#dst-svg');
+    var cards = root.querySelectorAll('[data-zone]');
+    var X0 = 46, X1 = 400, Y0 = 380, Y1 = 26;
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      (parent || svg).appendChild(n);
+      return n;
+    }
+    function T(x, y, s, anchor, fill, size, weight){
+      var t = el('text', {x: x, y: y, 'text-anchor': anchor || 'middle', fill: fill || 'var(--ds-dim)', 'font-size': size || 12, 'font-family': '"Cal Sans", sans-serif'});
+      if(weight) t.setAttribute('font-weight', weight);
+      t.textContent = s;
+      return t;
+    }
+    var grid = el('g', {stroke: 'var(--ds-line)', 'stroke-width': 1}, svg);
+    for(var i = 0; i <= 4; i++){
+      var gx = X0 + (i / 4) * (X1 - X0);
+      var gy = Y0 - (i / 4) * (Y0 - Y1);
+      el('line', {x1: gx, y1: Y1, x2: gx, y2: Y0}, grid);
+      el('line', {x1: X0, y1: gy, x2: X1, y2: gy}, grid);
+    }
+    var zones = el('g', {}, svg);
+    function zonePath(d, fill, edge, id){
+      var p = el('path', {d: d, fill: fill, stroke: edge, 'stroke-width': 1.5, 'class': 'atlx-ds-zone', tabindex: '0', role: 'button', 'aria-pressed': 'false', id: id}, zones);
+      return p;
+    }
+    var CX = X0, CY = Y0, KX = X1, KY = Y1;
+    var zComplex = zonePath('M' + X0 + ',' + Y1 + 'L' + X1 + ',' + Y1 + 'L' + X1 + ',' + Y0 + 'L' + X0 + ',' + Y0 + 'Z', 'rgba(84,164,104,0.13)', 'rgba(84,164,104,0.7)', 'dst-z-complex');
+    var carve = el('g', {style: 'fill:var(--ds-surface)', stroke: 'none'}, svg);
+    el('path', {d: 'M' + CX + ',' + (CY - 250) + ' A250,250 0 0 1 ' + (CX + 250) + ',' + CY + ' L' + CX + ',' + CY + ' Z'}, carve);
+    el('path', {d: 'M' + KX + ',' + (KY + 125) + ' L' + KX + ',' + KY + ' L' + (KX - 125) + ',' + KY + ' A125,125 0 0 0 ' + KX + ',' + (KY + 125) + ' Z'}, carve);
+    svg.insertBefore(carve, zones);
+    var zComp = zonePath('M' + CX + ',' + (CY - 250) + ' A250,250 0 0 1 ' + (CX + 250) + ',' + CY + ' L' + (CX + 125) + ',' + CY + ' A125,125 0 0 0 ' + CX + ',' + (CY - 125) + ' Z', 'rgba(91,158,213,0.55)', 'rgba(91,158,213,0.9)', 'dst-z-complicated');
+    var zSimple = zonePath('M' + CX + ',' + CY + 'L' + CX + ',' + (CY - 125) + ' A125,125 0 0 1 ' + (CX + 125) + ',' + CY + ' Z', 'rgba(255,192,116,0.75)', 'rgba(255,192,116,0.9)', 'dst-z-simple');
+    var zChaotic = zonePath('M' + KX + ',' + (KY + 125) + ' L' + KX + ',' + KY + ' L' + (KX - 125) + ',' + KY + ' A125,125 0 0 0 ' + KX + ',' + (KY + 125) + ' Z', 'rgba(167,139,250,0.7)', 'rgba(167,139,250,0.9)', 'dst-z-chaotic');
+    var zl = el('g', {'font-family': '"Cal Sans", sans-serif', 'font-size': 15, 'font-weight': 600, 'text-anchor': 'middle', 'pointer-events': 'none'}, svg);
+    function ZT(x, y, s, fill){
+      var t = el('text', {x: x, y: y, fill: fill}, zl);
+      t.textContent = s;
+    }
+    ZT(90, 336, 'Simple', 'var(--ds-ink)');
+    ZT(179, 247, 'Complicated', 'var(--ds-ink)');
+    ZT(250, 160, 'Complex', 'var(--ds-ink)');
+    ZT(356, 70, 'Chaotic', 'var(--ds-ink)');
+    T(X0, Y0 + 24, 'Methods: Known, Proven', 'start');
+    T(X1, Y0 + 24, 'Unknown, Untested', 'end');
+    var yl = el('text', {x: 14, y: (Y0 + Y1) / 2, fill: 'var(--ds-dim)', 'font-size': 12, 'font-family': '"Cal Sans", sans-serif', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + ((Y0 + Y1) / 2) + ')'}, svg);
+    yl.textContent = 'Outcomes: Clear at bottom, Unclear at top';
+    var paths = {simple: zSimple, complicated: zComp, complex: zComplex, chaotic: zChaotic};
+    var FILLS = {
+      simple: {base: 'rgba(255,192,116,0.75)', hot: 'rgba(255,192,116,0.95)'},
+      complicated: {base: 'rgba(91,158,213,0.55)', hot: 'rgba(91,158,213,0.85)'},
+      complex: {base: 'rgba(84,164,104,0.13)', hot: 'rgba(84,164,104,0.35)'},
+      chaotic: {base: 'rgba(167,139,250,0.7)', hot: 'rgba(167,139,250,0.9)'}
+    };
+    function setZone(k){
+      var dimOthers = k !== 'complex';
+      Object.keys(paths).forEach(function(key){
+        var on = key === k;
+        paths[key].setAttribute('aria-pressed', String(on));
+        paths[key].setAttribute('fill', on ? FILLS[key].hot : FILLS[key].base);
+        paths[key].setAttribute('opacity', on ? '1' : (dimOthers ? '0.45' : '1'));
+      });
+      cards.forEach(function(c){ c.setAttribute('data-active', String(c.getAttribute('data-zone') === k)); });
+    }
+    Object.keys(paths).forEach(function(key){
+      paths[key].addEventListener('click', function(){ setZone(key); });
+      paths[key].addEventListener('keydown', function(ev){ if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); setZone(key); } });
+    });
+    cards.forEach(function(c){ c.addEventListener('click', function(){ setZone(c.getAttribute('data-zone')); }); });
+    setZone('simple');
+  })();
+  </script>
+</div>

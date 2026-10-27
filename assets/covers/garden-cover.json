@@ -1,0 +1,104 @@
+{
+  "version": 4,
+  "a": {
+    "type": "dgrad",
+    "c1": "#91919c",
+    "c2": "#7b6253",
+    "angle": 0,
+    "glowX": 300,
+    "glowY": 100,
+    "glowR": 260,
+    "alpha": 96,
+    "img": {
+      "src": "",
+      "name": "",
+      "fit": "cover",
+      "x": 50,
+      "y": 50,
+      "zoom": 100,
+      "blur": 0,
+      "mode": "none"
+    }
+  },
+  "divider": {
+    "kind": "thickhoriz",
+    "position": 19,
+    "angle": 67,
+    "size": 100,
+    "x": 20,
+    "y": 0,
+    "waveAmp": 26,
+    "waveFreq": 3,
+    "rotation": 74,
+    "band": 4,
+    "rings": 1,
+    "softness": 0,
+    "edge": 0,
+    "invert": true,
+    "motion": "breathe",
+    "sweep": 0,
+    "seed": 1,
+    "shapes": 50,
+    "b": {
+      "type": "solid",
+      "c1": "#1b1b2e",
+      "c2": "#fbfaf7",
+      "angle": 45,
+      "glowX": 300,
+      "glowY": 100,
+      "glowR": 180,
+      "alpha": 51,
+      "img": {
+        "src": "",
+        "name": "",
+        "fit": "cover",
+        "x": 50,
+        "y": 50,
+        "zoom": 100,
+        "blur": 0,
+        "mode": "none"
+      }
+    }
+  },
+  "icons": [
+    {
+      "name": "tree-deciduous",
+      "x": 360,
+      "y": 101.54112894938397,
+      "size": 134,
+      "color": "#ffc074"
+    },
+    {
+      "name": "sprout",
+      "x": 240,
+      "y": 120.8052408166836,
+      "size": 90,
+      "color": "#c89966"
+    }
+  ],
+  "icon": {
+    "color": "#c89966",
+    "size": 90
+  },
+  "treat": {
+    "type": "grid",
+    "intensity": 68,
+    "cell": 6,
+    "c1": "#1f1f36",
+    "c2": "#ffc074",
+    "seed": 1,
+    "shapes": 14
+  },
+  "anim": {
+    "base": "none",
+    "icon": "none",
+    "treat": true,
+    "cycles": 1,
+    "duration": 5,
+    "fps": 24
+  },
+  "out": {
+    "scale": 3,
+    "exportPoint": 3.71
+  }
+}

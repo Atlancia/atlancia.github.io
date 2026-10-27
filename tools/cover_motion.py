@@ -55,6 +55,8 @@ Neither is needed by tools/build.py, so the site build has no such dependency.
 from __future__ import annotations
 
 import argparse
+import html
+import re
 import io
 import json
 import shutil
@@ -115,10 +117,13 @@ PLACE_JS = r"""
 
   const groups = [...svg.children].filter(isG);
   const hasDivider = kind && kind !== 'none';
+  // The cover lab emits the ground, one or two divider halves (thickrings and
+  // similar split into two groups), the icon(s), and an optional treatment
+  // layer. Count only the mandatory ones; extras are left untouched.
   const expected = 1 + (hasDivider ? 1 : 0) + iconCount;
-  if (groups.length !== expected) {
-    return { error: 'the file has ' + groups.length + ' layers where the record accounts for ' + expected +
-      ' (ground, ' + (hasDivider ? 'divider, ' : '') + iconCount + ' icon(s)). A tiled divider or a new layer kind would do this.' };
+  if (groups.length < expected) {
+    return { error: 'the file has ' + groups.length + ' layers where the record accounts for at least ' + expected +
+      ' (ground, ' + (hasDivider ? 'divider, ' : '') + iconCount + ' icon(s)). A new layer kind would do this.' };
   }
 
   // A layer's core transform starts with a run of translates. The editor always
@@ -144,15 +149,21 @@ PLACE_JS = r"""
     el.setAttribute('transform', parts.join(' ').replace(/\s+/g, ' ').trim());
   };
 
+  const dc = hasDivider ? (() => { let n = 0; for (let i = 1; i < groups.length; i++) { if (/^translate\(300 100\)/.test(tf(groups[i]))) n++; else break; } return n || 1; })() : 0;
+
   const notes = [];
 
   if (hasDivider) {
-    const layer = groups[1];
+    for (let _di = 1; _di < 1 + dc; _di++) {
+    const layer = groups[_di];
     const c = core(layer);
     if (!c) return { error: 'the divider layer has no core group: has the editor changed shape?' };
     const { leads, tail } = chain(c);
-    if (leads.length < 2) {
-      return { error: 'the divider core has ' + leads.length + ' leading translate(s), expected at least 2: has the editor changed shape?' };
+    // A divider whose motion lives in its path data, a wipe, has no drag
+    // translate at all: only the placement that cancels the host. Demanding two
+    // leads meant that whole motion type could never be ingested.
+    if (leads.length < 1) {
+      return { error: 'the divider core has no placement translate: has the editor changed shape?' };
     }
     // leads[0] cancels the host. If the tail opens with a scale or a rotate, the
     // last lead is the centre that pivot turns about, so it is not a drag. What
@@ -177,11 +188,16 @@ PLACE_JS = r"""
       notes.push('divider: no drag offset, already on the canvas axis');
     }
     writeChain(c, leads, tail);
+    }
   }
+
+  // Identify divider groups: consecutive groups after the ground whose host
+  // transform is the canvas centre, so a split divider (thickrings) with two
+  // halves is handled as one divider instead of being mistaken for icons.
 
   // One icon lands on the axis. Several move as a block, so the spacing between
   // them stays the author's and only the block's centre is the site's.
-  const icons = groups.slice(hasDivider ? 2 : 1);
+  const icons = groups.slice(hasDivider ? 1 + dc : 1).filter(g => wrap(g) !== null);
   const hosts = icons.map(g => wrap(g));
   const mean = hosts.length ? hosts.reduce((a, w) => a + (w ? w.px : 0), 0) / hosts.length : 0;
   const shift = 300 - mean;
@@ -361,30 +377,57 @@ def frames_differ(rest: bytes, later: bytes) -> tuple[bool, float]:
 # --- command ---------------------------------------------------------------
 
 
+RECORD_RE = re.compile(r'<metadata[^>]*id="cover-composition"[^>]*>(.*?)</metadata>', re.S)
+
+
+def record_from_svg(text: str) -> dict | None:
+    """The composition record the editor embedded, or None if this is an older export."""
+    match = RECORD_RE.search(text)
+    if not match:
+        return None
+    try:
+        return json.loads(html.unescape(match.group(1)))
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"the embedded composition record is not valid JSON: {exc}")
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="Ingest a generated motion cover: centre it, render its rest frame, verify it.",
         epilog="Needs Pillow and Playwright with Chromium. The site build does not.",
     )
     parser.add_argument("--source", required=True, type=Path, help="the exported cover.svg")
-    parser.add_argument("--composition", required=True, type=Path, help="the exported cover-composition.json")
+    parser.add_argument("--composition", type=Path, help="the composition record if it was exported separately; the cover package carries it inside the SVG")
     parser.add_argument("--name", required=True, help="asset name, e.g. gov-cover")
     parser.add_argument("--media", required=True, help="media id folder under static/media/posts, e.g. 7")
-    parser.add_argument("--rest-time", type=float, default=0.8, help="seconds into the loop for the rest frame (default: 0.8)")
+    parser.add_argument("--rest-time", type=float, default=None, help="seconds into the exported loop for the rest frame (default: the record's restTime, else 0.8)")
     parser.add_argument("--as-authored", action="store_true", help="keep the dragged placement instead of centring")
     parser.add_argument("--verify", action="store_true", help="sample the loop and fail if the invariants break")
     args = parser.parse_args(argv[1:])
 
-    for path in (args.source, args.composition):
-        if not path.exists():
-            parser.error(f"no such file: {path}")
+    if not args.source.exists():
+        parser.error(f"no such file: {args.source}")
+    if args.composition and not args.composition.exists():
+        parser.error(f"no such file: {args.composition}")
 
     root = project_root()
     workdir = root / "state" / "covers-lab"
     workdir.mkdir(parents=True, exist_ok=True)
 
-    record = json.loads(args.composition.read_text(encoding="utf-8"))
     text = args.source.read_text(encoding="utf-8")
+    if args.composition:
+        record = json.loads(args.composition.read_text(encoding="utf-8"))
+        record_origin = "beside the artwork"
+    else:
+        record = record_from_svg(text)
+        if record is None:
+            parser.error(
+                "no --composition given, and the SVG carries no cover-composition record "
+                "(the cover lab writes one, so this is probably an older export)"
+            )
+        record_origin = "inside the artwork"
+    recorded_rest = (record.get("out") or {}).get("restTime")
+    rest_time = args.rest_time if args.rest_time is not None else float(recorded_rest if recorded_rest is not None else 0.8)
     svg = text[text.find("<svg") :].strip()
     kind = str(record.get("divider", {}).get("kind", "none"))
     icon_count = len(record.get("icons") or [])
@@ -423,16 +466,27 @@ def main(argv: list[str]) -> int:
         layers = geometry["layers"]
 
     # --- write --------------------------------------------------------------
+    ids = set(re.findall(r'\bid="([^"]+)"', svg))
+    for id_val in ids:
+        if id_val != "cover-composition" and not id_val.startswith(f"{args.name}-"):
+            new_id = f"{args.name}-{id_val}"
+            svg = re.sub(rf'\bid="{re.escape(id_val)}"', f'id="{new_id}"', svg)
+            svg = re.sub(rf'url\(#{re.escape(id_val)}\)', f'url(#{new_id})', svg)
+            svg = re.sub(rf'href="#{re.escape(id_val)}"', f'href="#{new_id}"', svg)
     svg_out = root / "assets" / "covers" / f"{args.name}.svg"
     svg_out.parent.mkdir(parents=True, exist_ok=True)
     svg_out.write_text(svg, encoding="utf-8")
 
     record_out = root / "assets" / "covers" / f"{args.name}.json"
-    shutil.copyfile(args.composition, record_out)
+    if args.composition:
+        if Path(args.composition).resolve() != record_out.resolve():
+            shutil.copyfile(args.composition, record_out)
+    else:
+        record_out.write_text(json.dumps(record, indent=2, ensure_ascii=False) + chr(10), encoding="utf-8")
 
     rest_out = root / "static" / "media" / "posts" / args.media / f"{args.name}-rest.webp"
-    rest_png = render_frame(svg, args.rest_time, workdir, rest_out)
-    later_png = render_frame(svg, args.rest_time + duration / 4, workdir)
+    rest_png = render_frame(svg, rest_time, workdir, rest_out)
+    later_png = render_frame(svg, rest_time + duration / 4, workdir)
     alive, changed = frames_differ(rest_png, later_png)
 
     # --- report -------------------------------------------------------------
@@ -496,6 +550,11 @@ def main(argv: list[str]) -> int:
     print(f"  wrote {svg_out.relative_to(root)} ({svg_out.stat().st_size // 1024} KB)")
     print(f"  wrote {record_out.relative_to(root)}")
     print(f"  wrote {rest_out.relative_to(root)} ({rest_out.stat().st_size // 1024} KB)")
+    print(f"  record   {record_origin}; the rest frame is {rest_time:g}s, the instant the export made frame zero")
+    print("  --- frontmatter ---")
+    print(f'    coverMotion: "{args.name}"')
+    print(f"    coverMotionBase: {rest_time:g}")
+    print(f'    featureimage: "media/posts/{args.media}/{args.name}-rest.webp"')
 
     if args.verify:
         if problems:

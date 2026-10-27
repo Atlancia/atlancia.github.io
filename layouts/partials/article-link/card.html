@@ -23,9 +23,34 @@
 {{ end }}
 
 
+{{ $motion := $page.Params.coverMotion }}
+{{ $motionBase := $page.Params.coverMotionBase | default 0.8 }}
+
 <article
   class="article-link--card group relative min-h-full min-w-full overflow-hidden rounded-lg border border-neutral-300/80 bg-white/85 dark:border-neutral-600/80 dark:bg-neutral-900/80">
-  {{ with $featuredURL }}
+  {{ if $motion }}
+    {{ $svg := resources.Get (printf "covers/%s.svg" $motion) }}
+    {{ if not $svg }}{{ errorf "coverMotion %q has no file at assets/covers/%s.svg" $motion $motion }}{{ end }}
+    {{ $svgURL := $svg.RelPermalink }}
+    <div
+      class="flex-none relative overflow-hidden thumbnail_card motion-cover"
+      style="--thumbnail-aspect-ratio: {{ $thumbnailAspectRatio }}"
+      data-base="{{ $motionBase }}"
+      data-motion-src="{{ $svgURL }}"
+      aria-label="{{ $page.Title }}">
+      {{ with $featuredURL }}
+        <img
+          src="{{ . }}"
+          alt="{{ $page.Title }}"
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+          class="nozoom not-prose motion-poster absolute inset-0 h-full w-full object-cover transition-opacity duration-300"
+          {{ with $featureImagePosition }}style="object-position: {{ . }};"{{ end }} />
+      {{ end }}
+    </div>
+    {{ partial "functions/motion-script.html" . }}
+  {{ else }}{{ with $featuredURL }}
     <div
       class="flex-none relative overflow-hidden thumbnail_card{{ if $darkURL }} cover-pair{{ end }}"
       style="--thumbnail-aspect-ratio: {{ $thumbnailAspectRatio }}">
@@ -48,7 +73,7 @@
           {{ with $featureImagePosition }}style="object-position: {{ . }};"{{ end }} />
       {{ end }}
     </div>
-  {{ end }}
+  {{ end }}{{ end }}
   {{ if and .Draft .Site.Params.article.showDraftLabel }}
     <span class="absolute top-0 right-0 m-2">
       {{ partial "badge.html" (i18n "article.draft" | emojify) }}

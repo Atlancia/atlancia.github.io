@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# The content manager for atlancia.com. It edits the Markdown in this
+# repository through the GitHub API and commits each save to main, which
+# triggers the build in .github/workflows/deploy.yml.
+#
+# Signing in uses an access token. Create a fine-grained token with
+# "Contents: read and write" for this repository only, then paste it into the
+# sign-in dialog when it opens. The token stays in the browser.
+backend:
+  name: github
+  repo: Atlancia/atlancia
+  branch: main
+
+media_folder: static/media/posts
+public_folder: media/posts
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: content/posts
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    editor:
+      preview: false
+    summary: "{{title}} on {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Address, name: slug, widget: string, hint: "The last part of the address. /leaders-gardeners.html comes from slug leaders-gardeners." }
+      - { label: Hero image, name: featureimage, widget: image, required: false, choose_url: false, hint: "The image at the top of the essay and beside it in the lists." }
+      - { label: Author, name: authors, widget: select, multiple: true, default: [liam], options: [liam] }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: markdown }

@@ -1,11 +1,15 @@
 {{/* Atlancia: installs the held-until-asked motion for list thumbnails.
 
-  Emitted by article-link/simple.html for a page that sets coverMotion. The
+  Emitted by article-link partials for a page that sets coverMotion. The
   guard means a page with several motion covers installs the listeners once,
   after the document has parsed, so every card on the page is found.
 
-  The card itself is the hover target, not just the image, because the whole
-  card is what the reader points at.
+  Progressive hydration:
+  1. The template emits the static resting WebP as an <img> (first paint is instant).
+  2. In the background (idle time or pointer approach), the SVG is fetched.
+  3. The SVG is parsed, set to the resting pose (pauseAnimations + setCurrentTime),
+     and layered over the poster.
+  4. On hover, the animation runs immediately with zero lag.
 */}}
 <script>
 (function () {
@@ -14,31 +18,97 @@
 
   function init() {
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    var cache = new Map();
+    function fetchSVG(url) {
+      if (!cache.has(url)) {
+        cache.set(url, fetch(url).then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.text();
+        }));
+      }
+      return cache.get(url);
+    }
 
     document.querySelectorAll('.motion-cover').forEach(function (box) {
-      var svg = box.querySelector('svg');
-      if (!svg) return;
-
-      // A layout decision, not a change to the file: the artwork is 3:1 and the
-      // thumbnail box is nearer 5:3, so it fills and crops instead of banding.
-      svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-
+      var src = box.dataset.motionSrc;
       var base = parseFloat(box.dataset.base || '0.8');
       var host = box.closest('article') || box;
 
-      function hold() { try { svg.pauseAnimations(); svg.setCurrentTime(base); } catch (e) {} }
-      function run() { try { svg.unpauseAnimations(); } catch (e) {} }
+      var existingSvg = box.querySelector('svg');
+      if (existingSvg) {
+        existingSvg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+        function holdExisting() { try { existingSvg.pauseAnimations(); existingSvg.setCurrentTime(base); } catch (e) {} }
+        function runExisting() { try { existingSvg.unpauseAnimations(); } catch (e) {} }
+        existingSvg.removeAttribute('style');
+        holdExisting();
+        box.classList.add('is-ready');
+        host.addEventListener('mouseenter', runExisting);
+        host.addEventListener('mouseleave', holdExisting);
+        host.addEventListener('focusin', runExisting);
+        host.addEventListener('focusout', holdExisting);
+        return;
+      }
 
-      svg.removeAttribute('style');
-      hold();
-      box.classList.add('is-ready');
+      if (!src) return;
 
-      if (reduced) return;
+      function hydrate() {
+        if (box.__hydrating || box.querySelector('svg')) return;
+        box.__hydrating = true;
 
-      host.addEventListener('mouseenter', run);
-      host.addEventListener('mouseleave', hold);
-      host.addEventListener('focusin', run);
-      host.addEventListener('focusout', hold);
+        fetchSVG(src).then(function (text) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(text, 'image/svg+xml');
+          var svg = doc.querySelector('svg');
+          if (!svg) return;
+
+          svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+          svg.style.position = 'absolute';
+          svg.style.inset = '0';
+          svg.style.width = '100%';
+          svg.style.height = '100%';
+          svg.style.display = 'block';
+          svg.style.opacity = '0';
+          svg.style.transition = 'opacity 200ms ease';
+          svg.style.pointerEvents = 'none';
+
+          function hold() {
+            try { svg.pauseAnimations(); svg.setCurrentTime(base); } catch (e) {}
+          }
+          function run() {
+            try { svg.unpauseAnimations(); } catch (e) {}
+          }
+
+          box.appendChild(svg);
+          hold();
+
+          requestAnimationFrame(function () {
+            svg.style.opacity = '1';
+            box.classList.add('is-ready');
+          });
+
+          host.addEventListener('mouseenter', run);
+          host.addEventListener('mouseleave', hold);
+          host.addEventListener('focusin', run);
+          host.addEventListener('focusout', hold);
+
+          if (host.matches(':hover') || host.matches(':focus-within')) {
+            run();
+          }
+        }).catch(function (err) {
+          console.warn('Cover motion hydration failed for', src, err);
+        });
+      }
+
+      host.addEventListener('pointerenter', hydrate, { once: true });
+      host.addEventListener('focusin', hydrate, { once: true });
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function () { hydrate(); }, { timeout: 2000 });
+      } else {
+        setTimeout(hydrate, 300);
+      }
     });
   }
 

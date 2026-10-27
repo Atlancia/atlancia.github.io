@@ -1,0 +1,282 @@
+<!-- Atlancia embed: Diversity and complexity - who answers the work (interactive).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     Two pieces of work list what they require; chips show answered, gap, or stretch, and hovering traces who covers what.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-team">
+  <style>
+    .atlx-div-team {
+      --dt-ink: var(--atl-ink, #EEEDED);
+      --dt-text: var(--atl-figure-text, #BFBFBF);
+      --dt-dim: var(--atl-dim, #9D9D9D);
+      --dt-line: var(--atl-line, #373737);
+      --dt-surface: var(--atl-surface, #1e1e1e);
+      --dt-amber: var(--atl-accent, #FFC074);
+      --dt-purple: #a78bfa;
+      --dt-arrow: #9D9D9D;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--dt-surface);
+      color: var(--dt-text);
+      border: 1px solid var(--dt-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-team * { box-sizing: border-box; }
+    .atlx-div-team .atlx-dt-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--dt-ink);
+    }
+    .atlx-div-team .atlx-dt-sub { margin: 0 0 .3rem; color: var(--dt-dim); font-size: .95rem; }
+    .atlx-div-team .atlx-dt-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin: .55rem 0 .2rem; font-size: .85rem; color: var(--dt-dim); }
+    .atlx-div-team .atlx-dt-legend i { display: inline-block; width: .7em; height: .7em; border-radius: 2px; margin-right: .35em; vertical-align: baseline; }
+    .atlx-div-team .atlx-dt-view { display: flex; gap: .5rem; flex-wrap: wrap; margin: .9rem 0 1rem; }
+    .atlx-div-team .atlx-dt-view button {
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--dt-text);
+      border: 1px solid var(--dt-line);
+      border-radius: 999px;
+      padding: .35rem .8rem;
+      cursor: pointer;
+    }
+    .atlx-div-team .atlx-dt-view button[aria-pressed="true"] { color: var(--dt-ink); border-color: var(--dt-dim); }
+    .atlx-div-team .atlx-dt-view button:focus-visible { outline: 2px solid var(--dt-amber); outline-offset: 3px; }
+    .atlx-div-team svg { display: block; width: 100%; height: auto; }
+    .atlx-div-team .atlx-dt-req { cursor: default; }
+  </style>
+
+  <h3 class="atlx-dt-title">Who Answers the Work?</h3>
+  <p class="atlx-dt-sub">Two pieces of work land at once. Each lists what it needs; hover a requirement to see who covers it, or hover a person to see what they carry.</p>
+  <div class="atlx-dt-legend"><span><i style="background:var(--dt-purple)"></i>Background they arrived with</span><span><i style="background:var(--dt-amber)"></i>Tool the work needs</span><span><i style="border:1px dashed var(--dt-dim)"></i>Gap, nobody has it</span></div>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript only for highlighting. The gist: a security bug fix is answered except for threat modeling, which nobody on the team has, while a priority feature is fully answered with writing and English literature as stretch that makes it better.</p></noscript>
+
+  <div class="atlx-dt-view" role="group" aria-label="Pieces of work">
+    <button data-view="both" aria-pressed="true">Both</button>
+    <button data-view="sec" aria-pressed="false">Security fix</button>
+    <button data-view="feat" aria-pressed="false">Feature</button>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="ii-user" viewBox="0 0 24 24"><path d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"/><path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"/></symbol>
+  <symbol id="ii-database-script" viewBox="0 0 24 24"><path d="M22 14V6C22 4.34315 20.6569 3 19 3H9C7.34315 3 6 4.34315 6 6V13"/><path d="M12 21H6C3.79086 21 2 19.2091 2 17C2 14.7909 3.79086 13 6 13H17H18C15.7909 13 14 14.7909 14 17C14 19.2091 15.7909 21 18 21C20.2091 21 22 19.2091 22 17V14"/></symbol>
+  <symbol id="ii-code" viewBox="0 0 24 24"><path d="M13.5 6L10 18.5"/><path d="M6.5 8.5L3 12L6.5 15.5"/><path d="M17.5 8.5L21 12L17.5 15.5"/></symbol>
+  <symbol id="ii-flask" viewBox="0 0 24 24"><path d="M18.5 15L5.5 15"/><path d="M16 4L8 4"/><path d="M9 4.5L9 10.2602C9 10.7376 8.82922 11.1992 8.51851 11.5617L3.48149 17.4383C3.17078 17.8008 3 18.2624 3 18.7398V19C3 20.1046 3.89543 21 5 21L19 21C20.1046 21 21 20.1046 21 19V18.7398C21 18.2624 20.8292 17.8008 20.5185 17.4383L15.4815 11.5617C15.1708 11.1992 15 10.7376 15 10.2602L15 4.5"/><path d="M12 9.01L12.01 8.99889"/><path d="M11 2.01L11.01 1.99889"/></symbol>
+  <symbol id="ii-database-stats" viewBox="0 0 24 24"><path d="M4 6V12C4 12 4 15 11 15C18 15 18 12 18 12V6"/><path d="M11 3C18 3 18 6 18 6C18 6 18 9 11 9C4 9 4 6 4 6C4 6 4 3 11 3Z"/><path d="M11 21C4 21 4 18 4 18V12"/><path d="M15 21V19"/><path d="M18 21V17"/><path d="M21 21V15"/></symbol>
+  <symbol id="ii-cursor-pointer" viewBox="0 0 24 24"><path d="M19.5027 9.96958C20.7073 10.4588 20.6154 12.1941 19.3658 12.5533L13.0605 14.3658L10.1807 20.2606C9.60996 21.4288 7.88499 21.218 7.6124 19.9468L4.67677 6.25646C4.44638 5.18204 5.5121 4.2878 6.53019 4.70126L19.5027 9.96958Z"/></symbol>
+  <symbol id="ii-message-text" viewBox="0 0 24 24"><path d="M7 12L17 12"/><path d="M7 8L13 8"/><path d="M3 20.2895V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V15C21 16.1046 20.1046 17 19 17H7.96125C7.35368 17 6.77906 17.2762 6.39951 17.7506L4.06852 20.6643C3.71421 21.1072 3 20.8567 3 20.2895Z"/></symbol>
+  <symbol id="ii-map" viewBox="0 0 24 24"><path d="M9 19L3.78974 20.7368C3.40122 20.8663 3 20.5771 3 20.1675L3 5.43246C3 5.1742 3.16526 4.94491 3.41026 4.86325L9 3M9 19L15 21M9 19L9 3M15 21L20.5897 19.1368C20.8347 19.0551 21 18.8258 21 18.5675L21 3.83246C21 3.42292 20.5988 3.13374 20.2103 3.26325L15 5M15 21L15 5M15 5L9 3"/></symbol>
+  <symbol id="ii-light-bulb" viewBox="0 0 24 24"><path d="M9 18H15"/><path d="M10 21H14"/><path d="M9.00082 15C9.00098 13 8.50098 12.5 7.50082 11.5C6.50067 10.5 6.02422 9.48689 6.00082 8C5.95284 4.95029 8.00067 3 12.0008 3C16.001 3 18.0488 4.95029 18.0008 8C17.9774 9.48689 17.5007 10.5 16.5008 11.5C15.501 12.5 15.001 13 15.0008 15"/></symbol>
+  <symbol id="ii-open-book" viewBox="0 0 24 24"><path d="M12 21V7C12 5.89543 12.8954 5 14 5H21.4C21.7314 5 22 5.26863 22 5.6V18.7143"/><path d="M12 21V7C12 5.89543 11.1046 5 10 5H2.6C2.26863 5 2 5.26863 2 5.6V18.7143"/><path d="M14 19L22 19"/><path d="M10 19L2 19"/><path d="M12 21C12 19.8954 12.8954 19 14 19"/><path d="M12 21C12 19.8954 11.1046 19 10 19"/></symbol>
+  <symbol id="ii-bug" viewBox="0 0 24 24"><path d="M12 21C8.13401 21 5 16.9706 5 12C5 7.02944 8.13401 3 12 3C15.866 3 19 7.02944 19 12C19 16.9706 15.866 21 12 21Z"/><path d="M18 17.5L20 19.5"/><path d="M19 9.5L21 8.5"/><path d="M5 9.5L3 8.5"/><path d="M18 8C18 8 15 9 12 9M6 8C6 8 9 9 12 9M12 9V21"/><path d="M5 14H2"/><path d="M22 14H19"/><path d="M6 17.5L4 19.5"/></symbol>
+  <symbol id="ii-rocket" viewBox="0 0 24 24"><path d="M16.0614 10.4037L14 17L10 17L7.93865 10.4037C7.35085 8.52273 7.72417 6.47307 8.93738 4.92015L11.5272 1.6052C11.7674 1.29772 12.2326 1.29772 12.4728 1.6052L15.0626 4.92015C16.2758 6.47307 16.6491 8.52273 16.0614 10.4037Z"/><path d="M10 20C10 22 12 23 12 23C12 23 14 22 14 20"/><path d="M8.5 12.5C5 15 7 19 7 19L10 17"/><path d="M15.9312 12.5C19.4312 15 17.4312 19 17.4312 19L14.4312 17"/><path d="M12 11C10.8954 11 10 10.1046 10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9C14 10.1046 13.1046 11 12 11Z"/></symbol>
+  <symbol id="ii-shield" viewBox="0 0 24 24"><path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z"/></symbol>
+  </defs></svg>
+
+  <svg id="ddt-svg" role="img" aria-label="Two pieces of work mapped to the skills they require and the team members who cover them"></svg>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-team') : document.querySelector('.atlx-div-team');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var INK = 'var(--dt-ink)', DIM = 'var(--dt-dim)', LINE = 'var(--dt-line)', AMBER = 'var(--dt-amber)', ARROW = 'var(--dt-arrow)';
+    var PURPLE = 'var(--dt-purple)';
+    var CH = 21, CFONT = 11;
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    }
+    function txt(parent, x, y, s, size, weight, fill, anchor){
+      var t = el('text', {x: x, y: y, 'font-size': size, 'font-weight': weight || 400, fill: fill || INK, 'text-anchor': anchor || 'middle', 'font-family': '"Cal Sans", sans-serif'}, parent);
+      t.textContent = s;
+      return t;
+    }
+    function icon(parent, id, x, y, s, color, w){
+      var u = el('use', {href: '#' + id, x: x, y: y, width: s, height: s}, parent);
+      u.setAttribute('class', 'atlx-dt-ic');
+      u.setAttribute('fill', 'none');
+      u.setAttribute('stroke', color);
+      u.setAttribute('stroke-width', w);
+      u.setAttribute('stroke-linecap', 'round');
+      u.setAttribute('stroke-linejoin', 'round');
+      return u;
+    }
+    function ribbon(g, x0, y0, x1, y1){
+      var dx = Math.max(24, (x1 - x0) / 2);
+      el('path', {d: 'M' + x0 + ',' + y0 + ' C' + (x0 + dx) + ',' + y0 + ' ' + (x1 - dx) + ',' + y1 + ' ' + x1 + ',' + y1, fill: 'none', stroke: ARROW, 'stroke-width': 4, 'stroke-linecap': 'butt', opacity: 1}, g);
+    }
+    var MEMBERS = [
+      {id: 'dev', name: 'Senior Developer', sig: 'SQL · Programming · Writing'},
+      {id: 'test', name: 'Testing Analyst', sig: 'Test Automation · Data Analysis'},
+      {id: 'ux', name: 'UI/UX Analyst', sig: 'Design · Journey Mapping'},
+      {id: 'po', name: 'Product Owner', sig: 'Test Automation · Value Stream'}
+    ];
+    var WORKS = {
+      sec: {title: 'Security Bug Fix', icon: 'ii-bug', reqs: [
+        {label: 'SQL', icon: 'ii-database-script', by: ['dev']},
+        {label: 'Programming', icon: 'ii-code', by: ['dev']},
+        {label: 'Test Automation', icon: 'ii-flask', by: ['test', 'po']},
+        {label: 'Data Analysis', icon: 'ii-database-stats', by: ['test', 'po']},
+        {label: 'Manual Testing', icon: 'ii-cursor-pointer', by: ['test']},
+        {label: 'Incident Writing', icon: 'ii-message-text', by: ['dev']},
+        {label: 'Threat Modeling', icon: 'ii-shield', by: [], gap: true}
+      ]},
+      feat: {title: 'Priority Feature', icon: 'ii-rocket', reqs: [
+        {label: 'Programming', icon: 'ii-code', by: ['dev', 'ux']},
+        {label: 'Test Automation', icon: 'ii-flask', by: ['test', 'po']},
+        {label: 'Manual Testing', icon: 'ii-cursor-pointer', by: ['test']},
+        {label: 'Cust. Journey Mapping', icon: 'ii-map', by: ['ux']},
+        {label: 'Design Thinking', icon: 'ii-light-bulb', by: ['ux']},
+        {label: 'SQL', icon: 'ii-database-script', by: ['dev']},
+        {label: 'Writing & Feedback', icon: 'ii-message-text', by: ['dev'], stretch: true},
+        {label: 'English Lit. Degree', icon: 'ii-open-book', by: ['dev'], stretch: true, bg: true}
+      ]}
+    };
+    var W = 720, BOXX = 4, BOXW = 300, MEMX = 384, MEMW = 332;
+    var svg = root.querySelector('#ddt-svg');
+    function scoreLine(w){
+      var gaps = [], stretch = 0, base = 0;
+      w.reqs.forEach(function(r){ if(r.gap) gaps.push(r.label); else if(r.stretch) stretch++; else base++; });
+      var s = base + ' of ' + (base + gaps.length) + ' answered';
+      if(gaps.length) s += ' · Gap: ' + gaps.join(', ');
+      if(stretch) s += ' + ' + stretch + ' stretch';
+      return s;
+    }
+    function reqRow(g, x, y, w, r, key){
+      var rg = el('g', {'class': 'atlx-dt-req', tabindex: '0', 'data-by': r.by.join(' '), 'data-work': key}, g);
+      el('rect', {x: x, y: y, width: w, height: CH, fill: '#ffffff', 'fill-opacity': 0}, rg);
+      if(r.gap){
+        el('rect', {x: x, y: y + 2, width: w, height: CH - 4, rx: 4, fill: 'none', stroke: DIM, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, rg);
+        icon(rg, r.icon, x + 8, y + (CH - 13) / 2, 13, DIM, 2);
+        var t = el('text', {x: x + 28, y: y + 14, 'font-size': CFONT, fill: DIM, 'font-family': '"Cal Sans", sans-serif'}, rg);
+        t.textContent = r.label;
+        txt(rg, x + w - 10, y + 14, 'Gap', 10, 700, DIM, 'end');
+      } else {
+        icon(rg, r.icon, x + 8, y + (CH - 13) / 2, 13, r.bg ? PURPLE : AMBER, 2);
+        var t2 = el('text', {x: x + 28, y: y + 14, 'font-size': CFONT, fill: INK, 'font-family': '"Cal Sans", sans-serif'}, rg);
+        t2.textContent = r.label;
+        if(r.stretch) txt(rg, x + w - 10, y + 14, 'Stretch', 10, 700, AMBER, 'end');
+      }
+      return rg;
+    }
+    function workCard(g, x, y, w, key){
+      var wk = WORKS[key];
+      var h = CH + wk.reqs.length * CH + 24;
+      var cg = el('g', {}, g);
+      el('rect', {x: x, y: y, width: w, height: h, rx: 3, fill: 'rgba(255,255,255,0.02)', stroke: LINE, 'stroke-width': 1.5}, cg);
+      icon(cg, wk.icon, x + 10, y + 4, 15, INK, 2);
+      var tt = el('text', {x: x + 32, y: y + 16, 'font-size': 12.5, 'font-weight': 700, fill: INK, 'font-family': '"Cal Sans", sans-serif'}, cg);
+      tt.textContent = wk.title;
+      el('line', {x1: x + 8, y1: y + CH, x2: x + w - 8, y2: y + CH, stroke: LINE, 'stroke-width': 1, opacity: 0.35}, cg);
+      var reqGs = [];
+      wk.reqs.forEach(function(r, i){
+        reqGs.push(reqRow(cg, x, y + CH + i * CH, w, r, key));
+      });
+      var st = el('text', {x: x + 12, y: y + h - 8, 'font-size': 10.5, fill: DIM, 'font-family': '"Cal Sans", sans-serif'}, cg);
+      st.textContent = scoreLine(wk);
+      return {g: cg, h: h, reqGs: reqGs};
+    }
+    function memberRow(g, x, y, w, m){
+      var mg = el('g', {'class': 'atlx-dt-mem', tabindex: '0', 'data-m': m.id}, g);
+      el('circle', {cx: x + 22, cy: y + 24, r: 24, fill: '#ffffff', 'fill-opacity': 0}, mg);
+      el('circle', {cx: x + 22, cy: y + 24, r: 17, fill: 'none', stroke: INK, 'stroke-width': 2.5}, mg);
+      icon(mg, 'ii-user', x + 22 - 11, y + 24 - 10, 22, INK, 2);
+      var nt = el('text', {x: x + 48, y: y + 21, 'font-size': 12.5, 'font-weight': 700, fill: INK, 'font-family': '"Cal Sans", sans-serif'}, mg);
+      nt.textContent = m.name;
+      var st = el('text', {x: x + 48, y: y + 37, 'font-size': 10.5, fill: DIM, 'font-family': '"Cal Sans", sans-serif'}, mg);
+      st.textContent = m.sig;
+      return mg;
+    }
+    function dimOthers(reqGs, memGs, keepMembers, keepReqs){
+      memGs.forEach(function(mg){
+        mg.setAttribute('opacity', !keepMembers || keepMembers.indexOf(mg.getAttribute('data-m')) !== -1 ? '1' : '0.25');
+      });
+      reqGs.forEach(function(rg){
+        if(!keepReqs){ rg.setAttribute('opacity', '1'); return; }
+        var by = (rg.getAttribute('data-by') || '').split(' ').filter(Boolean);
+        var keep = by.some(function(b){ return keepReqs.indexOf(b) !== -1; });
+        rg.setAttribute('opacity', keep ? '1' : '0.25');
+      });
+    }
+    function soloDim(view, memGs){
+      var sb = {};
+      WORKS[view].reqs.forEach(function(r){ r.by.forEach(function(b){ sb[b] = 1; }); });
+      memGs.forEach(function(mg){ if(!sb[mg.getAttribute('data-m')]) mg.setAttribute('opacity', '0.3'); });
+    }
+    function build(view){
+      svg.innerHTML = '';
+      var bgG = el('g', {}, svg);
+      var keys = view === 'both' ? ['sec', 'feat'] : [view];
+      var cards = [], y = 8;
+      keys.forEach(function(k, i){
+        if(i){ y += 40; }
+        var c = workCard(svg, BOXX, y, BOXW, k);
+        cards.push({key: k, top: y, h: c.h, reqGs: c.reqGs});
+        y += c.h;
+      });
+      var leftTotal = y;
+      var memH = MEMBERS.length * 56 + (MEMBERS.length - 1) * 24;
+      var my = Math.max(8, (leftTotal - memH) / 2);
+      var memGs = [], memY = {};
+      MEMBERS.forEach(function(m, i){
+        var yy = my + i * 80;
+        memGs.push(memberRow(svg, MEMX, yy, MEMW, m));
+        memY[m.id] = yy + 24;
+      });
+      keys.forEach(function(k){
+        var card = cards.filter(function(c){ return c.key === k; })[0];
+        var mid = card.top + (CH + 8) / 2 + (WORKS[k].reqs.length * CH) / 4;
+        var targets = {};
+        WORKS[k].reqs.forEach(function(r){ r.by.forEach(function(b){ targets[b] = 1; }); });
+        Object.keys(targets).forEach(function(b){
+          ribbon(bgG, BOXX + BOXW, mid, MEMX + 5, memY[b]);
+        });
+      });
+      if(view !== 'both') soloDim(view, memGs);
+      var allReq = [];
+      cards.forEach(function(c){ allReq = allReq.concat(c.reqGs); });
+      allReq.forEach(function(rg){
+        var by = (rg.getAttribute('data-by') || '').split(' ').filter(Boolean);
+        function on(){ dimOthers(allReq, memGs, by.length ? by : null, null); }
+        function off(){ dimOthers(allReq, memGs, null, null); if(view !== 'both') soloDim(view, memGs); }
+        rg.addEventListener('mouseenter', on);
+        rg.addEventListener('mouseleave', off);
+        rg.addEventListener('focus', on);
+        rg.addEventListener('blur', off);
+      });
+      memGs.forEach(function(mg){
+        var m = mg.getAttribute('data-m');
+        function on(){ dimOthers(allReq, memGs, [m], [m]); }
+        function off(){ dimOthers(allReq, memGs, null, null); if(view !== 'both') soloDim(view, memGs); }
+        mg.addEventListener('mouseenter', on);
+        mg.addEventListener('mouseleave', off);
+        mg.addEventListener('focus', on);
+        mg.addEventListener('blur', off);
+      });
+      var total = Math.max(y, my + memH) + 8;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Math.ceil(total));
+    }
+    var btns = root.querySelectorAll('[data-view]');
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        btns.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+        build(b.getAttribute('data-view'));
+      });
+    });
+    build('both');
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ var v = root.querySelector('[data-view][aria-pressed="true"]'); build(v ? v.getAttribute('data-view') : 'both'); });
+  })();
+  </script>
+</div>

@@ -1,24 +1,33 @@
 ---
 title: "Shippable Governance and the Human in the Loop"
 date: "2026-10-24T10:45:00-04:00"
-lastmod: "2026-10-24T10:45:00-04:00"
+lastmod: "2026-10-27T09:40:00-04:00"
 slug: "shippable-governance-human-in-the-loop"
 url: "/shippable-governance-human-in-the-loop.html"
 type: posts
+draft: true
 authors: ["liam"]
 showComments: true
 meta_robots: "index, follow"
-featureimage: "media/posts/7/gov-cover-rest.webp"
-coverMotion: "gov-cover"
-coverMotionBase: 0.8
-coverStyle: "artwork"
 ---
 
-Over the past several months, I dove headfirst into the emerging practice of working with autonomous coding agents. In the broader cultural zeitgeist, people have started calling this "vibe coding": describing a mode where you casually prompt a language model, lean back, and watch working software materialize on the screen.
+I have spent an inordinate amount of time over the past year experimenting with coding agents, models, and frameworks on my computer. A slightly absurd amount of time.
 
-The experience is intoxicating. Seeing ideas translate into running systems within minutes provides an immediate, compounding feedback loop. I found myself rewiring entire operational patterns across my daily work, from managing deep research dossiers and complex academic coursework down to automating household logistics and personal errands. Tasks that previously required an afternoon of manual scaffolding now execute in seconds.
+I have always loved building things, turning a raw thought into something visible on a screen. Yet I have never felt drawn toward artistic expression for its own sake. My urge to build has always been about making things work better. I want to turn an ephemeral thought into a durable artifact, something I can return to and inspect.
 
-Yet the moment you move past trivial scripts and attempt to build durable software systems with these tools, the naive dream of effortless automation collides with reality.
+Usually, when I look at something I built yesterday, I do not admire it. I immediately start interrogating my own blind spots: How did I fail to see a cleaner structure? Why was my initial approach so narrow?
+
+That is why working with modern coding agents became addictive in a very specific way. It unlocked rapid, relentless learning loops. You turn an idea over in your head, watch it materialize into code within minutes, and occasionally watch it fall flat on its face. Because you did not spend three days writing boilerplate, you carry zero sunk-cost attachment to the code. You can spend forty-five minutes building an experimental tool, realize it is a dead end, delete the directory, and move on without a second of regret. What you acquired was not the script; it was the clarity that came from testing the assumption against reality.
+
+In Site Reliability Engineering, there is a technical term for repetitive, manual operational tasks that scale linearly with service growth: toil.
+
+What the zeitgeist calls vibe coding let me approach daily life with an SRE mindset. How do we engineer away the toil?
+
+I began applying autonomous agents to the operational friction of everyday life: sorting tax documentation, extracting contract clauses from opaque terms of service, navigating consumer dispute filings, and turning job applications into disciplined, evidence-based packages. Instead of spending an exhausting evening drafting an email to a customer service bureaucracy, an agent drafts the note from verified policy facts, I make two edits, and send it.
+
+Engineering away the irksome, administrative drag of life is a hell of a thing.
+
+Yet the moment you move past personal scripts and attempt to build durable software systems with these tools, the naive dream of effortless automation collides with reality.
 
 Working with an ecosystem of autonomous agents does not feel like operating a compiler, a code generator, or a spreadsheet. It feels strikingly, unmistakably like coaching an engineering delivery team.
 
@@ -90,13 +99,15 @@ The only path to scaling autonomous systems safely is to invert the control stru
 
 In traditional software delivery, this pattern is already familiar as shift-left testing. Decades ago, testing was an isolated phase conducted by a separate quality assurance department after developers declared their code complete. Work was tossed over a wall; defects were logged weeks later; schedules slipped indefinitely. Modern engineering resolved that paralysis by bringing automated unit tests, integration suites, and security scans directly into the developer workflow. Quality became an automated property of the build, freeing delivery teams from quarterly committee approvals.
 
+Years earlier in central banking, we experienced the power of this inversion while automating software distribution across thousands of enterprise endpoints. Salaried professionals routinely waited days for managers to sign off on pre-vetted, low-risk developer tools. By proving that pre-cleared software carried zero incremental risk and replacing manual sign-offs with automated fulfillment, we cut delivery times from days to under thirty seconds, saved over a thousand technician hours annually, and suffered zero security breaches.
+
 Agentic systems require an identical inversion, but applied across an operational canvas that encompasses reasoning, language, and tool invocation.
 
 Governance cannot be an event that occurs after an agent finishes generating artifacts. Governance must be the operational scaffold within which the agent operates. This is the core thesis behind emerging frameworks like Gartner AI Trust, Risk, and Security Management (AI TRiSM): model safety and operational integrity cannot rely on static pre-deployment audits. They require continuous runtime validation, dynamic authorization barriers, and deterministic circuit breakers.
 
 When organizations ship governance as code, compliance becomes frictionless. The delivery team does not wonder whether their work will pass the committee; they know it passes because the automated test suite green-lit the build. The adversarial tension between delivery and oversight dissolves. The rules are open, deterministic, and objective.
 
-{{< embed "governance-latency-simulator" >}}
+<!-- embed "governance-latency-simulator" -->
 
 ## The Exploratory Validator
 
@@ -109,6 +120,8 @@ The answer is an emphatic no. The difference is that the human's role undergoes 
 Consider the reality of testing in an agentic development environment. A deterministic test suite can easily prove that a document contains no banned words, that all cross-references resolve to existing files, that mathematical formulas balance, and that visual components compile without syntax errors. Those checks are binary, objective, and fast. An automated system can execute fifty of them in parallel without breaking stride.
 
 Yet an automated suite cannot tell you whether an essay has struck the right emotional register for an anxious board of directors. It cannot tell you that an interactive diagram, while technically valid, conveys an ambiguous metaphor that will confuse non-technical executives. It cannot tell you that an automated script, while perfectly fulfilling its literal prompt, is optimizing for a local metric that damages the broader strategic goal.
+
+In past enterprise platform delivery, we coached external engineering contractors who wrote code at breakneck speed but optimized purely for the happy path. When edge cases broke, non-technical business stakeholders suffered testing fatigue from reviewing the same features multiple times. Autonomous coding agents exhibit that exact pathology. Left to themselves, they generate happy-path solutions with astonishing velocity, quietly shifting the exhaustion of discovering edge cases onto the human user.
 
 Only an active human, engaging with the system's output with genuine curiosity and operational context, catches those anomalies.
 

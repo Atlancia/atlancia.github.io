@@ -1,0 +1,236 @@
+<!-- Atlancia embed: Difference - channel, contain, assimilate (interactive).
+     Fits the post Difference Needs Somewhere to Go.
+     You on the left, the team mid-field, the shared outcome right. Pick a fate; in Channel mode two sliders
+     drive it: how much you hold back, and how far the team stretches toward you.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-dflow">
+  <style>
+    .atlx-div-dflow {
+      --dd-ink: var(--atl-ink, #EEEDED);
+      --dd-text: var(--atl-figure-text, #BFBFBF);
+      --dd-dim: var(--atl-dim, #9D9D9D);
+      --dd-line: var(--atl-line, #373737);
+      --dd-surface: var(--atl-surface, #1e1e1e);
+      --dd-amber: var(--atl-accent, #FFC074);
+      --dd-purple: #a78bfa;
+      --dd-arrow: #9D9D9D;
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--dd-surface);
+      color: var(--dd-text);
+      border: 1px solid var(--dd-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-dflow * { box-sizing: border-box; }
+    .atlx-div-dflow .atlx-dd-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--dd-ink);
+    }
+    .atlx-div-dflow .atlx-dd-sub { margin: 0 0 .3rem; color: var(--dd-dim); font-size: .95rem; }
+    .atlx-div-dflow .atlx-dd-view { display: flex; gap: .5rem; flex-wrap: wrap; margin: .9rem 0 .4rem; }
+    .atlx-div-dflow .atlx-dd-view button {
+      font: inherit;
+      background: transparent;
+      border: 1px solid var(--dd-line);
+      border-radius: 6px;
+      padding: .5rem .8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      text-align: left;
+      flex: 1 1 12rem;
+    }
+    .atlx-div-dflow .atlx-dd-view button svg { width: 24px; height: 24px; flex: none; }
+    .atlx-div-dflow .atlx-dd-view button svg path { fill: var(--dd-ink, #EEEDED); }
+    .atlx-div-dflow .atlx-ddm-name { display: block; font-size: .88rem; font-weight: 600; color: var(--dd-ink); }
+    .atlx-div-dflow .atlx-ddm-move { display: block; font-size: .78rem; font-weight: 400; color: var(--dd-dim); }
+    .atlx-div-dflow .atlx-dd-view button[aria-pressed="true"] { color: var(--dd-ink); border-color: var(--dd-dim); }
+    .atlx-div-dflow .atlx-dd-view button:focus-visible { outline: 2px solid var(--dd-amber); outline-offset: 3px; }
+    .atlx-div-dflow svg { display: block; width: 100%; height: auto; }
+    .atlx-div-dflow .atlx-dd-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 1.2rem; margin: .6rem 0 .2rem; }
+    @media (max-width: 640px) { .atlx-div-dflow .atlx-dd-sliders { grid-template-columns: 1fr; } }
+    .atlx-div-dflow .atlx-dd-slider label { display: flex; justify-content: space-between; font-size: .85rem; color: var(--dd-dim); margin-bottom: .25rem; }
+    .atlx-div-dflow .atlx-dd-slider label output { color: var(--dd-ink); font-weight: 600; }
+    .atlx-div-dflow .atlx-dd-slider input[type="range"] { width: 100%; accent-color: var(--dd-amber); }
+    .atlx-div-dflow .atlx-dd-slider input[type="range"]:disabled { opacity: .35; }
+    .atlx-div-dflow .atlx-dd-readout { margin: .5rem 0 0; color: var(--dd-ink); font-size: .98rem; min-height: 2.6em; }
+  </style>
+
+  <h3 class="atlx-dd-title">Bring yourself, meet halfway</h3>
+  <p class="atlx-dd-sub">You arrive with something the room does not have. Pick what the room does with it. In Channel mode, set both sliders: what you hold back, and how far the team stretches toward you.</p>
+
+  <noscript><p style="font-size:.9rem;">This figure is interactive, but the gist needs no script: assimilated difference becomes copies, contained difference never reaches the work, and channelled difference changes the outcome exactly as far as you bring it and the team meets it.</p></noscript>
+
+<div class="atlx-dd-view" role="group" aria-label="Fates for difference">
+    <button data-mode="assimilate" aria-pressed="false"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M760-660q17 0 28.5-11.5T800-700q0-17-11.5-28.5T760-740q-17 0-28.5 11.5T720-700q0 17 11.5 28.5T760-660Zm-160 0q17 0 28.5-11.5T640-700q0-17-11.5-28.5T600-740q-17 0-28.5 11.5T560-700q0 17 11.5 28.5T600-660Zm80 60q-29 0-55.5 11.5T586-551q-5 10 2.5 18.5T608-524h144q12 0 19.5-8.5T774-551q-12-26-38.5-37.5T680-600ZM280-80q-100 0-170-70T40-320v-200q0-33 23.5-56.5T120-600h320q33 0 56.5 23.5T520-520v200q0 100-70 170T280-80Zm0-80q66 0 113-47t47-113v-200H120v200q0 66 47 113t113 47Zm640-640v200q0 102-70 171t-171 69q-17 0-33.5-2t-32.5-7q-16-5-23-20t-2-31q5-16 20-23.5t31-2.5q11 3 21 4.5t21 1.5q66 0 112.5-47T840-600v-200H520v100q0 17-11.5 28.5T480-660q-17 0-28.5-11.5T440-700v-100q0-33 23.5-56.5T520-880h320q33 0 56.5 23.5T920-800ZM200-380q17 0 28.5-11.5T240-420q0-17-11.5-28.5T200-460q-17 0-28.5 11.5T160-420q0 17 11.5 28.5T200-380Zm160 0q17 0 28.5-11.5T400-420q0-17-11.5-28.5T360-460q-17 0-28.5 11.5T320-420q0 17 11.5 28.5T360-380Zm-80 136q28 0 53-11t39-35q5-11-1-20.5t-17-9.5H206q-11 0-17 9.5t-1 20.5q14 24 39 35t53 11Zm0-96Zm390-280Z"/></svg><span><span class="atlx-ddm-name">Assimilate</span><span class="atlx-ddm-move">Wear the mask</span></span></button>
+    <button data-mode="contain" aria-pressed="false"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-560q-17 0-28.5 11.5T440-520v128l-36-36q-11-11-28-11t-28 11q-11 11-11 28t11 28l104 104q12 12 28 12t28-12l104-104q11-11 11-28t-11-28q-11-11-28-11t-28 11l-36 36v-128q0-17-11.5-28.5T480-560Zm-280-80v440h560v-440H200Zm0 520q-33 0-56.5-23.5T120-200v-499q0-14 4.5-27t13.5-24l50-61q11-14 27.5-21.5T250-840h460q18 0 34.5 7.5T772-811l50 61q9 11 13.5 24t4.5 27v499q0 33-23.5 56.5T760-120H200Zm16-600h528l-34-40H250l-34 40Zm264 300Z"/></svg><span><span class="atlx-ddm-name">Contain</span><span class="atlx-ddm-move">Give the acceptable part</span></span></button>
+    <button data-mode="channel" aria-pressed="true"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l108-108q11-11 27.5-11.5T398-528q11 11 11 28t-11 28L291-364q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l108-107q11-11 27.5-11.5T483-443q11 11 11 28t-11 28L376-279q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l108-107q11-11 27.5-11.5T568-358q11 11 11 28t-11 28L460-194q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l175-175q23-23 56.5-23t56.5 23l75 75q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-14 14-20 33t-3 38q3 17-7 30t-27 15q-17 2-30-7.5T42-553q-6-38 5.5-74.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-98-560Z"/></svg><span><span class="atlx-ddm-name">Channel</span><span class="atlx-ddm-move">Move toward each other</span></span></button>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="ii-user" viewBox="0 0 24 24"><path d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"/><path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"/></symbol>
+  </defs></svg>
+
+  <svg id="ddf-svg" role="img" aria-label="You, the team, and the shared outcome under three fates"></svg>
+
+  <div class="atlx-dd-sliders">
+    <div class="atlx-dd-slider">
+      <label for="ddf-hold">What you hold back <output id="ddf-hold-v">25%</output></label>
+      <input id="ddf-hold" type="range" min="0" max="100" value="25">
+    </div>
+    <div class="atlx-dd-slider">
+      <label for="ddf-stretch">How far the team stretches <output id="ddf-stretch-v">60%</output></label>
+      <input id="ddf-stretch" type="range" min="0" max="100" value="60">
+    </div>
+  </div>
+
+  <p class="atlx-dd-readout" id="ddf-cap" aria-live="polite"></p>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-dflow') : document.querySelector('.atlx-div-dflow');
+    if(!root) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var INK = 'var(--dd-ink)', DIM = 'var(--dd-dim)', LINE = 'var(--dd-line)', AMBER = 'var(--dd-amber)';
+    function el(name, attrs, parent){
+      var n = document.createElementNS(NS, name);
+      for(var k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    }
+    function txt(parent, x, y, s, size, weight, fill, anchor){
+      var t = el('text', {x: x, y: y, 'font-size': size, 'font-weight': weight || 400, fill: fill || INK, 'text-anchor': anchor || 'middle', 'font-family': '"Cal Sans", sans-serif'}, parent);
+      t.textContent = s;
+      return t;
+    }
+    function icon(parent, id, x, y, s, color, w){
+      var u = el('use', {href: '#' + id, x: x, y: y, width: s, height: s}, parent);
+      u.setAttribute('fill', 'none');
+      u.setAttribute('stroke', color);
+      u.setAttribute('stroke-width', w);
+      u.setAttribute('stroke-linecap', 'round');
+      u.setAttribute('stroke-linejoin', 'round');
+      return u;
+    }
+    function ribbon(g, x0, y0, x1, y1, w, color, op){
+      var dx = Math.max(24, (x1 - x0) / 2);
+      el('path', {d: 'M' + x0 + ',' + y0 + ' C' + (x0 + dx) + ',' + y0 + ' ' + (x1 - dx) + ',' + y1 + ' ' + x1 + ',' + y1, fill: 'none', stroke: color || 'var(--dd-arrow)', 'stroke-width': w, 'stroke-linecap': 'butt', opacity: op == null ? 1 : op}, g);
+    }
+    function person(g, cx, cy, r, color, sw, glyphS){
+      el('circle', {cx: cx, cy: cy, r: r + 6, fill: '#ffffff', 'fill-opacity': 0}, g);
+      el('circle', {cx: cx, cy: cy, r: r, fill: 'none', stroke: color, 'stroke-width': sw}, g);
+      icon(g, 'ii-user', cx - glyphS / 2, cy - glyphS / 2 + 1, glyphS, color, 2);
+    }
+    function hexPts(cx, cy, r){
+      var p = [];
+      for(var i = 0; i < 6; i++){
+        var a = Math.PI / 3 * i;
+        p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1));
+      }
+      return p.join(' ');
+    }
+    var MASKD = 'M760-660q17 0 28.5-11.5T800-700q0-17-11.5-28.5T760-740q-17 0-28.5 11.5T720-700q0 17 11.5 28.5T760-660Zm-160 0q17 0 28.5-11.5T640-700q0-17-11.5-28.5T600-740q-17 0-28.5 11.5T560-700q0 17 11.5 28.5T600-660Zm80 60q-29 0-55.5 11.5T586-551q-5 10 2.5 18.5T608-524h144q12 0 19.5-8.5T774-551q-12-26-38.5-37.5T680-600ZM280-80q-100 0-170-70T40-320v-200q0-33 23.5-56.5T120-600h320q33 0 56.5 23.5T520-520v200q0 100-70 170T280-80Zm0-80q66 0 113-47t47-113v-200H120v200q0 66 47 113t113 47Zm640-640v200q0 102-70 171t-171 69q-17 0-33.5-2t-32.5-7q-16-5-23-20t-2-31q5-16 20-23.5t31-2.5q11 3 21 4.5t21 1.5q66 0 112.5-47T840-600v-200H520v100q0 17-11.5 28.5T480-660q-17 0-28.5-11.5T440-700v-100q0-33 23.5-56.5T520-880h320q33 0 56.5 23.5T920-800ZM200-380q17 0 28.5-11.5T240-420q0-17-11.5-28.5T200-460q-17 0-28.5 11.5T160-420q0 17 11.5 28.5T200-380Zm160 0q17 0 28.5-11.5T400-420q0-17-11.5-28.5T360-460q-17 0-28.5 11.5T320-420q0 17 11.5 28.5T360-380Zm-80 136q28 0 53-11t39-35q5-11-1-20.5t-17-9.5H206q-11 0-17 9.5t-1 20.5q14 24 39 35t53 11Zm0-96Zm390-280Z';
+    var W = 720, SELFX = 96, TEAMX = 360, OUTX = 616, CY = 170;
+    var TEAMYS = [80, 140, 200, 260];
+    var svg = root.querySelector('#ddf-svg');
+    var holdEl = root.querySelector('#ddf-hold'), stretchEl = root.querySelector('#ddf-stretch');
+    var holdV = root.querySelector('#ddf-hold-v'), stretchV = root.querySelector('#ddf-stretch-v');
+    var cap = root.querySelector('#ddf-cap');
+    var btns = root.querySelectorAll('[data-mode]');
+    var mode = 'channel';
+    function render(){
+      var hb = holdEl.value / 100, ts = stretchEl.value / 100;
+      holdV.textContent = holdEl.value + '%';
+      stretchV.textContent = stretchEl.value + '%';
+      var chan = mode === 'channel';
+      root.querySelector('.atlx-dd-sliders').style.display = chan ? '' : 'none';
+      holdEl.disabled = !chan;
+      stretchEl.disabled = !chan;
+      svg.innerHTML = '';
+      var bgG = el('g', {}, svg);
+      var fgG = el('g', {}, svg);
+      if(mode === 'assimilate'){
+        var ays = [60, 110, 160, 210];
+        ays.forEach(function(yy){
+          person(fgG, TEAMX, yy, 16, DIM, 2.5, 22);
+        });
+        person(fgG, TEAMX, 260, 16, DIM, 2.5, 22);
+        var mks = 24 / 960;
+        el('path', {d: MASKD, fill: AMBER, transform: 'translate(' + (TEAMX - 12) + ',' + (260 + 11.1) + ') scale(' + mks + ')'}, fgG);
+        txt(fgG, TEAMX, 304, 'You, filed down', 11, 400, DIM);
+        el('rect', {x: 250, y: 96, width: 6, height: 54, fill: DIM}, fgG);
+        el('rect', {x: 250, y: 190, width: 6, height: 54, fill: DIM}, fgG);
+        txt(fgG, 253, 264, 'The window', 11, 400, DIM);
+        txt(fgG, TEAMX, 30, 'The team', 12, 700, INK);
+        el('polygon', {points: hexPts(OUTX, CY, 32), fill: 'none', stroke: DIM, 'stroke-width': 2}, fgG);
+        [[-12, -8], [10, -10], [0, 6], [-9, 12], [11, 10]].forEach(function(o){
+          el('circle', {cx: OUTX + o[0], cy: CY + o[1], r: 6, fill: DIM, opacity: 0.8}, fgG);
+        });
+        txt(fgG, OUTX, CY + 52, 'Copies', 12, 700, DIM);
+        ribbon(bgG, 40, CY, 250, CY, 4, DIM, 1);
+        ribbon(bgG, 256, CY - 8, TEAMX - 22, 135, 2, DIM, 1);
+        txt(fgG, 76, CY + 34, 'Difference in', 11, 400, DIM);
+        cap.textContent = 'Wear the mask: act different than you are so the room stays comfortable. Performing costs energy, and your contribution shrinks to whatever fits the window the team allows.';
+      } else if(mode === 'contain'){
+        TEAMYS.forEach(function(yy){
+          person(fgG, TEAMX, yy, 16, INK, 2.5, 22);
+        });
+        txt(fgG, TEAMX, 44, 'The team', 12, 700, INK);
+        el('rect', {x: SELFX - 52, y: 60, width: 104, height: 220, rx: 12, fill: 'none', stroke: DIM, 'stroke-width': 1.5, 'stroke-dasharray': '6 6'}, fgG);
+        txt(fgG, SELFX, 48, 'Kept, sealed', 11, 400, DIM);
+        person(fgG, SELFX, CY, 20, AMBER, 2.5, 28);
+        txt(fgG, SELFX, CY + 44, 'You, intact', 11, 400, INK);
+        el('circle', {cx: SELFX, cy: CY + 70, r: 10, fill: 'none', stroke: DIM, 'stroke-width': 2}, fgG);
+        txt(fgG, SELFX, CY + 88, 'Held back', 11, 400, DIM);
+        ribbon(bgG, SELFX + 26, CY, SELFX + 48, CY, 4, AMBER, 1);
+        el('polygon', {points: hexPts(OUTX, CY, 32), fill: 'none', stroke: DIM, 'stroke-width': 2, opacity: 0.5}, fgG);
+        txt(fgG, OUTX, CY, 'Nothing', 12, 700, DIM);
+        txt(fgG, OUTX, CY + 16, 'Crosses', 12, 700, DIM);
+        cap.textContent = 'Give the acceptable part: offer what the room will take and hold back the rest. Nothing false, but the best of what you bring never enters the work.';
+      } else {
+        var selfOp = 1 - hb * 0.75;
+        var tx = TEAMX - ts * 56;
+        TEAMYS.forEach(function(yy){
+          person(fgG, tx, yy, 16, INK, 2.5, 22);
+        });
+        txt(fgG, tx, 44, 'The team, moved', 12, 700, INK);
+        var selfG = el('g', {opacity: selfOp}, fgG);
+        person(selfG, SELFX, CY, 20, AMBER, 2.5, 28);
+        txt(fgG, SELFX, CY + 44, 'You, brought', 11, 400, INK);
+        ribbon(bgG, SELFX + 26, CY, OUTX - 30, CY, 1 + 4 * (1 - hb), AMBER, 1);
+        TEAMYS.forEach(function(yy){
+          ribbon(bgG, tx + 22, yy, OUTX - 30, CY, 1 + 3 * ts, INK, 1);
+        });
+        var combine = (1 - hb) * (0.35 + 0.65 * ts);
+        el('polygon', {points: hexPts(OUTX, CY, 32), fill: 'var(--dd-surface)', stroke: INK, 'stroke-width': 2.5}, fgG);
+        el('polygon', {points: hexPts(OUTX, CY, 26), fill: AMBER, opacity: (0.12 + 0.88 * combine).toFixed(2)}, fgG);
+        txt(fgG, OUTX, CY + 52, 'Shared outcome', 12, 700, INK);
+        var verdict = combine > 0.72 ? 'the outcome holds both.'
+          : combine > 0.42 ? 'partly: turnout without full insight.'
+          : 'mostly compliance. The difference stayed home.';
+        cap.textContent = 'Move toward each other: you bring ' + Math.round((1 - hb) * 100) + '%, the team stretches ' + Math.round(ts * 100) + '%, so ' + verdict;
+      }
+      svg.setAttribute('viewBox', '0 0 ' + W + ' 320');
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        btns.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+        mode = b.getAttribute('data-mode');
+        render();
+      });
+    });
+    holdEl.addEventListener('input', render);
+    stretchEl.addEventListener('input', render);
+    render();
+  })();
+  </script>
+</div>

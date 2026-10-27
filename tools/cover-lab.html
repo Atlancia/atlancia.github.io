@@ -25,13 +25,27 @@
     border-right: 1px dashed rgba(255, 192, 116, 0.9);
   }
   .controls { background: #2a2a2e; border-radius: 8px; padding: 14px; max-height: 88vh; overflow-y: auto; }
+  /* The icons live under the preview, beside the thing they act on, instead of
+     being one more group in a rail that already holds six. */
+  .stage-controls { margin-top: 12px; border-top: 1px solid #404044; padding-top: 10px; }
+  .stage-controls:empty { display: none; }
+  .stage-controls .control-group:last-child { margin-bottom: 0; }
   .control-group { margin-bottom: 14px; }
-  .control-group h3 { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #8a8a92; margin-bottom: 7px; border-bottom: 1px solid #404044; padding-bottom: 4px; }
+  .control-group h3 { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #8a8a92; margin-bottom: 7px; border-bottom: 1px solid #404044; padding-bottom: 4px; cursor: pointer; user-select: none; }
+  .control-group h3:hover { color: #c9c0a6; }
+  .control-group h3 .chev { font-size: 0.62rem; color: #6f6f77; transition: transform 0.12s ease; }
+  .control-group.collapsed h3 { margin-bottom: 0; }
+  .control-group.collapsed h3 .chev { transform: rotate(-90deg); }
+  .control-group.collapsed .group-body { display: none; }
+  .group-sub { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.06em; color: #857c66; margin: 11px 0 5px; }
+  .group-sub:first-child { margin-top: 2px; }
   .control-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-  .control-row.is-inactive, .control-block.is-inactive { display: none; }
-  body.show-inactive .control-block.is-inactive { display: block; opacity: 0.32; }
+  /* A control that does not apply is dimmed, never removed. Hiding it meant the
+     one row you needed could vanish because a predicate was wrong about your
+     cover, and dimmed rows stay usable for exactly that reason. */
+  .control-row.is-inactive, .control-block.is-inactive { opacity: 0.42; }
+  body.hide-inactive .control-row.is-inactive, body.hide-inactive .control-block.is-inactive { display: none; }
   .control-block { display: block; }
-  body.show-inactive .control-row.is-inactive { display: flex; opacity: 0.32; }
   .control-row label { font-size: 0.77rem; min-width: 86px; color: #b6b6bc; flex: 0 0 auto; }
   select, input[type="range"], button { flex: 1; }
   select { background: #35353a; color: #e0e0e0; border: 1px solid #555; border-radius: 4px; padding: 3px 6px; font-size: 0.77rem; min-width: 0; }
@@ -73,26 +87,22 @@
       <canvas id="preview" width="600" height="200"></canvas>
       <div class="card-guide" aria-hidden="true"><div class="win"></div></div>
     </div>
-    <div class="drag-hint">Click an icon to add it, drag it on the canvas, double-click to remove. Space plays and pauses. The dimmed edges are what the list thumbnail crops away.</div>
+    <div class="drag-hint">Click an icon to add it, drag it on the canvas, double-click to remove. Click a placed icon to select it, then drag the corner handle to resize. Space plays and pauses. The dimmed edges are what the list thumbnail crops away.</div>
     <div class="export-row">
-      <button id="toggle-guide" class="secondary">Card frame</button>
-      <button id="export-svg">SVG (animated)</button>
-      <button id="export-svg-still" class="secondary">SVG still</button>
-      <button id="export-png" class="secondary">PNG still</button>
+      <button id="export-package">Cover package</button>
       <button id="export-webp" class="secondary">WebP still</button>
-      <button id="export-frames" class="secondary">PNG sequence</button>
-      <button id="export-webm" class="secondary">WebM</button>
+      <button id="use-scrub" class="secondary" title="Take the export point from the current scrub position">Export point &larr; scrub</button>
+      <button id="toggle-guide" class="secondary">Card frame</button>
       <button id="clear-icons" class="secondary">Clear icons</button>
       <button id="randomize" class="secondary">Randomize</button>
     </div>
     <div class="status" id="status">ready</div>
+    <div class="stage-controls" id="stage-controls"></div>
   </div>
   <div class="controls" id="controls"></div>
 </div>
 
-<script>
-const EMBEDDED_ICONS = {"apple": "\n<svg\n  class=\"lucide lucide-apple\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 6.528V3a1 1 0 0 1 1-1h0\" />\n  <path d=\"M18.237 21A15 15 0 0 0 22 11a6 6 0 0 0-10-4.472A6 6 0 0 0 2 11a15.1 15.1 0 0 0 3.763 10 3 3 0 0 0 3.648.648 5.5 5.5 0 0 1 5.178 0A3 3 0 0 0 18.237 21\" />\n</svg>\n", "award": "\n<svg\n  class=\"lucide lucide-award\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\" />\n  <circle cx=\"12\" cy=\"8\" r=\"6\" />\n</svg>\n", "box": "\n<svg\n  class=\"lucide lucide-box\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\" />\n  <path d=\"m3.3 7 8.7 5 8.7-5\" />\n  <path d=\"M12 22V12\" />\n</svg>\n", "bridge": "\n<svg\n  class=\"lucide lucide-bridge\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 9.728V16\" />\n  <path d=\"M14 9.728V16\" />\n  <path d=\"M18 20V4\" />\n  <path d=\"m22 11-4-4A7.5 7.5 0 0 1 6 7l-4 4\" />\n  <path d=\"M22 16H2\" />\n  <path d=\"M6 20V4\" />\n</svg>\n", "bug": "\n<svg\n  class=\"lucide lucide-bug\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 20v-9\" />\n  <path d=\"M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z\" />\n  <path d=\"M14.12 3.88 16 2\" />\n  <path d=\"M21 21a4 4 0 0 0-3.81-4\" />\n  <path d=\"M21 5a4 4 0 0 1-3.55 3.97\" />\n  <path d=\"M22 13h-4\" />\n  <path d=\"M3 21a4 4 0 0 1 3.81-4\" />\n  <path d=\"M3 5a4 4 0 0 0 3.55 3.97\" />\n  <path d=\"M6 13H2\" />\n  <path d=\"m8 2 1.88 1.88\" />\n  <path d=\"M9 7.13V6a3 3 0 1 1 6 0v1.13\" />\n</svg>\n", "chart-bar": "\n<svg\n  class=\"lucide lucide-chart-bar\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M3 3v16a2 2 0 0 0 2 2h16\" />\n  <path d=\"M7 16h8\" />\n  <path d=\"M7 11h12\" />\n  <path d=\"M7 6h3\" />\n</svg>\n", "cog": "\n<svg\n  class=\"lucide lucide-cog\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M11 10.27 7 3.34\" />\n  <path d=\"m11 13.73-4 6.93\" />\n  <path d=\"M12 22v-2\" />\n  <path d=\"M12 2v2\" />\n  <path d=\"M14 12h8\" />\n  <path d=\"m17 20.66-1-1.73\" />\n  <path d=\"m17 3.34-1 1.73\" />\n  <path d=\"M2 12h2\" />\n  <path d=\"m20.66 17-1.73-1\" />\n  <path d=\"m20.66 7-1.73 1\" />\n  <path d=\"m3.34 17 1.73-1\" />\n  <path d=\"m3.34 7 1.73 1\" />\n  <circle cx=\"12\" cy=\"12\" r=\"2\" />\n  <circle cx=\"12\" cy=\"12\" r=\"8\" />\n</svg>\n", "coins": "\n<svg\n  class=\"lucide lucide-coins\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M13.744 17.736a6 6 0 1 1-7.48-7.48\" />\n  <path d=\"M15 6h1v4\" />\n  <path d=\"m6.134 14.768.866-.5 2 3.464\" />\n  <circle cx=\"16\" cy=\"8\" r=\"6\" />\n</svg>\n", "compass": "\n<svg\n  class=\"lucide lucide-compass\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\" />\n</svg>\n", "database": "\n<svg\n  class=\"lucide lucide-database\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" />\n  <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" />\n  <path d=\"M3 12A9 3 0 0 0 21 12\" />\n</svg>\n", "file-text": "\n<svg\n  class=\"lucide lucide-file-text\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" />\n  <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" />\n  <path d=\"M10 9H8\" />\n  <path d=\"M16 13H8\" />\n  <path d=\"M16 17H8\" />\n</svg>\n", "flower": "\n<svg\n  class=\"lucide lucide-flower\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <circle cx=\"12\" cy=\"12\" r=\"3\" />\n  <path d=\"M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5\" />\n  <path d=\"M12 7.5V9\" />\n  <path d=\"M7.5 12H9\" />\n  <path d=\"M16.5 12H15\" />\n  <path d=\"M12 16.5V15\" />\n  <path d=\"m8 8 1.88 1.88\" />\n  <path d=\"M14.12 9.88 16 8\" />\n  <path d=\"m8 16 1.88-1.88\" />\n  <path d=\"M14.12 14.12 16 16\" />\n</svg>\n", "layers": "\n<svg\n  class=\"lucide lucide-layers\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z\" />\n  <path d=\"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12\" />\n  <path d=\"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17\" />\n</svg>\n", "lightbulb": "\n<svg\n  class=\"lucide lucide-lightbulb\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\" />\n  <path d=\"M9 18h6\" />\n  <path d=\"M10 22h4\" />\n</svg>\n", "merge": "\n<svg\n  class=\"lucide lucide-merge\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m8 6 4-4 4 4\" />\n  <path d=\"M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22\" />\n  <path d=\"m20 22-5-5\" />\n</svg>\n", "network": "\n<svg\n  class=\"lucide lucide-network\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" />\n  <rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" />\n  <rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1\" />\n  <path d=\"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3\" />\n  <path d=\"M12 12V8\" />\n</svg>\n", "sailboat": "\n<svg\n  class=\"lucide lucide-sailboat\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 2v15\" />\n  <path d=\"M7 22a4 4 0 0 1-4-4 1 1 0 0 1 1-1h16a1 1 0 0 1 1 1 4 4 0 0 1-4 4z\" />\n  <path d=\"M9.159 2.46a1 1 0 0 1 1.521-.193l9.977 8.98A1 1 0 0 1 20 13H4a1 1 0 0 1-.824-1.567z\" />\n</svg>\n", "snowflake": "\n<svg\n  class=\"lucide lucide-snowflake\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m10 20-1.25-2.5L6 18\" />\n  <path d=\"M10 4 8.75 6.5 6 6\" />\n  <path d=\"m14 20 1.25-2.5L18 18\" />\n  <path d=\"m14 4 1.25 2.5L18 6\" />\n  <path d=\"m17 21-3-6h-4\" />\n  <path d=\"m17 3-3 6 1.5 3\" />\n  <path d=\"M2 12h6.5L10 9\" />\n  <path d=\"m20 10-1.5 2 1.5 2\" />\n  <path d=\"M22 12h-6.5L14 15\" />\n  <path d=\"m4 10 1.5 2L4 14\" />\n  <path d=\"m7 21 3-6-1.5-3\" />\n  <path d=\"m7 3 3 6h4\" />\n</svg>\n", "sparkles": "\n<svg\n  class=\"lucide lucide-sparkles\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" />\n  <path d=\"M20 2v4\" />\n  <path d=\"M22 4h-4\" />\n  <circle cx=\"4\" cy=\"20\" r=\"2\" />\n</svg>\n", "sprout": "\n<svg\n  class=\"lucide lucide-sprout\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4 4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3\" />\n  <path d=\"M4 9a5 5 0 0 1 8 4 5 5 0 0 1-8-4\" />\n  <path d=\"M5 21h14\" />\n</svg>\n", "star": "\n<svg\n  class=\"lucide lucide-star\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />\n</svg>\n", "table": "\n<svg\n  class=\"lucide lucide-table\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 3v18\" />\n  <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" />\n  <path d=\"M3 9h18\" />\n  <path d=\"M3 15h18\" />\n</svg>\n", "target": "\n<svg\n  class=\"lucide lucide-target\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <circle cx=\"12\" cy=\"12\" r=\"6\" />\n  <circle cx=\"12\" cy=\"12\" r=\"2\" />\n</svg>\n", "tree-deciduous": "\n<svg\n  class=\"lucide lucide-tree-deciduous\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"96\"\n  height=\"96\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"1.5\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M8 19a4 4 0 0 1-2.24-7.32A3.5 3.5 0 0 1 9 6.03V6a3 3 0 1 1 6 0v.04a3.5 3.5 0 0 1 3.24 5.65A4 4 0 0 1 16 19Z\" />\n  <path d=\"M12 19v3\" />\n</svg>\n"};
-</script>
+<script src="icons-lucide.js"></script>
 <script>
 'use strict';
 
@@ -122,6 +132,10 @@ const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const canvasWrap = document.getElementById('canvas-wrap');
 const statusEl = document.getElementById('status');
 const controlsEl = document.getElementById('controls');
+const stageEl = document.getElementById('stage-controls');
+// Which rail sections the user has folded away. Empty by default: nothing hides
+// until a header is clicked.
+const collapsedGroups = new Set();
 
 /* ---------- helpers ---------- */
 
@@ -349,7 +363,9 @@ function defaultState() {
     icon: { color: '#23233d', size: 64 },
     treat: { type: 'none', intensity: 50, cell: 2, c1: '#23233d', c2: '#ffc074', seed: 1, shapes: 14 },
     anim: { base: 'none', icon: 'none', treat: false, cycles: 1, duration: 3, fps: 24 },
-    out: { scale: 3 }
+    // The instant the still is taken from, which the export also rotates to be
+    // frame zero: the poster and the animation therefore start on the same pose.
+    out: { scale: 3, exportPoint: 0.8 }
   };
 }
 
@@ -1249,7 +1265,7 @@ function applyTreatment(c, tr, f) {
       const a = hexToRgb(tr.c2);
       c.save();
       c.fillStyle = 'rgb(' + a.r + ',' + a.g + ',' + a.b + ')';
-      c.globalAlpha = Math.min(1, 0.4 + amt * 0.55);
+      c.globalAlpha = clamp(0.18 + amt * 0.22, 0, 1);
       for (let y = -step; y < ch + step; y += step) {
         for (let x = -step; x < cw + step; x += step) {
           const px = x + off;
@@ -1307,15 +1323,31 @@ function applyTreatment(c, tr, f) {
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/* The composition record travels inside the artwork, so the pair cannot be
+   separated or mismatched on the way to the repo. Image bytes are left out: the
+   picture is already embedded in the SVG body as a data URL, and a second copy
+   would double the file for something the ingest never reads. */
+function coverRecord(state) {
+  const lean = JSON.parse(JSON.stringify(state));
+  [lean.a, lean.divider && lean.divider.b].forEach(node => {
+    if (node && node.img) { node.img.src = ''; node.img.embedded = false; }
+  });
+  lean.out = Object.assign({}, lean.out, { restTime: 0 });
+  lean.meta = { tool: 'cover-lab', at: new Date().toISOString() };
+  return JSON.stringify(lean);
+}
+
 function tfString(tf) {
   if (!tf) return '';
   const parts = [];
   if (tf.tx || tf.ty) parts.push(`translate(${n(tf.tx)} ${n(tf.ty)})`);
   if (tf.rot || tf.scale !== 1) {
-    parts.push(`translate(${n(tf.cx)} ${n(tf.cy)})`);
+    const cx = tf.cx !== undefined ? tf.cx : 0;
+    const cy = tf.cy !== undefined ? tf.cy : 0;
+    if (cx || cy) parts.push(`translate(${n(cx)} ${n(cy)})`);
     if (tf.rot) parts.push(`rotate(${n(tf.rot)})`);
     if (tf.scale !== 1) parts.push(`scale(${n(tf.scale)})`);
-    parts.push(`translate(${n(-tf.cx)} ${n(-tf.cy)})`);
+    if (cx || cy) parts.push(`translate(${n(-cx)} ${n(-cy)})`);
   }
   return parts.join(' ');
 }
@@ -1331,11 +1363,11 @@ function iconMarkup(name, color) {
   } catch (e) { return ''; }
 }
 
-function wipeKeyframes(state) {
+function wipeKeyframes(state, u0 = 0) {
   const K = 13, out = [];
   const dv = state.divider;
   for (let i = 0; i < K; i++) {
-    const u = i / (K - 1);
+    const u = (u0 + i / (K - 1)) % 1;
     const f = { u, ph: u * Math.PI * 2 * state.anim.cycles, cycles: state.anim.cycles, frameIndex: 0 };
     out.push(dividerGeometry(dv, motionAt(dv, f), f).d);
   }
@@ -1348,14 +1380,15 @@ const TREAT_SVG = {
   'none': 'none',
   'grain-light': 'grain', 'grain-heavy': 'grain',
   'vignette': 'native', 'glow': 'native',
-  'halftone': 'pattern', 'scanlines': 'pattern', 'grid': 'pattern',
+  'halftone': 'filter', 'scanlines': 'pattern', 'grid': 'pattern',
   'paper': 'grain',
   'posterize': 'filter', 'duotone': 'filter',
-  'dither': 'posterize', 'bayer': 'posterize', 'photocopy': 'posterize',
+  'dither': 'filter', 'bayer': 'filter', 'photocopy': 'filter',
   'lowpoly': 'vector', 'strata': 'vector', 'shapes': 'vector'
 };
 
-function svgTreatment(state, defs) {
+function svgTreatment(state, defs, opts) {
+  const animate = opts && opts.animate;
   const tr = state.treat;
   const amt = clamp(tr.intensity / 100, 0, 1);
   const kind = TREAT_SVG[tr.type] || 'none';
@@ -1437,31 +1470,77 @@ function svgTreatment(state, defs) {
       return out;
     }
   }
-  let halftoneDots = false;
   if (tr.type === 'halftone') {
-    const cv = state.a.type === 'image' ? processedImage(state.a) : null;
-    if (cv && cv.width && cv.height) {
-      const step = Math.max(6, tr.cell * 4);
-      const cols = Math.ceil(W / step), rows = Math.ceil(H / step);
-      const ctx = cv.getContext('2d', { willReadFrequently: true });
-      const px = ctx.getImageData(0, 0, cv.width, cv.height).data;
-      const maxR = step * 0.62 * (0.45 + amt * 0.55);
-      const parts = [];
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const sx = Math.min(cv.width - 1, Math.round(((x + 0.5) * step * cv.width) / W));
-          const sy = Math.min(cv.height - 1, Math.round(((y + 0.5) * step * cv.height) / H));
-          const i = (sy * cv.width + sx) * 4;
-          const lum = (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
-          const r = maxR * (1 - lum);
-          if (r < 0.4) continue;
-          parts.push('<circle cx="' + n((x + 0.5) * step) + '" cy="' + n((y + 0.5) * step) + '" r="' + n(r) + '"/>');
-        }
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d', { willReadFrequently: true });
+    const cell = Math.max(1, Math.round(tr.cell));
+    const step = Math.max(3, cell + 2);
+    const dur = Number(state.anim && state.anim.duration) || 3;
+    const exportPoint = Number(state.out && state.out.exportPoint) || 0;
+    const K = 13;
+    const isAnim = animate && state.anim && state.anim.treat;
+
+    const keyframesData = [];
+    const keyframesLo = [];
+    const keyframesSpan = [];
+    const sampleCount = isAnim ? K : 1;
+    for (let k = 0; k < sampleCount; k++) {
+      const t = exportPoint + (isAnim ? (k / (K - 1)) * dur : 0);
+      ctx.clearRect(0, 0, W, H);
+      drawScene(ctx, buildScene(state, t), 1);
+      const data = ctx.getImageData(0, 0, W, H).data;
+      let lo = 255, hi = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const l = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
+        if (l < lo) lo = l;
+        if (l > hi) hi = l;
       }
-      out.overlay += '<g fill="' + esc(tr.c2) + '" opacity="' + n(clamp(0.35 + amt * 0.55, 0, 1)) + '">' + parts.join('') + '</g>';
-      out.note = ' Halftone dots follow the base image, one circle per cell.';
-      halftoneDots = true;
+      keyframesData.push(data);
+      keyframesLo.push(lo);
+      keyframesSpan.push(Math.max(20, hi - lo));
     }
+
+    const s2 = 2;
+    const circleTags = [];
+    for (let y = -step; y <= H + step; y += step) {
+      for (let x = -step; x <= W + step; x += step) {
+        const dotX = x + step / 2, dotY = y + step / 2;
+        const rVals = [];
+        for (let k = 0; k < sampleCount; k++) {
+          const px = keyframesData[k];
+          const lo = keyframesLo[k], span = keyframesSpan[k];
+          let sum = 0, count = 0;
+          for (let sy = 0; sy < step; sy += s2) {
+            const yy = Math.round(y + sy);
+            if (yy < 0 || yy >= H) continue;
+            for (let sx = 0; sx < step; sx += s2) {
+              const xx = Math.round(x + sx);
+              if (xx < 0 || xx >= W) continue;
+              const i = (yy * W + xx) * 4;
+              sum += px[i] * 0.2126 + px[i + 1] * 0.7152 + px[i + 2] * 0.0722;
+              count++;
+            }
+          }
+          if (!count) {
+            rVals.push('0');
+            continue;
+          }
+          const lum = clamp((sum / count - lo) / span, 0, 1);
+          const r = Math.min((step / 2) * Math.max(0, 1 - lum) * Math.min(1, amt * 1.5), step * 0.72);
+          rVals.push(n(r));
+        }
+        if (Math.max(...rVals.map(Number)) < 0.4) continue;
+        const r0 = rVals[0];
+        const anim = isAnim ? `<animate attributeName="r" values="${rVals.join(';')}" dur="${dur}s" repeatCount="indefinite"/>` : '';
+        circleTags.push(`<circle cx="${n(dotX)}" cy="${n(dotY)}" r="${r0}">${anim}</circle>`);
+      }
+    }
+
+    const slide = isAnim ? `<animateTransform attributeName="transform" type="translate" values="0 0;${n(step)} 0" dur="${dur}s" repeatCount="indefinite"/>` : '';
+    out.overlay += `<g fill="${esc(tr.c2)}" opacity="${n(clamp(0.12 + amt * 0.18, 0, 1))}">${slide}${circleTags.join('')}</g>`;
+    out.note = ' Halftone dots follow the scene with animated pulse and drift.';
+    return out;
   }
   if (kind === 'pattern') {
     const step = tr.type === 'grid' ? Math.max(8, tr.cell * 12) : Math.max(4, tr.cell * 4);
@@ -1474,7 +1553,24 @@ function svgTreatment(state, defs) {
     out.overlay += `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#fxPat)"/>`;
   }
   if (kind === 'filter') {
-    if (tr.type === 'duotone') {
+    if (tr.type === 'halftone') {
+      const a = hexToRgb(tr.c1), b = hexToRgb(tr.c2);
+      const freq = 0.06 + amt * 0.04;
+      defs.push(`<filter id="fxScene" x="0" y="0" width="100%" height="100%">` +
+        `<feTurbulence type="fractalNoise" baseFrequency="${n(freq)}" numOctaves="4" seed="0" stitchTiles="stitch">` +
+        `<animate attributeName="seed" values="0;1;2;3;4;5;6;7" dur="${n(state.anim.duration)}s" repeatCount="indefinite"/>` +
+        `</feTurbulence>` +
+        `<feColorMatrix type="matrix" values="` +
+        `${a.r/255} 0 0 0 0 ` +
+        `0 ${a.g/255} 0 0 0 ` +
+        `0 0 ${a.b/255} 0 0 ` +
+        `0 0 0 1 0"/>` +
+        `<feComponentTransfer>` +
+        `<feFuncR type="table" tableValues="${a.r/255} ${b.r/255}"/>` +
+        `<feFuncG type="table" tableValues="${a.g/255} ${b.g/255}"/>` +
+        `<feFuncB type="table" tableValues="${a.b/255} ${b.b/255}"/>` +
+        `</feComponentTransfer></filter>`);
+    } else if (tr.type === 'duotone') {
       const a = hexToRgb(tr.c1), b = hexToRgb(tr.c2);
       defs.push(`<filter id="fxScene"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/>` +
         `<feComponentTransfer>` +
@@ -1500,7 +1596,13 @@ function svgTreatment(state, defs) {
 function svgBuild(state, opts) {
   const animate = opts && opts.animate;
   const scale = opts && opts.scale ? opts.scale : 1;
-  const scene = buildScene(state, 0);
+  // The export rotates the loop so the chosen instant becomes frame zero. The
+  // still, the static attributes and the first keyframe are then the same pose,
+  // which is what stops the poster and the animation starting on different feet.
+  const duration = Number(state.anim && state.anim.duration) || 3;
+  const exportPoint = Number(state.out && state.out.exportPoint) || 0;
+  const u0 = ((exportPoint % duration) + duration) % duration / duration;
+  const scene = buildScene(state, exportPoint);
   const defs = [];
   const body = [];
   let uid = 0;
@@ -1509,7 +1611,7 @@ function svgBuild(state, opts) {
 
   const sample = fn => {
     const vals = [];
-    for (let i = 0; i < K; i++) vals.push(fn(i / (K - 1)));
+    for (let i = 0; i < K; i++) vals.push(fn((u0 + i / (K - 1)) % 1));
     return vals.join(';');
   };
 
@@ -1571,17 +1673,17 @@ function svgBuild(state, opts) {
     if (!isIcon && !isDiv) return null;
     const drv = isIcon ? (layer.driver || state.anim.icon) : state.divider.motion;
     if (!drv || drv === 'none' || drv === 'wipe') return null;
-    const type = drv === 'spin' ? 'rotate'
-      : (drv === 'pulse' || drv === 'breathe' || drv === 'iris') ? 'scale' : 'translate';
+    const type = (drv === 'spin' || drv === 'wobble') ? 'rotate'
+      : (drv === 'pulse' || drv === 'breathe' || drv === 'iris' || drv === 'pulse-outline') ? 'scale' : 'translate';
     const idx = isIcon ? Number(layer.name.replace('icon', '')) : -1;
     const read = u => {
       const f = { u, ph: u * Math.PI * 2 * state.anim.cycles, cycles: state.anim.cycles, frameIndex: 0 };
       return isIcon ? iconMotion(drv, f, idx, layer.iconOpts) : motionAt(state.divider, f);
     };
-    const base = read(0);
+    const base = read(u0);
     const vals = [];
     for (let i = 0; i < K; i++) {
-      const mo = read(i / (K - 1));
+      const mo = read((u0 + i / (K - 1)) % 1);
       if (type === 'rotate') vals.push(n(mo.rot - base.rot));
       else if (type === 'scale') vals.push(n(base.scale ? mo.scale / base.scale : 1));
       else {
@@ -1644,9 +1746,21 @@ function svgBuild(state, opts) {
       }
       const fill = paintDef(op.paint, animVals);
       const needsWipe = animate && layer.name === 'b0' && state.divider.kind !== 'none' && state.divider.motion === 'wipe';
-      const kids = needsWipe
-        ? `<animate attributeName="d"${BEG} values="${esc(wipeKeyframes(state))}" dur="${n(state.anim.duration)}s" repeatCount="indefinite"/>`
+      let kids = needsWipe
+        ? `<animate attributeName="d"${BEG} values="${esc(wipeKeyframes(state, u0))}" dur="${n(state.anim.duration)}s" repeatCount="indefinite"/>`
         : '';
+      // Ground pulse: the canvas cross-fades between c1 and c2. The SVG has to
+      // animate the fill the same way, otherwise the option is a lie.
+      if (animate && layer.name === 'a' && state.anim.base === 'pulse' && op.paint.kind === 'solid') {
+        const vals = [];
+        for (let i = 0; i < K; i++) {
+          const uu = (u0 + i / (K - 1)) % 1;
+          const f = { u: uu, ph: uu * Math.PI * 2 * state.anim.cycles, cycles: state.anim.cycles, frameIndex: 0 };
+          const paint = paintOf(state.a, 'pulse', f);
+          vals.push(esc(paint.color));
+        }
+        kids += `<animate attributeName="fill"${BEG} values="${vals.join(';')}" dur="${n(state.anim.duration)}s" repeatCount="indefinite"/>`;
+      }
       inner.push(`<path d="${op.geom}" fill="${esc(fill)}" fill-rule="${op.fillRule}">${kids}</path>`);
     }
 
@@ -1673,16 +1787,14 @@ function svgBuild(state, opts) {
     }
   });
 
-  const treat = svgTreatment(state, defs);
-  if (treat.filter) {
-    body.unshift('<g filter="url(#' + treat.filter + ')">');
-    body.push('</g>');
-  }
+  const treat = svgTreatment(state, defs, opts);
+  const filterAttr = treat.filter ? ` filter="url(#${treat.filter})"` : '';
   if (treat.overlay) body.push(treat.overlay);
 
   const w = Math.round(W * scale), h = Math.round(H * scale);
   return {
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${w}" height="${h}" shape-rendering="geometricPrecision">` +
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${w}" height="${h}" shape-rendering="geometricPrecision"${filterAttr}>` +
+      `<metadata id="cover-composition">${esc(coverRecord(state))}</metadata>` +
       `<defs>${defs.join('')}</defs>${body.join('')}</svg>`,
     note: treat.note
   };
@@ -1727,7 +1839,7 @@ function fillRows(base, label) {
     { type: 'range', path: base + '.alpha', label: 'Opacity', min: 0, max: 100 },
     { type: 'colour', path: base + '.c1', label: 'Colour 1' },
     { type: 'colour', path: base + '.c2', label: 'Colour 2', when: base + '.type=vgrad|hgrad|dgrad|radial|conic' },
-    { type: 'range', path: base + '.angle', label: 'Angle', min: 0, max: 360, when: base + '.type=dgrad' },
+    { type: 'range', path: base + '.angle', label: 'Angle', min: 0, max: 360, when: base + '.type=vgrad|hgrad|dgrad|radial|conic' },
     { type: 'range', path: base + '.glowX', label: 'Glow X', min: 0, max: 600, when: base + '.type=radial' },
     { type: 'range', path: base + '.glowY', label: 'Glow Y', min: 0, max: 200, when: base + '.type=radial' },
     { type: 'range', path: base + '.glowR', label: 'Glow size', min: 20, max: 500, when: base + '.type=radial' },
@@ -1761,11 +1873,14 @@ const CONTROL_GROUPS = [
   },
   { title: 'Region B', note: 'the second look', rows: fillRows('divider.b', 'Divider') },
   {
-    title: 'Icons', rows: [
-      { type: 'colour', path: 'icon.color', label: 'New icon colour' },
-      { type: 'range', path: 'icon.size', label: 'New icon size', min: 8, max: 400 },
-      { type: 'select', path: 'anim.icon', label: 'Motion', opts: [['none', 'None'], ['spin', 'Spin'], ['float', 'Float'], ['pulse', 'Pulse'], ['orbit', 'Orbit'], ['sway', 'Sway'], ['wobble', 'Wobble']] },
+    title: 'Icons', zone: 'stage', note: 'on the stage', rows: [
+      { type: 'sub', path: null, label: 'Palette' },
       { type: 'icons', path: null, label: '' },
+      { type: 'sub', path: null, label: 'New icons get' },
+      { type: 'colour', path: 'icon.color', label: 'Colour' },
+      { type: 'range', path: 'icon.size', label: 'Size', min: 8, max: 400 },
+      { type: 'select', path: 'anim.icon', label: 'Motion', opts: [['none', 'None'], ['spin', 'Spin'], ['float', 'Float'], ['pulse', 'Pulse'], ['orbit', 'Orbit'], ['sway', 'Sway'], ['wobble', 'Wobble']] },
+      { type: 'sub', path: null, label: 'Selected icon' },
       { type: 'iconprops', path: null, label: '' }
     ]
   },
@@ -1798,6 +1913,7 @@ const CONTROL_GROUPS = [
   {
     title: 'Output', rows: [
       { type: 'select', path: 'out.scale', label: 'Scale', opts: [[1, '1x (600 x 200)'], [2, '2x (1200 x 400)'], [3, '3x (1800 x 600)']], numeric: true },
+      { type: 'range', path: 'out.exportPoint', label: 'Export point (s)', min: 0, max: 10, step: 0.05 },
       { type: 'composition', path: null, label: '' }
     ]
   }
@@ -1826,6 +1942,13 @@ const PRESETS = {
     treat: { type: 'grain-light', intensity: 40, cell: 1, c1: '#23233d', c2: '#ffc074' },
     icons: [{ name: 'sailboat', x: 300, y: 100, size: 76, color: '#fbfaf7' }],
     anim: { base: 'rotate', icon: 'float', treat: true, cycles: 1, duration: 3, fps: 24 }
+  }),
+  Spotify: () => ({
+    a: { ...fillSpec('#1a1a2e', '#e94560'), type: 'radial', glowR: 320, c1: '#1a1a2e', c2: '#e94560' },
+    divider: { ...defaultState().divider, kind: 'diagonal', position: 55, angle: 30, b: fillSpec('#0f3460', '#e94560') },
+    treat: { type: 'duotone', intensity: 90, cell: 2, c1: '#1a1a2e', c2: '#e94560' },
+    icons: [{ name: 'sparkles', x: 300, y: 100, size: 90, color: '#e94560', motion: 'pulse' }],
+    anim: { base: 'rotate', icon: 'pulse', treat: false, cycles: 1, duration: 3, fps: 24 }
   }),
   split: () => ({
     a: fillSpec('#fbfaf7', '#ffc074'),
@@ -1865,12 +1988,6 @@ const PRESETS = {
     a: fillSpec('#fbfaf7', '#ffc074'),
     divider: { ...defaultState().divider, kind: 'thickbands', band: 16, angle: 60, motion: 'slide-x', b: fillSpec('#23233d', '#ffc074') },
     treat: { type: 'vignette', intensity: 30, cell: 2, c1: '#23233d', c2: '#ffc074' }
-  }),
-  halftone: () => ({
-    a: { ...fillSpec('#23233d', '#ffc074'), type: 'radial', glowR: 300, c1: '#2b2b4a', c2: '#16162a' },
-    treat: { type: 'halftone', intensity: 75, cell: 2, c1: '#23233d', c2: '#ffc074' },
-    icons: [{ name: 'star', x: 300, y: 100, size: 78, color: '#ffc074' }],
-    anim: { base: 'none', icon: 'none', treat: true, cycles: 1, duration: 4, fps: 24 }
   }),
   grid: () => ({
     a: { ...fillSpec('#23233d', '#ffc074'), type: 'radial', glowR: 240, c1: '#2b2b4a', c2: '#15152a' },
@@ -1962,11 +2079,24 @@ function makeRow(row) {
     return holder;
   }
 
+  if (row.type === 'sub') {
+    const sub = document.createElement('div');
+    sub.className = 'group-sub';
+    sub.textContent = row.label;
+    return sub;
+  }
+
   if (row.type === 'icons') {
     const holder = document.createElement('div');
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.placeholder = 'Search ' + ICON_NAMES.length + ' icons...';
+    search.style.cssText = 'width:100%;background:#35353a;color:#e0e0e0;border:1px solid #555;border-radius:4px;padding:4px 8px;font-size:0.76rem;margin-bottom:6px;';
+    search.addEventListener('input', () => buildIconGrid(search.value));
+    holder.appendChild(search);
     const grid = document.createElement('div');
     grid.id = 'icon-grid';
-    grid.style.cssText = 'display:grid;grid-template-columns:repeat(8,1fr);gap:3px;max-height:150px;overflow-y:auto;padding:4px;background:#222;border-radius:4px;width:100%';
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:4px;max-height:170px;overflow-y:auto;padding:4px;background:#222;border-radius:4px;width:100%';
     holder.appendChild(grid);
     const hint = document.createElement('div');
     hint.className = 'hint';
@@ -2025,9 +2155,13 @@ function makeRow(row) {
     const holder = document.createElement('div');
     holder.className = 'control-block';
     holder.style.cssText = 'display:grid;gap:4px;margin-top:6px';
-    const ic = S.icons[selectedIconIdx];
+    // Timing is per icon, but it used to appear only once an icon was selected,
+    // which made it look missing. With icons in the scene it now edits the
+    // selected one, or the first if none is.
+    const idx = selectedIconIdx >= 0 ? selectedIconIdx : 0;
+    const ic = S.icons[idx];
     if (!ic) {
-      holder.innerHTML = '<div class="hint">Select an icon on the canvas to give it its own motion.</div>';
+      holder.innerHTML = '<div class="hint">Add an icon, and its own motion and timing appear here.</div>';
       return holder;
     }
     const line = (label, node) => {
@@ -2075,7 +2209,7 @@ function makeRow(row) {
     const del = document.createElement('button');
     del.type = 'button'; del.textContent = 'Delete';
     del.onclick = () => {
-      S.icons.splice(selectedIconIdx, 1);
+      S.icons.splice(idx, 1);
       selectedIconIdx = -1;
       buildPanel(); drawPreview();
     };
@@ -2201,7 +2335,16 @@ function makeRow(row) {
 }
 
 function buildPanel() {
+  // This runs on every selection, motion change and panel rebuild. It used to
+  // append, so each rebuild stacked another copy of every group: clicking icons
+  // until seventeen rails were on screen. Replace, and keep the scroll.
+  const scroll = controlsEl.scrollTop;
+  controlsEl.textContent = '';
+  stageEl.textContent = '';
+
   const frag = document.createDocumentFragment();
+  const stageFrag = document.createDocumentFragment();
+
   CONTROL_GROUPS.forEach(group => {
     const g = document.createElement('div');
     g.className = 'control-group';
@@ -2213,9 +2356,27 @@ function buildPanel() {
       nb.textContent = group.note;
       h.appendChild(nb);
     }
+    const chev = document.createElement('span');
+    chev.className = 'chev';
+    chev.textContent = '▾';
+    h.appendChild(chev);
+
+    // The rail holds eight groups and got long enough to be unreadable. Headers
+    // fold, and folding is the only thing that hides a row: the state default is
+    // open, so nothing disappears on its own.
+    const body = document.createElement('div');
+    body.className = 'group-body';
+    group.rows.forEach(row => body.appendChild(makeRow(row)));
+    if (collapsedGroups.has(group.title)) g.classList.add('collapsed');
+    h.addEventListener('click', () => {
+      g.classList.toggle('collapsed');
+      if (g.classList.contains('collapsed')) collapsedGroups.add(group.title);
+      else collapsedGroups.delete(group.title);
+    });
+
     g.appendChild(h);
-    group.rows.forEach(row => g.appendChild(makeRow(row)));
-    frag.appendChild(g);
+    g.appendChild(body);
+    (group.zone === 'stage' ? stageFrag : frag).appendChild(g);
   });
 
   const presets = document.createElement('div');
@@ -2225,10 +2386,19 @@ function buildPanel() {
 
   const footer = document.createElement('div');
   footer.className = 'control-group';
-  footer.innerHTML = '<label class="check-row"><input type="checkbox" id="show-inactive"> Show controls that do not apply</label>' +
-    '<div class="hint">Every option configures something. Rows dim when the current option does not use them, and nothing is deleted, so switching options never loses a value.</div>';
+  footer.innerHTML = '<label class="check-row"><input type="checkbox" id="hide-inactive"> Hide controls that do not apply</label>' +
+    '<div class="hint">Every option configures something, so none of them are removed. Rows fade when the current option does not use them and stay clickable, because a cover can need a row the rule did not expect.</div>';
   frag.appendChild(footer);
+
+  stageEl.appendChild(stageFrag);
   controlsEl.appendChild(frag);
+  controlsEl.scrollTop = scroll;
+  // The palette is rebuilt with the panel, so it has to be refilled here or the
+  // grid comes back empty.
+  if (stageEl.querySelector('#icon-grid')) buildIconGrid();
+  // New elements carry no is-inactive class until something refreshes them, so
+  // the dimming has to be recomputed here or it lags a rebuild behind.
+  refreshApplicability();
 }
 
 function whenOk(expr) {
@@ -2350,6 +2520,12 @@ function drawSelection() {
   ctx.setLineDash([4, 3]);
   ctx.lineWidth = 1;
   ctx.strokeRect(ic.x - half, ic.y - half, ic.size, ic.size);
+  // The grabbed corner: filled, and outlined so it reads against any artwork.
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#ffc074';
+  ctx.fillRect(ic.x + half - 5, ic.y + half - 5, 10, 10);
+  ctx.strokeStyle = '#1a1a1e';
+  ctx.strokeRect(ic.x + half - 5, ic.y + half - 5, 10, 10);
   ctx.restore();
 }
 
@@ -2407,8 +2583,8 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  if (e.target.id === 'show-inactive') {
-    document.body.classList.toggle('show-inactive', e.target.checked);
+  if (e.target.id === 'hide-inactive') {
+    document.body.classList.toggle('hide-inactive', e.target.checked);
     refreshApplicability();
   }
 });
@@ -2429,11 +2605,15 @@ document.addEventListener('keydown', e => {
 
 const ICON_NAMES = Object.keys(EMBEDDED_ICONS).sort();
 
-function buildIconGrid() {
+function buildIconGrid(filter) {
   const grid = document.getElementById('icon-grid');
   if (!grid) return;
   grid.innerHTML = '';
-  ICON_NAMES.forEach(name => {
+  // With 516 icons a bare grid is unusable; the search box above it is the
+  // only way to find anything, so keep it and filter as you type.
+  const q = (filter || '').trim().toLowerCase();
+  const names = q ? ICON_NAMES.filter(n => n.includes(q)) : ICON_NAMES;
+  names.forEach(name => {
     const btn = document.createElement('button');
     btn.className = 'icon-btn';
     btn.title = name;
@@ -2458,12 +2638,15 @@ function buildIconGrid() {
 function addIcon(name) {
   S.icons.push({ name, x: W / 2, y: H / 2, size: S.icon.size, color: S.icon.color });
   selectedIconIdx = S.icons.length - 1;
-  refreshApplicability();
+  buildPanel();
   drawPreview();
 }
 
 let isDragging = false;
+let dragMoved = false;
 let dragIdx = -1;
+let isResizing = false;
+let resizeStart = null;
 const dragOff = { x: 0, y: 0 };
 
 function toBaseCoords(e) {
@@ -2482,39 +2665,91 @@ function iconAt(x, y) {
   return -1;
 }
 
+/* The resize handle sits on the selected icon's corner. Base units, so it holds
+   its proportion against the canvas whatever the preview scale. */
+const HANDLE_REACH = 11;
+function handleAt(x, y) {
+  const ic = S.icons[selectedIconIdx];
+  if (!ic) return false;
+  return Math.abs(x - (ic.x + ic.size / 2)) <= HANDLE_REACH &&
+         Math.abs(y - (ic.y + ic.size / 2)) <= HANDLE_REACH;
+}
+
 canvasWrap.addEventListener('mousedown', e => {
   const p = toBaseCoords(e);
+
+  // The corner handle resizes the selected icon. Without it the only way to
+  // change a size was the slider in the rail, which is not where you are looking.
+  if (handleAt(p.x, p.y)) {
+    isResizing = true;
+    resizeStart = { px: p.x, py: p.y, size: S.icons[selectedIconIdx].size };
+    e.preventDefault();
+    return;
+  }
+
   const idx = iconAt(p.x, p.y);
   if (idx >= 0) {
+    const changed = idx !== selectedIconIdx;
     selectedIconIdx = idx;
-    buildPanel();
+    if (changed) buildPanel();
     isDragging = true;
     dragIdx = idx;
+    dragMoved = false;
     dragOff.x = p.x - S.icons[idx].x;
     dragOff.y = p.y - S.icons[idx].y;
+    canvasWrap.style.cursor = 'grabbing';
   } else {
+    if (selectedIconIdx !== -1) buildPanel();
     selectedIconIdx = -1;
   }
   drawPreview();
 });
 
 canvasWrap.addEventListener('mousemove', e => {
-  if (!isDragging || dragIdx < 0) return;
   const p = toBaseCoords(e);
-  S.icons[dragIdx].x = clamp(p.x - dragOff.x, 0, W);
-  S.icons[dragIdx].y = clamp(p.y - dragOff.y, 0, H);
-  drawPreview();
+
+  if (isResizing) {
+    const ic = S.icons[selectedIconIdx];
+    if (!ic) return;
+    // Distance from the icon's centre to the pointer, doubled: the handle sits on
+    // the corner, so it tracks the box the icon occupies without a jump.
+    const reach = Math.max(Math.abs(p.x - ic.x), Math.abs(p.y - ic.y));
+    ic.size = Math.round(clamp(reach * 2, 8, 400));
+    drawPreview();
+    return;
+  }
+
+  if (isDragging && dragIdx >= 0) {
+    if (!dragMoved) {
+      const moved = Math.abs(p.x - (S.icons[dragIdx].x + dragOff.x)) + Math.abs(p.y - (S.icons[dragIdx].y + dragOff.y));
+      if (moved < 2) return;          // a click, not a drag: leave the icon where it is
+      dragMoved = true;
+    }
+    S.icons[dragIdx].x = clamp(p.x - dragOff.x, 0, W);
+    S.icons[dragIdx].y = clamp(p.y - dragOff.y, 0, H);
+    drawPreview();
+    return;
+  }
+
+  if (!isDragging && !isResizing) {
+    canvasWrap.style.cursor = handleAt(p.x, p.y) ? 'nwse-resize' : iconAt(p.x, p.y) >= 0 ? 'grab' : 'default';
+  }
 });
 
 ['mouseup', 'mouseleave'].forEach(evt => canvasWrap.addEventListener(evt, () => {
+  const resized = isResizing;
   isDragging = false;
   dragIdx = -1;
+  dragMoved = false;
+  isResizing = false;
+  canvasWrap.style.cursor = 'default';
+  if (resized) buildPanel();          // move the size slider to match the drag
 }));
 
 canvasWrap.addEventListener('dblclick', e => {
   const p = toBaseCoords(e);
   const idx = iconAt(p.x, p.y);
-  if (idx >= 0) { S.icons.splice(idx, 1); selectedIconIdx = -1; drawPreview(); }
+  if (idx >= 0) { S.icons.splice(idx, 1); selectedIconIdx = -1; buildPanel(); drawPreview(); }
 });
 
 /* ==========================================================================
@@ -2576,17 +2811,7 @@ document.getElementById('toggle-guide').addEventListener('click', () => {
    Exports
    ========================================================================== */
 
-function stillCanvas() { return renderToCanvas(S.out.scale, tNow); }
-
-document.getElementById('export-png').addEventListener('click', async () => {
-  await ensureIconsLoaded();
-  await ensureImagesReady();
-  const cv = stillCanvas();
-  cv.toBlob(blob => {
-    downloadBlob(blob, 'cover-' + S.out.scale + 'x.png');
-    status('PNG still, ' + cv.width + ' x ' + cv.height);
-  }, 'image/png');
-});
+function stillCanvas() { return renderToCanvas(S.out.scale, S.out.exportPoint); }
 
 document.getElementById('export-webp').addEventListener('click', async () => {
   await ensureIconsLoaded();
@@ -2595,101 +2820,29 @@ document.getElementById('export-webp').addEventListener('click', async () => {
   cv.toBlob(blob => {
     if (!blob) { status('WebP encoding unavailable in this browser'); return; }
     downloadBlob(blob, 'cover-' + S.out.scale + 'x.webp');
-    status('WebP still, ' + cv.width + ' x ' + cv.height + ', ' + (blob.size / 1024).toFixed(1) + ' KB');
+    status('WebP still at the export point, ' + cv.width + ' x ' + cv.height +
+      ', ' + (blob.size / 1024).toFixed(1) + ' KB. This is the poster the page holds.');
   }, 'image/webp', 0.9);
 });
 
-document.getElementById('export-svg').addEventListener('click', async () => {
+document.getElementById('use-scrub').addEventListener('click', () => {
+  const at = Math.round(tNow * 100) / 100;
+  S.out.exportPoint = at;
+  syncControls();
+  status('Export point set to ' + at.toFixed(2) + 's. The still and the start of the loop both use that pose.');
+  drawPreview();
+});
+
+document.getElementById('export-package').addEventListener('click', async () => {
   await ensureIconsLoaded();
   await ensureImagesReady();
   const built = svgBuild(S, { animate: true, scale: S.out.scale });
   const kb = new Blob([built.svg]).size / 1024;
   downloadBlob(new Blob([built.svg], { type: 'image/svg+xml' }), 'cover.svg');
   const hasImage = S.a.type === 'image' || S.divider.b.type === 'image';
-  status('Animated SVG, ' + kb.toFixed(1) + ' KB, viewBox 0 0 600 200.' +
-    (hasImage ? ' An uploaded image is embedded in the file, which is why it is larger than usual.' : '') + built.note);
-});
-
-document.getElementById('export-svg-still').addEventListener('click', async () => {
-  await ensureIconsLoaded();
-  await ensureImagesReady();
-  const built = svgBuild(S, { animate: false, scale: S.out.scale });
-  downloadBlob(new Blob([built.svg], { type: 'image/svg+xml' }), 'cover-still.svg');
-  status('Still SVG, ' + (new Blob([built.svg]).size / 1024).toFixed(1) + ' KB.' + built.note);
-});
-
-document.getElementById('export-frames').addEventListener('click', async () => {
-  const btn = document.getElementById('export-frames');
-  btn.disabled = true;
-  setPlaying(false);
-  await ensureIconsLoaded();
-  const fps = S.anim.fps, total = Math.round(S.anim.duration * fps);
-  await ensureImagesReady();
-  let dir = null;
-  if (window.showDirectoryPicker) {
-    try { dir = await window.showDirectoryPicker({ mode: 'readwrite', id: 'cover-frames' }); }
-    catch (err) { status('frame export cancelled'); btn.disabled = false; return; }
-  }
-  try {
-    for (let i = 0; i < total; i++) {
-      const cv = renderToCanvas(S.out.scale, i / fps);
-      const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
-      const name = 'frame-' + String(i).padStart(3, '0') + '.png';
-      if (dir) {
-        const fh = await dir.getFileHandle(name, { create: true });
-        const w = await fh.createWritable();
-        await w.write(blob); await w.close();
-      } else {
-        downloadBlob(blob, name);
-        await sleep(140);
-      }
-      status('frame ' + (i + 1) + ' of ' + total);
-    }
-    status(total + ' frames written. Now: python frames_to_webp.py . --fps ' + fps);
-  } catch (err) {
-    status('frame export failed: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    setPlaying(true); lastTs = 0;
-  }
-});
-
-document.getElementById('export-webm').addEventListener('click', async () => {
-  const btn = document.getElementById('export-webm');
-  btn.disabled = true;
-  const wasPlaying = playing;
-  setPlaying(false);
-  await ensureIconsLoaded();
-  const fps = S.anim.fps, total = Math.round(S.anim.duration * fps);
-  try {
-    const cv = document.createElement('canvas');
-    cv.width = Math.round(W * S.out.scale); cv.height = Math.round(H * S.out.scale);
-    const c = cv.getContext('2d', { willReadFrequently: true });
-    await ensureImagesReady();
-    const stream = cv.captureStream(0);
-    const track = stream.getVideoTracks()[0];
-    const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
-    const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6000000 });
-    const chunks = [];
-    rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
-    const done = new Promise(r => { rec.onstop = r; });
-    rec.start();
-    for (let i = 0; i < total; i++) {
-      drawScene(c, buildScene(S, i / fps), S.out.scale);
-      if (track.requestFrame) track.requestFrame();
-      status('recording ' + (i + 1) + ' of ' + total);
-      await sleep(1000 / fps);
-    }
-    rec.stop();
-    await done;
-    downloadBlob(new Blob(chunks, { type: mime }), 'cover.webm');
-    status('WebM written. It is for reviewing motion, not a cover format.');
-  } catch (err) {
-    status('WebM export failed: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    if (wasPlaying) { setPlaying(true); lastTs = 0; }
-  }
+  status('Cover package: cover.svg, ' + kb.toFixed(1) + ' KB, with the composition record inside it. ' +
+    'Ingest with: python tools/cover_motion.py --source cover.svg --name <name> --media <id> --verify' +
+    (hasImage ? ' The uploaded image is embedded in the file, which is why it is larger than usual.' : '') + built.note);
 });
 
 /* ---------- composition JSON ---------- */

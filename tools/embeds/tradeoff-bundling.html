@@ -1,0 +1,394 @@
+<!-- Atlancia embed: Trade-off mentality - bundling vs unbundling work (interactive).
+     Fits the post Building a Trade-off Mentality.
+     Toggle between bundled and unbundled to see how critical work can jump to the front.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-trade-bundle">
+  <style>
+    .atlx-trade-bundle {
+      --tb-ink: var(--atl-ink, #EEEDED);
+      --tb-text: var(--atl-figure-text, #BFBFBF);
+      --tb-dim: var(--atl-dim, #9D9D9D);
+      --tb-line: var(--atl-line, #373737);
+      --tb-surface: var(--atl-surface, #1e1e1e);
+      --tb-blue: var(--atl-info, #5B9ED5);
+      --tb-green: var(--atl-success, #54A468);
+      --tb-amber: var(--atl-accent, #FFC074);
+      --tb-pink: #f43f5e;
+      --tb-purple: #a78bfa;
+      --tb-gray: #9ca3af;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--tb-surface);
+      color: var(--tb-text);
+      border: 1px solid var(--tb-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-trade-bundle * { box-sizing: border-box; }
+    .atlx-trade-bundle .atlx-tb-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--tb-ink);
+    }
+    .atlx-trade-bundle .atlx-tb-sub {
+      margin: 0 0 .3rem;
+      color: var(--tb-dim);
+      font-size: .95rem;
+    }
+    .atlx-trade-bundle .atlx-tb-btns {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin: .9rem 0 1rem;
+      align-items: center;
+    }
+    .atlx-trade-bundle .atlx-tb-btns button {
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--tb-text);
+      border: 1px solid var(--tb-line);
+      border-radius: 999px;
+      padding: .35rem .8rem;
+      cursor: pointer;
+    }
+    .atlx-trade-bundle .atlx-tb-btns button[aria-pressed="true"] {
+      color: var(--tb-ink);
+      border-color: var(--tb-dim);
+    }
+    .atlx-trade-bundle .atlx-tb-btns button:focus-visible {
+      outline: 2px solid var(--tb-amber);
+      outline-offset: 3px;
+    }
+    .atlx-trade-bundle .atlx-tb-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem 1.2rem;
+      margin-left: auto;
+      font-size: .88rem;
+      color: var(--tb-dim);
+    }
+    .atlx-trade-bundle .atlx-tb-legend-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .atlx-trade-bundle .atlx-tb-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .atlx-trade-bundle .atlx-tb-dot.critical { background: var(--tb-pink); }
+    .atlx-trade-bundle .atlx-tb-dot.high { background: var(--tb-green); }
+    .atlx-trade-bundle .atlx-tb-dot.medium { background: var(--tb-purple); }
+    .atlx-trade-bundle .atlx-tb-dot.low { background: var(--tb-gray); }
+    .atlx-trade-bundle .atlx-tb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+    @media (max-width: 900px) {
+      .atlx-trade-bundle .atlx-tb-grid { grid-template-columns: 1fr; }
+      .atlx-trade-bundle .atlx-tb-legend { margin-left: 0; width: 100%; }
+    }
+    .atlx-trade-bundle .atlx-tb-project {
+      border: 1px solid var(--tb-line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .atlx-trade-bundle .atlx-tb-project.critical-border {
+      border-color: var(--tb-pink);
+    }
+    .atlx-trade-bundle .atlx-tb-project-header {
+      display: flex;
+      flex-direction: column;
+      padding: .6rem .75rem;
+      border-bottom: 1px solid var(--tb-line);
+      color: var(--tb-ink);
+    }
+    .atlx-trade-bundle .atlx-tb-project-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .atlx-trade-bundle .atlx-tb-project-title {
+      font-weight: 600;
+      font-size: .92rem;
+      color: var(--tb-ink);
+    }
+    .atlx-trade-bundle .atlx-tb-project-sub {
+      font-size: .78rem;
+      color: var(--tb-dim);
+      font-weight: 500;
+      margin-top: .2rem;
+      line-height: 1.25;
+    }
+    .atlx-trade-bundle .atlx-tb-project-body {
+      display: grid;
+      gap: .35rem;
+      padding: .5rem .5rem;
+      min-height: auto;
+    }
+    .atlx-trade-bundle .atlx-tb-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .4rem .5rem;
+      border-radius: 6px;
+      font-size: .75rem;
+      line-height: 1.25;
+      white-space: normal;
+      color: var(--tb-ink);
+      border: 1px solid var(--tb-line);
+      background: rgba(255,255,255,0.01);
+      transition: all .25s ease;
+    }
+    .atlx-trade-bundle .atlx-tb-item svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+    .atlx-trade-bundle .atlx-tb-item.critical {
+      background: rgba(244,63,94,0.18);
+      border-color: rgba(244,63,94,0.9);
+    }
+    .atlx-trade-bundle .atlx-tb-item.high {
+      background: rgba(84,164,104,0.18);
+      border-color: rgba(84,164,104,0.9);
+    }
+    .atlx-trade-bundle .atlx-tb-item.medium {
+      background: rgba(167,139,250,0.18);
+      border-color: rgba(167,139,250,0.9);
+    }
+    .atlx-trade-bundle .atlx-tb-item.low {
+      background: rgba(156,163,175,0.14);
+      border-color: rgba(156,163,175,0.7);
+    }
+    .atlx-trade-bundle .atlx-tb-item.pulse {
+      box-shadow: 0 0 0 0 rgba(251,191,36,0.6);
+      animation: tb-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes tb-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.3); }
+      50% { box-shadow: 0 0 0 3px rgba(251,191,36,0); }
+    }
+    .atlx-trade-bundle .atlx-tb-order.hl {
+      border-color: var(--tb-amber);
+      box-shadow: 0 0 0 1px var(--tb-amber);
+    }
+    .atlx-trade-bundle .atlx-tb-callout {
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      margin-top: 1rem;
+      padding: .7rem .9rem;
+      border: 1px solid var(--tb-line);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+      color: var(--tb-text);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+    .atlx-trade-bundle .atlx-tb-callout .atlx-tb-order { flex: 0 0 auto; margin-top: .1rem; }
+    .atlx-trade-bundle .atlx-tb-order {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.8rem;
+      height: 1.4rem;
+      padding: 0 .4rem;
+      border-radius: 999px;
+      border: 1px solid var(--tb-line);
+      background: rgba(0,0,0,.25);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      font-size: .78rem;
+      flex: 0 0 auto;
+      color: var(--tb-ink);
+      white-space: nowrap;
+    }
+    .atlx-trade-bundle .atlx-tb-item-label {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .atlx-trade-bundle .atlx-tb-critical-pack {
+      display: none;
+      margin-top: 1rem;
+      border: 1px solid rgba(251,191,36,0.8);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .atlx-trade-bundle .atlx-tb-critical-pack.visible {
+      display: block;
+    }
+    .atlx-trade-bundle .atlx-tb-critical-pack-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1rem;
+      border-bottom: 1px solid rgba(251,191,36,0.6);
+      color: var(--tb-ink);
+      font-weight: 600;
+    }
+    .atlx-trade-bundle .atlx-tb-critical-pack-body {
+      padding: .8rem;
+      display: grid;
+      gap: .5rem;
+    }
+  </style>
+
+  <h3 class="atlx-tb-title">Bundling vs Unbundling Work</h3>
+  <p class="atlx-tb-sub">If critical work is bundled with low-priority work, it might wait for the whole package. Breaking it apart lets it jump to the front.</p>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript. The gist: bundled work forces low priority items in Project 1 ahead of higher value work elsewhere, while unbundling lets the critical item go first.</p></noscript>
+
+  <div class="atlx-tb-btns">
+    <button data-action="view" data-view="bundled" aria-pressed="true">Bundled</button>
+    <button data-action="view" data-view="unbundled" aria-pressed="false">Unbundled</button>
+    <div class="atlx-tb-legend">
+      <div class="atlx-tb-legend-item"><span class="atlx-tb-dot critical"></span> Critical</div>
+      <div class="atlx-tb-legend-item"><span class="atlx-tb-dot high"></span> High Value</div>
+      <div class="atlx-tb-legend-item"><span class="atlx-tb-dot medium"></span> Medium</div>
+      <div class="atlx-tb-legend-item"><span class="atlx-tb-dot low"></span> Low Priority</div>
+    </div>
+  </div>
+
+  <div class="atlx-tb-grid">
+    <article class="atlx-tb-project" data-project="1">
+      <header class="atlx-tb-project-header">
+        <div class="atlx-tb-project-top">
+          <span class="atlx-tb-project-title">Project 1</span>
+          <span class="atlx-tb-order" data-order></span>
+        </div>
+        <div class="atlx-tb-project-sub">Critical plus low items</div>
+      </header>
+      <div class="atlx-tb-project-body">
+        <div class="atlx-tb-item critical" data-critical>
+          <div class="atlx-tb-item-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Critical Piece of Work
+          </div>
+        </div>
+        <div class="atlx-tb-item low">Low Importance Bug-Fix</div>
+        <div class="atlx-tb-item low">Low Importance UI Update</div>
+      </div>
+    </article>
+    <article class="atlx-tb-project" data-project="2">
+      <header class="atlx-tb-project-header">
+        <div class="atlx-tb-project-top">
+          <span class="atlx-tb-project-title">Project 2</span>
+          <span class="atlx-tb-order" data-order></span>
+        </div>
+        <div class="atlx-tb-project-sub">High value</div>
+      </header>
+      <div class="atlx-tb-project-body">
+        <div class="atlx-tb-item high">High Value Enhancement</div>
+        <div class="atlx-tb-item high">Long-Term Delivery Improvement</div>
+        <div class="atlx-tb-item medium">Medium Value Enhancement</div>
+      </div>
+    </article>
+    <article class="atlx-tb-project" data-project="3">
+      <header class="atlx-tb-project-header">
+        <div class="atlx-tb-project-top">
+          <span class="atlx-tb-project-title">Project 3</span>
+          <span class="atlx-tb-order" data-order></span>
+        </div>
+        <div class="atlx-tb-project-sub">Security fix</div>
+      </header>
+      <div class="atlx-tb-project-body">
+        <div class="atlx-tb-item high">High Value Enhancement</div>
+        <div class="atlx-tb-item medium">Medium Value Enhancement</div>
+        <div class="atlx-tb-item medium">Medium Risk Security Fix</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="atlx-tb-callout" data-role="callout">
+    <span class="atlx-tb-order hl">1st</span>
+    <span data-role="callout-text"></span>
+  </div>
+
+  <div class="atlx-tb-critical-pack" data-role="critical-pack">
+    <header class="atlx-tb-critical-pack-header">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--tb-amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+      </svg>
+      <span>Critical work pulled out of Project 1</span>
+      <span class="atlx-tb-order" data-order-pack style="margin-left:auto;"></span>
+    </header>
+    <div class="atlx-tb-critical-pack-body">
+      <div class="atlx-tb-item critical pulse">
+        <div class="atlx-tb-item-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Critical Piece of Work
+        </div>
+      </div>
+      <p style="margin:.2rem 0 0;color:var(--tb-dim);font-size:.9rem;">Done first, ahead of the rest. High value work in Project 2 and the security fix in Project 3 move up next.</p>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-trade-bundle') : document.querySelector('.atlx-trade-bundle');
+    if(!root) return;
+    var btns = root.querySelectorAll('[data-action="view"]');
+    var critical = root.querySelector('[data-critical]');
+    var project1 = root.querySelector('[data-project="1"]');
+    var project2 = root.querySelector('[data-project="2"]');
+    var project3 = root.querySelector('[data-project="3"]');
+    var pack = root.querySelector('[data-role="critical-pack"]');
+    var packOrder = root.querySelector('[data-order-pack]');
+    var calloutText = root.querySelector('[data-role="callout-text"]');
+    var orders = {
+      "1": root.querySelector('[data-project="1"] [data-order]'),
+      "2": root.querySelector('[data-project="2"] [data-order]'),
+      "3": root.querySelector('[data-project="3"] [data-order]')
+    };
+    function setView(v){
+      btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === v)); });
+      Object.keys(orders).forEach(function(k){ orders[k].classList.remove('hl'); });
+      packOrder.classList.remove('hl');
+      if(v === 'bundled'){
+        critical.style.display = 'flex';
+        project1.classList.remove('critical-border');
+        pack.classList.remove('visible');
+        orders["1"].textContent = '1st';
+        orders["2"].textContent = '2nd';
+        orders["3"].textContent = '3rd';
+        orders["1"].classList.add('hl');
+        calloutText.textContent = 'Project 1 goes first, so its low priority bug fix and UI update get done ahead of high value work in Project 2 and the security fix in Project 3.';
+      } else {
+        critical.style.display = 'none';
+        project1.classList.add('critical-border');
+        pack.classList.add('visible');
+        packOrder.textContent = '1st';
+        orders["2"].textContent = '2nd';
+        orders["3"].textContent = '3rd';
+        orders["1"].textContent = '4th';
+        packOrder.classList.add('hl');
+        calloutText.textContent = 'Critical work goes first on its own. High value work in Project 2 and the security fix in Project 3 move up next, and the leftover low items in Project 1 drop to last.';
+      }
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ setView(b.getAttribute('data-view')); }); });
+    setView('bundled');
+  })();
+  </script>
+</div>

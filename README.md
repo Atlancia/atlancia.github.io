@@ -12,15 +12,12 @@ result.
 | Path | What it holds |
 |---|---|
 | `content/posts/` | The essays, one Markdown file each |
-| `content/gallery.md` | The page that shows every figure |
 | `layouts/` | The theme, ported from the Publii "simple" theme |
-| `layouts/shortcodes/embed.html` | The shortcode that places a figure in a post |
 | `static/` | The stylesheet, the script, the fonts, the media and the content manager |
-| `assets/embeds/` | The twenty-three figures, as self-contained HTML |
 | `data/site.json` | The settings the theme reads: title, hero, menu, comments |
 | `data/media.json` | Every image with its responsive set and its size |
-| `data/embeds.json` | The figures, with the title, the kind and the essay each one fits |
 | `tools/` | The scripts that build the site and check it against the old build |
+| `tools/embeds/` | The figures, parked. Not published, not referenced, awaiting a rebuild |
 
 ## Building
 
@@ -54,9 +51,9 @@ A cover can be an animation that waits for the reader. The essay opts in with
 two frontmatter keys, and the feature image points at the resting frame:
 
 ```
-featureimage: "media/posts/2/ba-cover-rest.webp"
-coverMotion: "ba-cover"
-coverMotionBase: 0.8
+featureimage: "media/posts/7/gov-cover-rest.webp"
+coverMotion: "gov-cover"
+coverMotionBase: 0
 ```
 
 `coverMotion` names a file in `assets/covers`. The SVG is inlined into the page
@@ -65,11 +62,25 @@ holds still on the frame named by `coverMotionBase`, runs on hover, focus or
 tap, and stays still for a reader who asks for reduced motion. The resting frame
 also feeds the RSS feed, the sitemap and the list thumbnails.
 
-Ingest an exported cover with:
+The editor asks for an export point: the instant of the loop whose pose you want
+as the still. The export rotates the loop so that instant becomes frame zero,
+which is why `coverMotionBase` is 0. The animation therefore starts on exactly
+the pose the poster shows instead of jumping into it a moment later, and the
+icons start their own motion from the same place. Covers exported before the
+editor did this rest at 0.8; their records carry no hold time, so the tool keeps
+defaulting to 0.8 for them.
+
+Ingest a cover with:
 
 ```
-python tools/cover_motion.py --source <cover.svg> --composition <cover-composition.json> --name gov-cover --media 7 --verify
+python tools/cover_motion.py --source <cover.svg> --name gov-cover --media 7 --verify
 ```
+
+The editor's Cover package button writes one file: the animated SVG with its
+composition record inside a `<metadata>` element, so the artwork and the intent
+cannot be separated or mismatched on the way here. The tool reads the record out
+of it and prints the frontmatter to paste. Passing `--composition` still works,
+for an export that came as a pair.
 
 It writes three things: `assets/covers/<name>.svg`, the composition record beside
 it as `assets/covers/<name>.json` so any cover can be reloaded into the editor
@@ -101,36 +112,44 @@ The tool needs Pillow and Playwright. `tools/build.py` needs neither.
 
 The editor itself is `tools/cover-lab.html`. Open it in a browser, nothing to
 install. Each icon carries its own motion, speed, direction and phase, so two
-icons can counter-rotate; the halftone treatment exports real dots that follow
-the base image rather than a uniform screen.
+icons can counter-rotate.
+
+Scrub to the pose you want as the still, press Export point, then Cover package.
+That is the whole round trip: one SVG, record inside, straight into the ingest
+above. WebP still is there for looking at the poster on its own, at the same
+instant. The PNG, PNG sequence and WebM exports are gone, because no part of the
+site ever consumed them.
 
 ## What the reader gets
 
 **A colour mode.** The site follows the operating system and the button in the
 header overrides it, and the choice is remembered in the browser. The two token
-sets live in `layouts/partials/custom-css.html`, and the figures in the essays
-read the same tokens, so they change with the site.
+sets live in `layouts/partials/custom-css.html`. When the figures come back they
+will read those same tokens, so that they change with the site.
 
 **A table of contents** in the essays that have sections, a reading time, a
 bar showing how far through the essay the reader is, and a click on any image
 to open it larger.
 
-**A gallery** at `/gallery/` with every figure, each one live in the page.
 
-## Putting a figure in an essay
+## The figures are parked
 
-The figures are self-contained: their own CSS and their own JavaScript, no
-external requests, no storage, nothing sent. A post places one with a single
-line:
+The twenty-four interactive figures are no longer part of the site. They were
+built against an earlier visual language, most of them draw their insides in
+literal dark greys that a light mode cannot follow, and the decision was to
+rebuild them rather than patch them. Keeping them published while that happens
+would have meant shipping pages the author had already judged unfinished.
 
-```
-{{< embed "trade-off-frontier" >}}
-```
+They now live in `tools/embeds/`, beside the cover editor and for the same
+reason: `tools/` is not built, not served and not linked. Nothing in the site
+references them. The gallery page, its template, the `embed` shortcode, the
+figures index and the stylesheet block that framed them were removed in the same
+change, so there is no half-wired surface left behind.
 
-The shortcode reads the file from `assets/embeds/` and inlines it, so the
-figure is part of the document rather than a separate frame. It therefore
-inherits the site's fonts, the site's colours and the site's colour mode,
-which an embedded frame could never do.
+Before one comes back it needs three things: a rendering that follows the site's
+colour tokens instead of literal greys, the `atlx` wrapper class on its root
+element (which is what gives it a maximum width and its own sideways scroll), and
+a decision about which essay paragraph earns it.
 
 ## Editing in the browser
 
@@ -166,8 +185,8 @@ python tools/compare_build.py <the old build folder> public
 The differences it folds away are the ones the port made on purpose: body
 headings are level two, the editor's utility classes are gone, a figure is no
 longer wrapped in a second figure, and the parts the new build added (the
-colour mode, the table of contents, the reading time, the zoom, the progress
-bar and the gallery) are not part of the comparison.
+colour mode, the table of contents, the reading time, the zoom and the progress
+bar) are not part of the comparison.
 
 ## Where the content came from
 
@@ -179,7 +198,7 @@ old theme had compiled into its stylesheet, because that colour would have won
 over any colour scheme.
 
 The figures were built for the old site and live in the vault at
-`vault/Areas/Blog/embeds/`. Their published copies are here, with their
+`vault/Areas/Blog/embeds/`. Their parked copies are in `tools/embeds/`, with their
 colours repointed at the shared tokens.
 
 One deliberate difference from the old build is worth knowing about. Headings

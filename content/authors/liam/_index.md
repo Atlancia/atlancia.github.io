@@ -7,3 +7,4 @@ aliases: []
 
 Liam Shaw writes about the systems we work in: middle management, difference,
 complexity, and the assumptions underneath all of it.
+

@@ -1,0 +1,145 @@
+<!-- Atlancia embed: Diversity and complexity - watchmaking vs software team table (interactive).
+     Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
+     The full comparison as a readable table; select an aspect to see why it matters.
+     slop-ok: exclamation marks are logical-not operators in inline script, not prose emphasis. -->
+<div class="atlx atlx-div-table">
+  <style>
+    .atlx-div-table {
+      --dt-ink: var(--atl-ink, #EEEDED);
+      --dt-text: var(--atl-figure-text, #BFBFBF);
+      --dt-dim: var(--atl-dim, #9D9D9D);
+      --dt-line: var(--atl-line, #373737);
+      --dt-surface: var(--atl-surface, #1e1e1e);
+      --dt-blue: var(--atl-info, #5B9ED5);
+      --dt-green: var(--atl-success, #54A468);
+      --dt-amber: var(--atl-accent, #FFC074);
+      font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+      background: var(--dt-surface);
+      color: var(--dt-text);
+      border: 1px solid var(--dt-line);
+      border-radius: 6px;
+      padding: 1.3rem 1.3rem 1.1rem;
+      margin: 2.5rem 0;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .atlx-div-table * { box-sizing: border-box; }
+    .atlx-div-table .atlx-dt-title {
+      margin: 0 0 .2rem;
+      font-family: "Young Serif", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--dt-ink);
+    }
+    .atlx-div-table .atlx-dt-sub { margin: 0 0 .3rem; color: var(--dt-dim); font-size: .95rem; }
+    .atlx-div-table table { width: 100%; border-collapse: collapse; font-size: .95rem; margin-top: .9rem; }
+    .atlx-div-table th, .atlx-div-table td {
+      text-align: left;
+      vertical-align: top;
+      padding: .6rem .7rem;
+      border: 1px solid var(--dt-line);
+      color: var(--dt-text);
+      background: transparent;
+    }
+    .atlx-div-table thead th { color: var(--dt-ink); background: rgba(255,255,255,0.03); }
+    .atlx-div-table .atlx-dt-rowbtn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: .6rem .7rem;
+      font: inherit;
+      font-weight: 500;
+      color: inherit;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+    }
+    .atlx-div-table .atlx-dt-rowbtn:hover { background: rgba(255,255,255,0.04); }
+    .atlx-div-table .atlx-dt-rowbtn[aria-pressed="true"] { background: rgba(255,192,116,0.12); color: var(--dt-ink); }
+    .atlx-div-table .atlx-dt-rowbtn:focus-visible { outline: 2px solid var(--dt-amber); outline-offset: 3px; }
+    .atlx-div-table tbody th { position: relative; padding: 0; width: 11rem; min-width: 11rem; color: var(--dt-ink); font-weight: 500; background: rgba(255,255,255,0.05); }
+    .atlx-div-table tbody tr[data-active="true"] td,
+    .atlx-div-table tbody tr[data-active="true"] th { background: rgba(255,192,116,0.06); }
+    .atlx-div-table tbody tr[data-active="true"] th { background: rgba(255,192,116,0.14); }
+    .atlx-div-table .atlx-dt-callout {
+      margin: 1rem 0 0;
+      padding: .7rem .9rem;
+      border: 1px solid rgba(255,192,116,0.75);
+      border-radius: 6px;
+      background: rgba(255,192,116,0.07);
+      color: var(--dt-text);
+      font-size: .92rem;
+    }
+    .atlx-div-table .atlx-dt-callout strong { color: var(--dt-ink); }
+  </style>
+
+  <h3 class="atlx-dt-title">Watchmaking vs Software Team</h3>
+  <p class="atlx-dt-sub">The same five aspects, two different worlds. Select an aspect in the first column.</p>
+
+  <noscript><p style="font-size:.9rem;">This figure needs JavaScript only for row highlighting. The gist: watchmaking is consistent, single-role, one-way work with restricted tools, while software is novel, multi-role, bi-directional work with evolving tools.</p></noscript>
+
+  <table>
+    <thead>
+      <tr><th scope="col"></th><th scope="col">Watchmaking</th><th scope="col">Software Team</th></tr>
+    </thead>
+    <tbody>
+      <tr data-row="product">
+        <th scope="row"><button class="atlx-dt-rowbtn" data-aspect="product" aria-pressed="true">Product</button></th>
+        <td>Consistency with design, single product, completed by a single individual.</td>
+        <td>Novel, no direct comparison to use as quality check, cannot be completed individually.</td>
+      </tr>
+      <tr data-row="team">
+        <th scope="row"><button class="atlx-dt-rowbtn" data-aspect="team" aria-pressed="false">Team Composition</button></th>
+        <td>Individuals on the same task at different skill levels, one role, limited benefit to cross-skilling.</td>
+        <td>Significantly different roles working together; cross-skilling benefits emerge and reduce delivery pressure.</td>
+      </tr>
+      <tr data-row="systems">
+        <th scope="row"><button class="atlx-dt-rowbtn" data-aspect="systems" aria-pressed="false">Work Systems</button></th>
+        <td>Limited relationship between individuals and team; shipping is one-way, with no updates and limited fixes.</td>
+        <td>Deeply relevant team relationships; shipping is bi-directional, with bugs, feature requests and support flowing back.</td>
+      </tr>
+      <tr data-row="perspectives">
+        <th scope="row"><button class="atlx-dt-rowbtn" data-aspect="perspectives" aria-pressed="false">Perspectives</button></th>
+        <td>Similar perspectives within a predictable range: years of experience and qualifications.</td>
+        <td>Very different perspectives with unpredictable relevance: an English literature background can unexpectedly help.</td>
+      </tr>
+      <tr data-row="tools">
+        <th scope="row"><button class="atlx-dt-rowbtn" data-aspect="tools" aria-pressed="false">Tools and Heuristics</button></th>
+        <td>Tools restricted by design to ensure consistency and encourage mastery.</td>
+        <td>Wide variety discovered through daily work; combining tools produces new ones, like design thinking with value stream mapping.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="atlx-dt-callout" data-role="callout" aria-live="polite"></div>
+
+  <script>
+  (function(){
+    var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest('.atlx-div-table') : document.querySelector('.atlx-div-table');
+    if(!root) return;
+    var call = root.querySelector('[data-role="callout"]');
+    var btns = root.querySelectorAll('[data-aspect]');
+    var rows = root.querySelectorAll('[data-row]');
+    var WHY = {
+      product: '<strong>Product: reproduce the known versus invent the new.</strong> A watch is checked against its design; novel software has no perfect template, so management must match the work.',
+      team: '<strong>Team Composition: one role at many levels versus many roles at one table.</strong> Juniors become masters on the same task; software needs dev, test, design and product together.',
+      systems: '<strong>Work Systems: one-way delivery versus a running conversation.</strong> A sold watch is done; a shipped release starts a feedback loop of bugs, requests and support.',
+      perspectives: '<strong>Perspectives: predictable range versus unpredictable relevance.</strong> Watchmaking rewards deeper sameness; software is saved by the unexpected background.',
+      tools: '<strong>Tools and Heuristics: restricted for mastery versus discovered daily.</strong> The watchmaker masters fewer tools; the team routinely combines them into new ones.'
+    };
+    function setAspect(a){
+      btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-aspect') === a)); });
+      rows.forEach(function(r){ r.setAttribute('data-active', String(r.getAttribute('data-row') === a)); });
+      call.innerHTML = WHY[a];
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ setAspect(b.getAttribute('data-aspect')); }); });
+    setAspect('product');
+  })();
+  </script>
+</div>
