@@ -9,7 +9,7 @@
 # sign-in dialog when it opens. The token stays in the browser.
 backend:
   name: github
-  repo: Atlancia/atlancia
+  repo: Atlancia/atlancia.github.io
   branch: main
 
 media_folder: static/media/posts
