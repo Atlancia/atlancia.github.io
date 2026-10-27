@@ -12,8 +12,9 @@ featureimage: "media/posts/3/tradem-cover-rest.webp"
 coverMotion: "tradem-cover"
 coverMotionBase: 0.8
 ---
-> *If you wish to make an apple pie from scratch, you must first invent the universe.  
-> – Carl Sagan*
+> *If you wish to make an apple pie from scratch, you must first invent the universe.*
+>
+> - Carl Sagan
 
 Carl Sagan’s famous quote inspires deeper thought of how connected our universe is, that to “make an apple pie from scratch” you can keep going one step backwards until one has to “invent the universe.” What struck me was that somewhere between the start of the universe and baking the pie, we had to draw a line for what we consider "from scratch." Why would buying pre-made pie crust feel like “cheating,” yet buying pre-ground flour would not? What lines have we drawn without much thought of how we choose them?
 

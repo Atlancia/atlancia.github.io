@@ -15,7 +15,7 @@ coverStyle: "artwork"
 ---
 > I was raised up believing I was somehow unique. Like a snowflake distinct among snowflakes. Unique in each way you'd conceive. And now after some thinking I'd say I'd rather be, a functioning cog in some great machinery, serving something beyond me.
 >
-> *Opening lyrics to Helplessness Blues by Fleet Foxes*
+> *Opening lyrics to Helplessness Blues by Fleet Foxes.*
 
 At about twenty-five, I was in my first real job, working on a major project. We were on the cusp of a complex, multi-million-dollar initiative, about to scale from a business-case team of five into a delivery operation of more than fifty. On my way to work every day, I listened to music on a ten-minute walk. I rarely got through more than the first few tracks of an album before arriving, saying hello, and starting my day.
 
@@ -25,7 +25,7 @@ As our project grew, my place on a small team where relationships were tight and
 
 Moving from that tight-knit group to my first large-scale project brought an anxious transition. I did not know where I was supposed to fit, or what cog I was supposed to be in what machine. I could feel a shift in the room from a dynamic where the right answer emerged from discussion to one where the right answer came from hierarchy. I was unsure where our differences fit when truth was no longer found through debate, but dictated by a spot on an organizational chart.
 
-Throughout my career, that tension kept returning: When to bring more of myself into the room. When to make space for someone else. How to contribute to something larger without assuming that contribution requires leaving individuality at the door.
+Throughout my career, that tension kept returning: when to bring more of myself into the room, when to make space for someone else, and how to contribute to something larger without assuming that contribution requires leaving individuality at the door.
 
 Having been away from work for a while, I find myself preparing for interviews and realizing I cannot shake the habit of saying “we.”
 
@@ -237,19 +237,19 @@ While I have spent hours stewing over these thoughts, the details will fade over
 
 As I look ahead at the environments I want to build and the teams, products, and projects I want to take on, these are the lines that stand out from this reflection:
 
-> **Difference needs somewhere to go**
+> **Difference needs somewhere to go.**
 
 It will always exist, but without a constructive channel, it can settle into quiet cynicism, hallway complaints, and defensive silos. Brought into the open early, difference is a benefit. A room without friction isn't aligned; it is just quiet.
 
-> **Nobody knows enough**
+> **Nobody knows enough.**
 
 In work that is novel, complex and requires learning to do, the goal is never to be the smartest person at the table, but to ensure the table is smarter than any one person sitting at it. If one competency can solve a problem alone, the rest of the room is expensive overhead. In cross-functional teams we are not assembled to protect narrow jurisdictions or complete parallel tasks in isolation.
 
-> **Truth has to come from debate, not an organizational chart**
+> **Truth has to come from debate, not an organizational chart.**
 
 Hierarchy can allocate a budget, set a broad mandate, and carry the final accountability, but it cannot manufacture insight. Good environments are ones where arguments are tested on their merits, where half-formed thinking is invited in while the clay is wet, and where challenging an assumption is recognized as engagement, not insubordination.
 
-> **New information is never an inconvenient penalty**
+> **New information is never an inconvenient penalty.**
 
 Discovering a flaw in the plan should not feel like an attack on someone's competence or a burden that ruins days of work. It is what makes the result resilient. Spotting a design flaw or a missed constraint early in a project is not wasted effort; it is an early escape from an expensive failure. Discovering an error is simply the price of making contact with reality.
 

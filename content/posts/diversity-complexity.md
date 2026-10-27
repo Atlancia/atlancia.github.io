@@ -16,7 +16,7 @@ coverMotionBase: 0.8
 >
 > Implementation, then, takes time and sweat both because of the physical media and because of the inadequacies of the underlying ideas. We tend to blame the physical media for most of our implementation difficulties; for the media are not “ours” in the way the ideas are, and our pride colors our judgment.
 >
-> \- “The Mythical Man Month” — Fred Brooks, 1975
+> - "The Mythical Man-Month" - Fred Brooks, 1975.
 
 In the nearly half century since Fred Brooks articulated the idea of a “mythical man month,” the myth persists. He attributed the myth to optimism, that software development is a “modern sorcery \[that\] especially attracts those who believe in happy endings and fairy godmothers.”
 
@@ -577,7 +577,7 @@ Regardless of how we choose to encode the ideas of complexity, either the above,
 
 Crossing that boundary requires discarding assumptions that only held true in predictable environments. Best practices become merely good practices; assuming a single practice remains best is a fool's errand. Rigid processes turn into anchors slowing down needed change. Staying still becomes as risky as changing and adaptability is a necessary dimension of resilience (see BS 65000:2022, Organizational Resilience).
 
-> *All models are wrong, some are useful. — George Box, 1976*
+> *All models are wrong, some are useful.* - George Box, 1976.
 
 No model captures the full mess of a real project. The useful distinction is the tipping point where predictability breaks down. Where work is no longer defined by the comfort of predictability, but by the challenges of unpredictability.
 
@@ -591,17 +591,17 @@ And so, we go full circle. The opening quote of this writing from the *Mythical 
 
 ## Diversity as a Tool in Knowledge Work
 
-> *Knowledge workers are persons who understand their job better than their boss — Peter Drucker*
+> *Knowledge workers are persons who understand their job better than their boss.* - Peter Drucker.
 
 If we are to accept that:
 
-- Knowledge work is complex and requires teams of skilled people working together
-- Complex work is unpredictable, interconnected and non-linear
-- The tools or expertise required to achieve good outcomes cannot be predicted far in advance
+- Knowledge work is complex and requires teams of skilled people working together.
+- Complex work is unpredictable, interconnected and non-linear.
+- The tools or expertise required to achieve good outcomes cannot be predicted far in advance.
 
-Then surely the natural response would be to seek not to build a team of “qualified” individuals who fit the same mould. Instead, an approach could be to optimize for the broadest germane skills and tools. Diversity of thought, over convergence to a mean.
+Then surely the natural response would be to avoid building a team of identical individuals who fit the same mold. Instead, an approach could be to optimize for the broadest germane skills and tools, prioritizing diversity of thought over convergence to a mean.
 
-Below is a very simplified model built to illustrate some key difference between; making the complicated workings of a watch and the complex development of a novel software product.
+Below is a simplified model illustrating key differences between making the complicated workings of a watch and the complex development of a novel software product.
 
 <!-- Atlancia embed: Diversity and complexity - input diversity comparison (interactive).
      Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
@@ -1036,9 +1036,9 @@ Below is a very simplified model built to illustrate some key difference between
 
 The table above almost certainly sells the incredible skills of watchmaking short, but as a model, the key ideas hopefully hold up. The key concepts that we can tease out though are:
 
-- The outcome of work (the product) requires collaboration across multiple skills where individual contributions alone cannot produce value
-- The skills needed to complete work usually require a breadth of skills and knowledge beyond a single individual’s capacity; a typical flow of requirements, design, implement, test and deploy may require all of the roles in the diagram to work together
-- The relationship between the team and the work isn’t predictable, some work may require a large amount of design, some may require extremely in-depth knowledge of development or knowledge of a new business domain.
+- The outcome of work (the product) requires collaboration across multiple skills where individual contributions alone cannot produce value.
+- The skills needed to complete work usually require a breadth of skills and knowledge beyond a single individual's capacity; a typical flow of requirements, design, implement, test and deploy may require all of the roles in the diagram to work together.
+- The relationship between the team and the work is not predictable: some work may require a large amount of design, while other work may require in-depth knowledge of development or a new business domain.
 
 Unpredictability in the work and the tight coupling between teammates mean that strengthening a team requires more than deepening existing capabilities; it requires adding diverse perspectives and problem-solving heuristics. Instead of matching resumes to fixed task lists, teams could look at upcoming challenges and ask which perspectives are currently missing.
 

@@ -37,10 +37,10 @@ This concept of formally managed “requirements” was new to me. They weren’
 
 Requirements in the traditional sense simply help define what an initiative needs to achieve to be successful. But there are a few issues with the concept:
 
-- They capture the best knowledge available at a point in time and rarely change; even worse, they often reflect the best understanding of technology by non-technical users without having seen a system or prototype
-- They apply formality to what often would be better served as a conversation or dialogue
-- By investing time in documenting them and going through approvals, there is a sunk cost that makes it difficult to change
-- There is often resistance to changing them through existing project mechanisms, such as change control, even when new information is uncovered
+- They capture the best knowledge available at a point in time and rarely change; even worse, they often reflect the best understanding of technology by non-technical users without having seen a system or prototype.
+- They apply formality to what often would be better served as a conversation or dialogue.
+- By investing time in documenting them and going through approvals, there is a sunk cost that makes it difficult to change.
+- There is often resistance to changing them through existing project mechanisms, such as change control, even when new information is uncovered.
 
 These issues are similar to those that hamper the growth of the business analysis practice. The best knowledge available when the role was being created was that the majority of software development was occurring through projects, those projects were failing at an alarming rate (nearly 1/3 being cancelled) and that poor management of requirements was a significant contributor.
 
@@ -495,7 +495,7 @@ What felt the most valuable was not the work I was supposed to be focused on. In
       c.addEventListener('mousemove', function () {
         var s = place();
         var ann = getAnn();
-        showTip(s.p[0], s.p[1], label + ' · ' + AXES[idx] + ': ' + s.v, ann);
+        showTip(s.p[0], s.p[1], label + ' - ' + AXES[idx] + ': ' + s.v, ann);
       });
       c.addEventListener('mouseleave', hideTip);
       return { c: c, t: tt, place: place };
