@@ -1,24 +1,27 @@
 ---
-title: "From Shovels to Software: Why Difference Matters When Things Get Complex"
-date: "2023-06-05T00:00:00-04:00"
-lastmod: "2025-08-23T08:28:51-04:00"
-slug: "diversity-complexity"
-url: "/diversity-complexity.html"
-type: posts
-media_id: 4
-authors: ["liam"]
-meta_robots: "index, follow"
-featureimage: "covers/shovel-cover.svg"
-coverMotion: "shovel-cover"
+title: 'From Shovels to Software: Why Difference Matters When Things Get Complex'
+date: 2023-06-05T00:00:00-04:00
+slug: diversity-complexity
+featureimage: covers/shovel-cover.svg
+authors:
+  - liam
+draft: false
+coverMotion: shovel-cover
 coverMotionBase: 0.8
+lastmod: 2025-08-23T08:28:51-04:00
+media_id: 4
+meta_robots: index, follow
+type: posts
+url: /diversity-complexity.html
 ---
+
 > In many creative activities the medium of execution is intractable. Lumber splits; paints smear; electrical circuits ring. These physical limitations of the medium constrain the ideas that may be expressed, and they also create unexpected difficulties in the implementation.
 >
 > Implementation, then, takes time and sweat both because of the physical media and because of the inadequacies of the underlying ideas. We tend to blame the physical media for most of our implementation difficulties; for the media are not “ours” in the way the ideas are, and our pride colors our judgment.
 >
 > - "The Mythical Man-Month" - Fred Brooks, 1975.
 
-In the nearly half century since Fred Brooks articulated the idea of a “mythical man month,” the myth persists. He attributed the myth to optimism, that software development is a “modern sorcery \[that\] especially attracts those who believe in happy endings and fairy godmothers.”
+In the nearly half century since Fred Brooks articulated the idea of a “mythical man month,” the myth persists. He attributed the myth to optimism, that software development is a “modern sorcery that especially attracts those who believe in happy endings and fairy godmothers.”
 
 The persistent mythology, that if we close our eyes, and think hard enough, that we can put together a perfectly tractable plan of what we want to build, how we can build it and who will need to pull it together, is an optimistic delusion. This optimism has real consequences, and I’ve witnessed language used by those concerned with diversity that reflects this as a foundation for some of their resistance to accepting diversity and inclusion not simply as a moral imperative, but as a benefit to improved performance.
 
@@ -197,7 +200,6 @@ Workplaces rarely suffer from a shortage of complicated problems but they stumbl
   })();
   </script>
 </div>
-
 
 As a starting point for moving further, I have to start with a few definitions.
 
@@ -454,7 +456,6 @@ As a starting point for moving further, I have to start with a few definitions.
   </script>
 </div>
 
-
 ## Kicking and Screaming Into Complexity
 
 Regardless of how we choose to encode the ideas of complexity, either the above, or other common models like Cynefin, the key idea is that there is a point in complexity where we leave the world of the predictable, stable and solvable and enter a different domain.
@@ -574,10 +575,9 @@ Regardless of how we choose to encode the ideas of complexity, either the above,
 
 </div>
 
-
 Crossing that boundary requires discarding assumptions that only held true in predictable environments. Best practices become merely good practices; assuming a single practice remains best is a fool's errand. Rigid processes turn into anchors slowing down needed change. Staying still becomes as risky as changing and adaptability is a necessary dimension of resilience (see BS 65000:2022, Organizational Resilience).
 
-> *All models are wrong, some are useful.* - George Box, 1976.
+> _All models are wrong, some are useful._ - George Box, 1976.
 
 No model captures the full mess of a real project. The useful distinction is the tipping point where predictability breaks down. Where work is no longer defined by the comfort of predictability, but by the challenges of unpredictability.
 
@@ -585,13 +585,13 @@ No model captures the full mess of a real project. The useful distinction is the
 
 A diagram makes the boundary look clean, but real-world problems do not arrive with labels. Some challenges look deceptively simple yet resist straightforward answers. The moving sofa problem (finding the largest two-dimensional shape that can maneuver through an L-shaped hallway) has occupied mathematicians for decades without a complete proof.
 
-In *Antifragile*, Nassim Nicholas Taleb highlights non-linearity as a hallmark of complex systems. Doubling an input does not yield a tidy doubling of the result; effects are either amplified or reduced through a crosshatch of interdependencies. Simple cause-and-effect relationships do not hold, and understanding the functioning of individual parts alone is insufficient.
+In _Antifragile_, Nassim Nicholas Taleb highlights non-linearity as a hallmark of complex systems. Doubling an input does not yield a tidy doubling of the result; effects are either amplified or reduced through a crosshatch of interdependencies. Simple cause-and-effect relationships do not hold, and understanding the functioning of individual parts alone is insufficient.
 
-And so, we go full circle. The opening quote of this writing from the *Mythical Man-Month*, exemplifies this non-linearity. The observation that adding developers to a late software project tends to make it later is a darn good indicator that knowledge work is complex rather than simply complicated. The rest of the writing will use software development and knowledge work generally, as marquee examples in comparison to other clearly simple or complicated types of work.
+And so, we go full circle. The opening quote of this writing from the _Mythical Man-Month_, exemplifies this non-linearity. The observation that adding developers to a late software project tends to make it later is a darn good indicator that knowledge work is complex rather than simply complicated. The rest of the writing will use software development and knowledge work generally, as marquee examples in comparison to other clearly simple or complicated types of work.
 
 ## Diversity as a Tool in Knowledge Work
 
-> *Knowledge workers are persons who understand their job better than their boss.* - Peter Drucker.
+> _Knowledge workers are persons who understand their job better than their boss._ - Peter Drucker.
 
 If we are to accept that:
 
@@ -886,7 +886,6 @@ Below is a simplified model illustrating key differences between making the comp
   </script>
 </div>
 
-
 <!-- Atlancia embed: Diversity and complexity - watchmaking vs software team table (interactive).
      Fits the post From Shovels to Software: Why Difference Matters When Things Get Complex.
      The full comparison as a readable table; select an aspect to see why it matters.
@@ -1032,7 +1031,6 @@ Below is a simplified model illustrating key differences between making the comp
   })();
   </script>
 </div>
-
 
 The table above almost certainly sells the incredible skills of watchmaking short, but as a model, the key ideas hopefully hold up. The key concepts that we can tease out though are:
 
@@ -1329,8 +1327,6 @@ Unpredictability in the work and the tight coupling between teammates mean that 
   </script>
 </div>
 
-
-
 Say this team had to balance two very big pieces of work in their system: a large security issue and a challenging high priority feature request. What could they do as a first step? Look at the new work and ask themselves, what they might be missing to address them, and seek out adding that to the team. It is only the team though who could assess this as it is based on their collective skills.
 
 If a team realizes they need fresh capability, recruiting someone with an identical background offers little advantage. When future problems are unpredictable, the strongest move is to hire for cognitive difference, bringing in people whose perspectives and mental models diverge from the existing group.
@@ -1342,4 +1338,3 @@ Cognitive diversity builds their capacity to address the problems of today and b
 If a worker shovels coal all day and notices the person next to them shoveled half as much for the same pay, frustration is natural. The output is physical, uniform, and easily measured. The same applies to a watchmaker producing twice the volume of a peer at identical quality.
 
 However, when looking at knowledge work, where complexity is the norm, how can we justify that same sentiment? I’d argue that we simply can’t. The volatility, uncertainty, complexity, and ambiguity of the work environment ought to compel teams to add skills different from their own as a route to making themselves and their teams better. Clinging to rigid qualification checklists only limits the pool of perspectives a team can draw upon. Core competence matters, but when problems demand wide-ranging judgment, we cannot expect to solve new challenges by hiring people who think and work identically to ourselves.
-
