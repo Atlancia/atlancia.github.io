@@ -61,8 +61,6 @@ When I first started using coding agents, I reacted like any cautious practition
 
 Within days, I was exhausted. Requests came in such a relentless torrent that I was simply a gatekeeper, clicking through without reading, keeping an illusion of control with zero real safety. I was just clicking, knowing the next prompt was already queuing up the moment I hit Approve.
 
-{{}}
-
 Yet, I have to admit to myself: I never would have gotten comfortable granting autonomy had I not lived through that friction. Feeling that drag firsthand forced me to think of smarter ways to govern the system. I could never have found the right balance of autonomy and constraint in the abstract; I had to experience the friction directly.
 
 While earlier I said I enjoyed being wrong, this was a far less enjoyable realization. Being wrong here was not like discovering a flaw in a guardrail or a test that became a logical puzzle to fix. This was different. This was realizing that a frustration I had carried for years from enterprise delivery was built on my own incomplete understanding. I was wrong about the role of gatekeepers.
