@@ -56,19 +56,42 @@ def frontmatter(md_path):
     return yaml.safe_load(match.group(1)) or {}
 
 
+# Tails that mark one rendering of a cover rather than the cover itself.
+# Shed repeatedly, so ba-cover-rest loses -rest and then -cover, landing on
+# the stem the twin pair is published under. Mirrors verify_covers.TAILS.
+TAILS = ("-cover-light", "-cover-dark", "-rest", "-cover")
+
+
+def stem_of(feature):
+    """The cover stem behind a featureimage path."""
+    stem = Path(feature).with_suffix("").as_posix()
+    stripped = True
+    while stripped:
+        stripped = False
+        for tail in TAILS:
+            if stem.endswith(tail):
+                stem = stem[: -len(tail)]
+                stripped = True
+    return stem
+
+
 def load_source(featureimage):
     """The source photograph behind a featureimage path.
 
-    Accepts the original photo path or either variant name, so re-running
-    after a frontmatter edit still finds the untouched source.
+    Accepts the original photo path, either twin name, or a -rest frame, so
+    re-running after a frontmatter edit still finds the untouched source.
+    Falls back to the feature file itself: a resting frame is a full-colour
+    photograph, so when no stem photo sits beside it the frame is fit to
+    treat.
     """
-    stem = featureimage
-    for suffix in ("-cover-light", "-cover-dark"):
-        stem = stem.replace(suffix, "")
+    stem = stem_of(featureimage)
     for ext in (".jpg", ".jpeg", ".png", ".webp"):
         candidate = STATIC / Path(stem).with_suffix(ext).as_posix()
         if candidate.exists():
             return candidate
+    fallback = STATIC / featureimage.split("#", 1)[0].split("?", 1)[0]
+    if fallback.is_file():
+        return fallback
     return None
 
 
@@ -145,9 +168,7 @@ def process(md_path, force=False):
         return None
     if not style:
         return None
-    stem = Path(feature).with_suffix("").as_posix()
-    for suffix in ("-cover-light", "-cover-dark", "-cover"):
-        stem = stem.replace(suffix, "")
+    stem = stem_of(feature)
     if style == "artwork":
         outs = []
         for mode in ("dark", "light"):

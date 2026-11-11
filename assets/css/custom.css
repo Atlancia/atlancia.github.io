@@ -165,8 +165,8 @@ html:not(.dark) body {
   font-weight: 380;
   font-kerning: normal;
   font-variant-ligatures: common-ligatures contextual;
-  font-variant-numeric: oldstyle-nums;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "lnum" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -45,7 +45,7 @@ In this wild west of modern AI, where tooling, models, and conventions shift dai
 
 What once took months of toil to learn (and could easily be rendered obsolete by a new version, or abandoned after realizing it was too complicated to maintain) now takes thirty minutes. I can write a clear spec, reuse or write a few tests, and see quickly whether an idea holds water. A technique like test-driven development becomes a vehicle for shipping human intent to a machine.
 
-This year offers a fitting historical marker: 2026 is the centenary of Mary Parker Follett’s 1926 lecture The Giving of Orders. It was a rare, early critique of command-and-control management, arguing that productive work should not derive from "power-over," but from "power-with," grounded in the objective facts of the work itself.
+This year offers a fitting historical marker: 2026 is the centenary of Mary Parker Follett’s 1926 essay *The Giving of Orders*. It was a rare, early critique of command-and-control management, arguing that productive work should not derive from "power-over," but from "power-with," grounded in the objective facts of the work itself.
 
 When working with coding agents, "power-over" is not even an option. They are not people. I can yell and type in all caps, but they have no feelings to injure and no mouths to feed at home that I could threaten by docking pay. Coercion does not work on software that already does its best to fulfill a prompt. To fix a broken result, I have to default to a "power-with" model: aligning on objective facts, understanding how the model parses instructions, and steering the work toward truth.
 
