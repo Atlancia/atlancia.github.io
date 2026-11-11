@@ -1,0 +1,155 @@
+<!-- Telephone figure: With the agent vs With the team (Shippable Governance essay) -->
+<div class="tel-fig-wrap">
+  <style>
+    .tel-fig { --tel-bg: var(--atl-surface, #1e1e1e); --tel-panel: var(--atl-bg, #141418); --tel-ink: var(--atl-ink, #eeeded); --tel-muted: var(--atl-dim, #9d9d9d); --tel-border: var(--atl-line, #373737); --tel-accent: var(--atl-accent, #ffc074); --tel-accent-ink: #141418; --tel-faint: var(--atl-bg, #141418); font-family: "Cal Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--tel-bg); color: var(--tel-ink); border: 1px solid var(--tel-border); border-radius: 6px; padding: 1.3rem 1.3rem 1.1rem; margin: 2.5rem 0; max-width: 100%; font-size: 1rem; line-height: 1.55; }
+    .tel-fig * { box-sizing: border-box; }
+    @media (prefers-color-scheme: light) {
+      .tel-fig { --tel-bg: #f1efea; --tel-panel: #fbfaf7; --tel-ink: #23233d; --tel-muted: #6b6b70; --tel-border: #d6d2ca; --tel-accent: #ffc074; --tel-accent-ink: #23233d; --tel-faint: #e7e3dc; }
+    }
+    html:not(.dark) .tel-fig { --tel-bg: var(--atl-surface, #f1efea); --tel-panel: var(--atl-page, #fbfaf7); --tel-ink: var(--atl-ink, #23233d); --tel-muted: var(--atl-dim, #6b6b70); --tel-border: var(--atl-line, #d6d2ca); --tel-accent: var(--atl-accent, #ffc074); --tel-accent-ink: #23233d; --tel-faint: var(--atl-bg, #f1efea); }
+    .tel-fig .tel-kick { margin:0 0 .4rem; font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--tel-accent); }
+    .tel-fig .tel-title { margin:0 0 .2rem; font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif; font-weight:500; font-size:1.25rem; line-height:1.35; color:var(--tel-ink); }
+    .tel-fig .tel-sub { margin:0 0 1rem; color:var(--tel-muted); font-size:.95rem; }
+    .tel-fig .tel-sub code { font-family: "Monaspace Neon", ui-monospace, monospace; font-size:.88em; background:var(--tel-faint); border:1px solid var(--tel-border); border-radius:4px; padding:.05rem .35rem; color:var(--tel-ink); }
+    .tel-fig .tel-controls { display:flex; align-items:center; gap:.9rem; flex-wrap:wrap; margin:0 0 1rem; }
+    .tel-fig button.tel-run { font:inherit; font-size:.9rem; font-weight:600; cursor:pointer; color:var(--tel-accent-ink); background:var(--tel-accent); border:1px solid var(--tel-accent); border-radius:999px; padding:.45rem 1.1rem; }
+    .tel-fig button.tel-run:disabled { opacity:.55; cursor:default; }
+    .tel-fig button.tel-run:focus-visible { outline:2px solid var(--tel-accent); outline-offset:3px; }
+    .tel-fig .tel-dots { display:flex; gap:.45rem; align-items:center; }
+    .tel-fig .tel-dot { width:11px; height:11px; border-radius:999px; border:1px solid var(--tel-accent); background:transparent; padding:0; }
+    .tel-fig .tel-dot.is-on { background:var(--tel-accent); }
+    .tel-fig .tel-stepname { font-size:.85rem; color:var(--tel-muted); min-height:1.5em; }
+    .tel-fig .tel-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    @media (max-width:640px) { .tel-fig .tel-grid { grid-template-columns:1fr; } }
+    .tel-fig .tel-panel { background:var(--tel-panel); border:1px solid var(--tel-border); border-radius:4px; padding:.9rem; }
+    .tel-fig .tel-panel p.tel-panel-title { margin:0 0 .6rem; font-size:.95rem; line-height:1.4; color:var(--tel-ink); font-weight:600; }
+    .tel-fig svg.tel-ico { display:inline-block; width:14px; height:14px; vertical-align:-2px; }
+    .tel-fig .tel-panel-title svg.tel-ico { margin-right:.4rem; }
+    .tel-fig .tel-prompt { position:relative; border:1px solid var(--tel-border); border-left:3px solid var(--tel-accent); border-radius:4px; background:var(--tel-bg); padding:.55rem .7rem; font-size:.92rem; margin:0 0 .8rem; transition:opacity .5s ease; }
+    .tel-fig .tel-prompt .tel-tag { display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--tel-accent); border:1px solid var(--tel-accent); border-radius:999px; padding:.05rem .5rem; margin-left:.5rem; vertical-align:middle; }
+    .tel-fig .tel-prompt .tel-tag svg.tel-ico { vertical-align:-1px; margin-right:.3rem; }
+    .tel-fig .tel-prompt.is-expired { opacity:.25; }
+    .tel-fig .tel-prompt .tel-expired-label { display:none; }
+    .tel-fig .tel-prompt.is-expired .tel-expired-label { display:inline-block; }
+    .tel-fig .tel-prompt.is-expired .tel-live-label { display:none; }
+    .tel-fig ol.tel-steps { list-style:none; margin:0; padding:0; display:grid; gap:.5rem; min-height:11.5em; }
+    .tel-fig .tel-step { display:none; border:1px solid var(--tel-border); border-radius:4px; background:var(--tel-bg); padding:.5rem .65rem; font-size:.9rem; }
+    .tel-fig .tel-step.is-on { display:block; }
+    .tel-fig .tel-step b { display:block; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--tel-muted); font-weight:700; margin-bottom:.1rem; }
+    .tel-fig .tel-payoff { display:none; margin:.6rem 0 0; padding:.55rem .7rem; border-radius:4px; font-size:.9rem; border:1px solid var(--tel-accent); color:var(--tel-ink); background:var(--tel-bg); }
+    .tel-fig .tel-payoff.is-on { display:block; }
+    .tel-fig .tel-note { margin:.8rem 0 0; font-size:.85rem; color:var(--tel-muted); }
+    @media (prefers-reduced-motion: reduce) {
+      .tel-fig .tel-prompt { transition:none; }
+    }
+  </style>
+  <noscript><p>Same prompt, two outcomes: with the agent the words stay pinned; with the team the words expire.</p></noscript>
+  <div class="tel-fig" role="figure" aria-label="Telephone comparison: prompt survives with the agent, prompt vanishes with the team">
+    <p class="tel-kick">A short test of memory</p>
+    <p class="tel-title">Same prompt, two outcomes</p>
+    <p class="tel-sub">The starting words are <code>Fix the login screen.</code> One Run button steps both sides together.</p>
+    <div class="tel-controls">
+      <button type="button" class="tel-run" data-tel-run>Run both</button>
+      <div class="tel-dots" aria-hidden="true">
+        <span class="tel-dot" data-tel-dot="1"></span>
+        <span class="tel-dot" data-tel-dot="2"></span>
+        <span class="tel-dot" data-tel-dot="3"></span>
+      </div>
+      <span class="tel-stepname" data-tel-stepname>Ready. One press plays both sides together.</span>
+    </div>
+    <div class="tel-grid">
+      <div class="tel-panel" aria-live="polite">
+        <p class="tel-panel-title"><svg class="tel-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></svg>With the agent (prompt survives)</p>
+        <p class="tel-prompt" data-tel-left-prompt>Fix the login screen.<span class="tel-tag tel-live-label"><svg class="tel-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5" /><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z" /></svg>pinned</span></p>
+        <ol class="tel-steps">
+          <li class="tel-step" data-tel-s="1"><b>1. Spin</b>He says fix. Could mean centered. Could mean fast. Picks centered.</li>
+          <li class="tel-step" data-tel-s="2"><b>2. Ship</b>Moves it to center at all sizes. Reports back against the same words.</li>
+          <li class="tel-step" data-tel-s="3"><b>3. Receipt</b>Original still pinned three inches up. Miss is undeniable.</li>
+        </ol>
+        <p class="tel-payoff" data-tel-left-payoff>I did not say what fix meant. Scroll up and the gap shows.</p>
+      </div>
+      <div class="tel-panel" aria-live="polite">
+        <p class="tel-panel-title"><svg class="tel-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>With the team (prompt vanishes)</p>
+        <p class="tel-prompt" data-tel-right-prompt>Fix the login screen.<span class="tel-tag tel-live-label">live</span><span class="tel-tag tel-expired-label"><svg class="tel-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>expired</span></p>
+        <ol class="tel-steps">
+          <li class="tel-step" data-tel-s="1"><b>1. Hesitate</b>What does fix mean. Do I ask again. He was short last time.</li>
+          <li class="tel-step" data-tel-s="2"><b>2. Guess</b>Maybe search old tickets. Nobody remembers the exact words.</li>
+          <li class="tel-step" data-tel-s="3"><b>3. Present</b>Best guess lands. This is not what I asked for. Why so slow.</li>
+        </ol>
+        <p class="tel-payoff" data-tel-right-payoff>The words are gone, so blame fills the gap.</p>
+      </div>
+    </div>
+    <p class="tel-note">Payoff: pinned words expose the miss; vanished words invite blame.</p>
+  </div>
+  <script>
+    (function () {
+      var root = document.currentScript && document.currentScript.closest ? document.currentScript.closest(".tel-fig-wrap") : document.querySelector(".tel-fig-wrap");
+      if (root === null) return;
+      var btn = root.querySelector("[data-tel-run]");
+      var dots = Array.prototype.slice.call(root.querySelectorAll("[data-tel-dot]"));
+      var name = root.querySelector("[data-tel-stepname]");
+      var steps = Array.prototype.slice.call(root.querySelectorAll("[data-tel-s]"));
+      var leftPrompt = root.querySelector("[data-tel-left-prompt]");
+      var rightPrompt = root.querySelector("[data-tel-right-prompt]");
+      var leftPayoff = root.querySelector("[data-tel-left-payoff]");
+      var rightPayoff = root.querySelector("[data-tel-right-payoff]");
+      var names = ["", "Step 1 of 3: Spin and hesitate", "Step 2 of 3: Ship and guess", "Step 3 of 3: Receipt and blame"];
+      var timers = [];
+      var running = false;
+      var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function clearTimers() {
+        timers.forEach(function (t) { window.clearTimeout(t); });
+        timers = [];
+      }
+
+      function showStep(n) {
+        steps.forEach(function (el) {
+          var s = Number(el.getAttribute("data-tel-s"));
+          if (s <= n) { el.classList.add("is-on"); } else { el.classList.remove("is-on"); }
+        });
+        dots.forEach(function (d, i) {
+          if (i < n) { d.classList.add("is-on"); } else { d.classList.remove("is-on"); }
+        });
+        if (n >= 2) { rightPrompt.classList.add("is-expired"); } else { rightPrompt.classList.remove("is-expired"); }
+        if (n >= 3) { leftPayoff.classList.add("is-on"); rightPayoff.classList.add("is-on"); }
+        else { leftPayoff.classList.remove("is-on"); rightPayoff.classList.remove("is-on"); }
+        name.textContent = n === 0 ? "Ready. One press plays both sides together." : names[n];
+      }
+
+      function reset() {
+        clearTimers();
+        running = false;
+        showStep(0);
+        btn.textContent = "Run both";
+        btn.disabled = false;
+      }
+
+      btn.addEventListener("click", function () {
+        if (btn.textContent === "Reset") { reset(); return; }
+        if (running) return;
+        if (reduced) {
+          showStep(4);
+          btn.textContent = "Reset";
+          return;
+        }
+        running = true;
+        btn.disabled = true;
+        btn.textContent = "Playing";
+        showStep(0);
+        [1, 2, 3].forEach(function (n, i) {
+          timers.push(window.setTimeout(function () {
+            showStep(n);
+            if (n === 3) {
+              running = false;
+              btn.disabled = false;
+              btn.textContent = "Reset";
+            }
+          }, 900 * (i + 1)));
+        });
+      });
+
+      showStep(0);
+    })();
+  </script>
+</div>

@@ -1,0 +1,351 @@
+<style>
+  .ev6 {
+    --fig-ink: var(--atl-ink, #EEEDED);
+    --fig-text: var(--atl-figure-text, #BFBFBF);
+    --fig-dim: var(--atl-dim, #9D9D9D);
+    --fig-line: var(--atl-line, #373737);
+    --fig-bg: var(--atl-bg, #141418);
+    --fig-surface: var(--atl-surface, #1E1E1E);
+    --fig-accent: var(--atl-accent, #FFC074);
+    --fig-on-accent: #141418;
+    --fig-clicks: var(--atl-warning, #FB6762);
+    --fig-clean: var(--atl-info, #5B9ED5);
+    --fig-learn: var(--atl-success, #54A468);
+    background: var(--fig-bg);
+    color: var(--fig-text);
+    border: 1px solid var(--fig-line);
+    border-radius: 10px;
+    padding: 1.4rem 1.4rem 1.2rem;
+    max-width: 100%;
+    font-family: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  @media (prefers-color-scheme: light) {
+    .ev6 {
+      --fig-ink: var(--atl-ink, #1B1B1F);
+      --fig-text: var(--atl-figure-text, #3F3F46);
+      --fig-dim: var(--atl-dim, #6E6E76);
+      --fig-line: var(--atl-line, #DFDFD6);
+      --fig-bg: var(--atl-bg, #FAFAF7);
+      --fig-surface: var(--atl-surface, #FFFFFF);
+      --fig-accent: var(--atl-accent, #9A5B00);
+      --fig-on-accent: #FFFFFF;
+      --fig-clicks: var(--atl-warning, #C2433B);
+      --fig-clean: var(--atl-info, #2F6FAD);
+      --fig-learn: var(--atl-success, #2E7D43);
+    }
+  }
+  html:not(.dark) .ev6 {
+    --fig-ink: var(--atl-ink, #1B1B1F);
+    --fig-text: var(--atl-figure-text, #3F3F46);
+    --fig-dim: var(--atl-dim, #6E6E76);
+    --fig-line: var(--atl-line, #DFDFD6);
+    --fig-bg: var(--atl-bg, #FAFAF7);
+    --fig-surface: var(--atl-surface, #FFFFFF);
+    --fig-accent: var(--atl-accent, #9A5B00);
+    --fig-on-accent: #FFFFFF;
+    --fig-clicks: var(--atl-warning, #C2433B);
+    --fig-clean: var(--atl-info, #2F6FAD);
+    --fig-learn: var(--atl-success, #2E7D43);
+  }
+  .ev6-kicker {
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fig-dim);
+    margin: 0 0 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ev6-kicker svg { width: 14px; height: 14px; }
+  .ev6-title {
+    margin: 0 0 0.25rem;
+    font-size: 1.3rem;
+    line-height: 1.3;
+    color: var(--fig-ink);
+    font-weight: 600;
+  }
+  .ev6-sub { margin: 0 0 0.2rem; font-size: 0.95rem; color: var(--fig-dim); }
+  .ev6-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.76rem;
+    color: var(--fig-dim);
+  }
+  .ev6-legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .ev6-legend svg { width: 13px; height: 13px; }
+  .ev6-sw { width: 0.7rem; height: 0.7rem; border-radius: 3px; display: inline-block; }
+  .ev6-sw.clicks { background: var(--fig-clicks); }
+  .ev6-sw.clean { background: var(--fig-clean); }
+  .ev6-sw.learn { background: var(--fig-learn); }
+  .ev6-rows { display: grid; gap: 0.6rem; margin-top: 0.8rem; }
+  .ev6-row {
+    background: var(--fig-surface);
+    border: 1px solid var(--fig-line);
+    border-radius: 8px;
+    padding: 0.65rem 0.7rem 0.6rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .ev6-row.on {
+    border-color: var(--fig-accent);
+    box-shadow: 0 0 0 1px var(--fig-accent);
+  }
+  .ev6-rowhead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .ev6-name { margin: 0; font-size: 0.9rem; color: var(--fig-ink); font-weight: 600; }
+  .ev6-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: var(--fig-learn);
+  }
+  .ev6-tag svg { width: 13px; height: 13px; }
+  .ev6-units {
+    margin: 0;
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.74rem;
+    color: var(--fig-dim);
+    white-space: nowrap;
+  }
+  .ev6-bar {
+    display: flex;
+    height: 1.15rem;
+    border-radius: 5px;
+    overflow: hidden;
+    background: var(--fig-line);
+  }
+  .ev6-seg { min-width: 4px; display: flex; align-items: center; justify-content: center; }
+  .ev6-seg.clicks { background: var(--fig-clicks); }
+  .ev6-seg.clean { background: var(--fig-clean); }
+  .ev6-seg.learn { background: var(--fig-learn); }
+  .ev6-seg span {
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #141418;
+    line-height: 1;
+  }
+  .ev6-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 0.9rem; }
+  @media (max-width: 560px) {
+    .ev6-btns { grid-template-columns: 1fr; }
+  }
+  .ev6-btn {
+    font: inherit;
+    color: var(--fig-text);
+    background: var(--fig-surface);
+    border: 1px solid var(--fig-line);
+    border-radius: 8px;
+    padding: 0.5rem 0.55rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .ev6-btn svg { width: 16px; height: 16px; flex: none; }
+  .ev6-btn[data-tone="bad"] svg { color: var(--fig-clicks); }
+  .ev6-btn[data-tone="info"] svg { color: var(--fig-clean); }
+  .ev6-btn[data-tone="good"] svg { color: var(--fig-learn); }
+  .ev6-btn[aria-pressed="true"] {
+    border-color: var(--fig-accent);
+    box-shadow: 0 0 0 1px var(--fig-accent);
+    color: var(--fig-ink);
+  }
+  .ev6-btn:focus-visible { outline: 2px solid var(--fig-accent); outline-offset: 2px; }
+  .ev6-controls { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.9rem; }
+  .ev6-play {
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.85rem;
+    background: var(--fig-accent);
+    color: var(--fig-on-accent);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ev6-play:focus-visible { outline: 2px solid var(--fig-ink); outline-offset: 2px; }
+  .ev6-play svg { width: 14px; height: 14px; }
+  .ev6-caption {
+    font-family: "Monaspace Neon", ui-monospace, monospace;
+    font-size: 0.8rem;
+    color: var(--fig-dim);
+    margin: 0;
+    min-height: 1.6em;
+  }
+  .ev6-payoff { margin: 0.9rem 0 0; font-size: 0.95rem; color: var(--fig-text); }
+  .ev6-payoff strong { color: var(--fig-ink); }
+  @media (prefers-reduced-motion: reduce) {
+    .ev6-row, .ev6-btn { transition: none; }
+  }
+</style>
+<div class="ev6" id="ev6">
+  <p class="ev6-kicker"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 16a3 3 0 0 1 0 6H7a5 5 0 1 1 4.9-6z"/><path d="M18.376 14.512a6 6 0 0 0 3.461-4.127c.148-.625-.659-.97-1.248-.714a4 4 0 0 1-5.259-5.26c.255-.589-.09-1.395-.716-1.248a6 6 0 0 0-4.594 5.36"/></svg>Evening budget</p>
+  <p class="ev6-title">Three evenings, one budget of 100 units</p>
+  <p class="ev6-sub">Each bar shows where an evening goes: clicks, cleanup, or learning. Press Play to tour all three, or pick an evening below. The buttons stay clickable the whole time.</p>
+  <ul class="ev6-legend" aria-label="Bar key">
+    <li><span class="ev6-sw clicks" aria-hidden="true"></span>clicks</li>
+    <li><span class="ev6-sw clean" aria-hidden="true"></span>cleanup</li>
+    <li><span class="ev6-sw learn" aria-hidden="true"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>learning</li>
+  </ul>
+  <div class="ev6-rows">
+    <div class="ev6-row" id="ev6-r1">
+      <div class="ev6-rowhead">
+        <p class="ev6-name">Approve everything</p>
+        <p class="ev6-units">clicks 90 · cleanup 5 · learning 5</p>
+      </div>
+      <div class="ev6-bar" role="img" aria-label="Approve everything: 90 units clicks, 5 cleanup, 5 learning, out of 100.">
+        <div class="ev6-seg clicks" style="width:90%"><span>90</span></div>
+        <div class="ev6-seg clean" style="width:5%"></div>
+        <div class="ev6-seg learn" style="width:5%"></div>
+      </div>
+    </div>
+    <div class="ev6-row" id="ev6-r2">
+      <div class="ev6-rowhead">
+        <p class="ev6-name">Allow all</p>
+        <p class="ev6-units">clicks 20 · cleanup 70 · learning 10</p>
+      </div>
+      <div class="ev6-bar" role="img" aria-label="Allow all: 20 units clicks, 70 cleanup, 10 learning, out of 100.">
+        <div class="ev6-seg clicks" style="width:20%"><span>20</span></div>
+        <div class="ev6-seg clean" style="width:70%"><span>70</span></div>
+        <div class="ev6-seg learn" style="width:10%"></div>
+      </div>
+    </div>
+    <div class="ev6-row on" id="ev6-r3">
+      <div class="ev6-rowhead">
+        <p class="ev6-name">Bounded</p>
+        <p class="ev6-tag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg>blueprint night</p>
+        <p class="ev6-units">clicks 20 · cleanup 20 · learning 60</p>
+      </div>
+      <div class="ev6-bar" role="img" aria-label="Bounded: 20 units clicks, 20 cleanup, 60 learning, out of 100. A blueprint night.">
+        <div class="ev6-seg clicks" style="width:20%"><span>20</span></div>
+        <div class="ev6-seg clean" style="width:20%"><span>20</span></div>
+        <div class="ev6-seg learn" style="width:60%"><span>60</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="ev6-btns" role="group" aria-label="Choose an evening">
+    <button class="ev6-btn" id="ev6-b1" type="button" data-tone="bad" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      <span>Approve everything</span>
+    </button>
+    <button class="ev6-btn" id="ev6-b2" type="button" data-tone="info" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 10.5 22 2"/><path d="M14.734 13.841a2 2 0 00-.314-2.42L12.58 9.58a2 2 0 00-2.421-.314l-7.657 4.461A1 1 0 002.3 15.3l6.403 6.403a1 1 0 001.571-.204z"/><path d="m5 18 2-2"/><path d="m7.699 10.7 5.602 5.601"/></svg>
+      <span>Allow all</span>
+    </button>
+    <button class="ev6-btn" id="ev6-b3" type="button" data-tone="good" aria-pressed="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg>
+      <span>Bounded</span>
+    </button>
+  </div>
+  <div class="ev6-controls">
+    <button class="ev6-play" id="ev6play" type="button">
+      <svg id="ev6iconplay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"/><circle cx="12" cy="12" r="10"/></svg>
+      <svg id="ev6iconstop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+      <span id="ev6playlabel">Play</span>
+    </button>
+    <p class="ev6-caption" id="ev6cap" aria-live="polite">Bounded is selected. Press Play or pick an evening.</p>
+  </div>
+  <p class="ev6-payoff" id="ev6payoff" aria-live="polite"><strong>Bounded:</strong> clicks fall to 20, learning rises to 60, and the evening turns into blueprints.</p>
+  <noscript><p>Approve everything spends 90 of 100 evening units on clicks and learning gets 5. Allow all spends 70 units on cleanup and learning gets 10. Bounded holds clicks at 20, gives learning 60, and the evening turns into blueprints.</p></noscript>
+</div>
+<script>
+(function () {
+  var play = document.getElementById('ev6play');
+  var playLabel = document.getElementById('ev6playlabel');
+  var iconPlay = document.getElementById('ev6iconplay');
+  var iconStop = document.getElementById('ev6iconstop');
+  var cap = document.getElementById('ev6cap');
+  var payoff = document.getElementById('ev6payoff');
+  var rows = [
+    document.getElementById('ev6-r1'),
+    document.getElementById('ev6-r2'),
+    document.getElementById('ev6-r3')
+  ];
+  var btns = [
+    document.getElementById('ev6-b1'),
+    document.getElementById('ev6-b2'),
+    document.getElementById('ev6-b3')
+  ];
+  var names = ['Approve everything', 'Allow all', 'Bounded'];
+  var captions = [
+    'Touring: Approve everything. 90 units go to clicks, learning gets 5.',
+    'Touring: Allow all. 70 units go to cleanup, learning gets 10.',
+    'Touring: Bounded. Clicks hold at 20, learning rises to 60.'
+  ];
+  var payoffs = [
+    '<strong>Approve everything:</strong> 90 of 100 units go to clicks, learning gets 5, and the evening buys no blueprints.',
+    '<strong>Allow all:</strong> 70 of 100 units go to cleanup, learning gets 10, and little survives into blueprints.',
+    '<strong>Bounded:</strong> clicks fall to 20, learning rises to 60, and the evening turns into blueprints.'
+  ];
+  var timers = [];
+  var playing = false;
+  function clearTimers() {
+    timers.forEach(clearTimeout);
+    timers = [];
+  }
+  function setPlayUI(on) {
+    playLabel.textContent = on ? 'Stop' : 'Play';
+    iconPlay.hidden = on;
+    iconStop.hidden = on ? false : true;
+  }
+  function show(i, touring) {
+    rows.forEach(function (r, j) { r.classList.toggle('on', i === j); });
+    btns.forEach(function (b, j) { b.setAttribute('aria-pressed', i === j ? 'true' : 'false'); });
+    cap.textContent = touring ? captions[i] : names[i] + ' selected.';
+    payoff.innerHTML = payoffs[i];
+  }
+  function stopTour() {
+    clearTimers();
+    if (playing) {
+      playing = false;
+      setPlayUI(false);
+    }
+  }
+  btns.forEach(function (btn, i) {
+    btn.addEventListener('click', function () {
+      stopTour();
+      show(i, false);
+    });
+  });
+  play.addEventListener('click', function () {
+    if (playing) {
+      stopTour();
+      cap.textContent = 'Tour stopped. Pick the evening that fits.';
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      show(2, false);
+      cap.textContent = captions[2] + ' Pick the evening that fits.';
+      return;
+    }
+    playing = true;
+    setPlayUI(true);
+    show(0, true);
+    timers.push(setTimeout(function () { show(1, true); }, 900));
+    timers.push(setTimeout(function () { show(2, true); }, 1800));
+    timers.push(setTimeout(function () {
+      playing = false;
+      setPlayUI(false);
+      cap.textContent = 'Tour complete. Pick the evening that fits.';
+    }, 2700));
+  });
+})();
+</script>
