@@ -1,5 +1,6 @@
 ---
 title: "Difference Needs Somewhere to Go"
+description: "Moving from a small team to large projects and finding where differences fit."
 date: "2026-09-30T14:41:46-04:00"
 lastmod: "2026-10-05T10:21:05-04:00"
 slug: "difference-needs-somewhere-to-go"

@@ -1,5 +1,6 @@
 ---
 title: "Seeing the Difference Between a Boss and a Botanist"
+description: "Middle managers as gardeners who shape conditions for teams to innovate."
 date: "2025-02-17T00:00:00-05:00"
 lastmod: "2026-10-05T10:13:02-04:00"
 slug: "leaders-gardeners"

@@ -1,5 +1,6 @@
 ---
 title: "Changing Requirements to be a Successful Business Analyst"
+description: "A path into business analysis and why static requirements fall short."
 date: "2019-06-14T00:00:00-04:00"
 lastmod: "2025-08-23T08:27:53-04:00"
 slug: "business-analyst-reflection"

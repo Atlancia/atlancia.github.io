@@ -1,5 +1,6 @@
 ---
-title: 'From Shovels to Software: Why Difference Matters When Things Get Complex'
+title: "Difference Matters in Shovels and Software"
+description: "Why diverse teams handle uncertainty better once work turns complex."
 date: 2023-06-05T00:00:00-04:00
 slug: diversity-complexity
 featureimage: covers/shovel-cover.svg

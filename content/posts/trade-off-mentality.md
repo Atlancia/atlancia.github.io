@@ -1,5 +1,6 @@
 ---
 title: "Building a Trade-off Mentality"
+description: "Surfacing hidden costs and assumptions behind everyday decisions."
 date: "2023-05-06T00:00:00-04:00"
 lastmod: "2026-09-30T17:06:42-04:00"
 slug: "trade-off-mentality"

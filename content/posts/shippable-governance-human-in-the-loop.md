@@ -1,5 +1,6 @@
 ---
 title: "Shippable Governance and the Human in the Loop"
+description: "Building governance through debate, feedback loops, and humans guiding AI agents."
 date: "2026-10-24T10:45:00-04:00"
 lastmod: "2026-11-10T19:05:00-05:00"
 slug: "shippable-governance-human-in-the-loop"
