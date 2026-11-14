@@ -1,51 +1,46 @@
 ---
-title: "Shippable Governance and the Human in the Loop"
-description: "Building governance through debate, feedback loops, and humans guiding AI agents."
-date: "2026-10-24T10:45:00-04:00"
-lastmod: "2026-11-10T19:05:00-05:00"
-slug: "shippable-governance-human-in-the-loop"
-url: "/shippable-governance-human-in-the-loop.html"
-type: posts
+title: Shippable Governance and the Human in the Loop
+date: 2026-10-24T10:45:00-04:00
+slug: shippable-governance-human-in-the-loop
+featureimage: media/posts/7/shippable-cover-rest.webp
+authors:
+  - liam
 draft: false
-authors: ["liam"]
-showComments: true
-meta_robots: "index, follow"
-media_id: 7
-featureimage: "media/posts/7/shippable-cover-rest.webp"
-coverMotion: "shippable-cover"
+coverMotion: shippable-cover
 coverMotionBase: 0.8
+description: Building governance through debate, feedback loops, and humans guiding AI agents.
+lastmod: 2026-11-10T19:05:00-05:00
+media_id: 7
+meta_robots: index, follow
+showComments: true
+type: posts
+url: /shippable-governance-human-in-the-loop.html
 ---
 
 > "I may be wrong and you may be right, and by an effort, we may get nearer to the truth."  
-> Karl Popper, *The Open Society and Its Enemies* (1945)
+> Karl Popper, _The Open Society and Its Enemies_ (1945)
 
-I recently put out a small post reflecting on the environments where I feel best suited to drive change and build value. Since putting that out, one idea has been circling in my head: the contrast between rooms where "right" is determined by debate, and rooms where "right" is determined by hierarchy.
+There is a stark difference between rooms where “right” is determined by debate, and rooms where “right” is determined by hierarchy.
 
-Of course, hierarchy has its place. Leadership is a skill like any other, and ultimately accountability cannot be outsourced. Depending on the size of an organization, there may simply be an insurmountable distance between decision-makers and the people doing the work. Structure is how large institutions coordinate action. Still, no position can manufacture truth.
+Hierarchy has its place, especially where accountability cannot be outsourced, and structure supports large institutions to coordinate. Still, no title can manufacture truth. Years ago, reading Jürgen Habermas on deliberative democracy, I wished his ideas were applied more often to business and technology. He argued that sound decisions require leaving rank at the door, giving authority to “the unforced force of the better argument.” 
 
-No institution exemplifies that scale and hierarchy quite like government. Years ago, while reading Jürgen Habermas's work on deliberative democracy, I found myself wishing his concepts were more frequently applied to business and technology. Habermas argued that sound collective decisions require more than administrative decrees or raw voting tallies. They require an environment where rank and power are bracketed at the door, leaving authority to what he called "the unforced force of the better argument."
+When hierarchy suppresses debate, it breeds epistemic blindness. It happens in government, in boardrooms detached from operational reality, and in engineering teams ignoring issues because nobody feels empowered to challenge a schedule.
 
-When hierarchy suppresses debate, it creates epistemic blindness. That blindness is not unique to governments. It thrives in boardrooms that lose touch with operational reality, in review committees that hoard evaluation criteria, and in engineering teams that layer technical debt onto technical debt because nobody feels empowered to challenge a delivery schedule.
+Every decision eventually collides with reality; the market, the voters, or production. When an organization uses rank to replace internal debate, reality still finds it. The trick is pulling that reality forward while the cost of learning is still low.
 
-Every decision eventually hits a surface where it makes contact with reality. For a business, that surface is the market; for a government, it is the voters; for a software team, it is the production runtime. If an organization uses rank to avoid internal debate, it misses the truth, and reality will eventually find it. It is always better to bring that reality toward you as early as possible, learning while the costs are lowest.
+Over the past few months, I have immersed myself in using AI agents and developer tooling on my laptop. While countless articles debate the grand promises and perils of artificial intelligence, I have simply enjoyed the fun of making things: using little more than words with the right loops, tests, and guardrails, each discovered through trial and error.
 
-Over the past few months, I have immersed myself in using AI agents and developer tooling on my laptop. While countless articles debate the grand promises and perils of artificial intelligence, I have simply enjoyed the fun of making things: using little more than words and the right loops, tests, and guardrails, each discovered through trial and error.
+In this environment, there could be no flatter hierarchy. It is simply me working alongside autonomous coding agents and reasoning models doing their best to fulfill an instruction.
 
-In this environment, there could be no flatter hierarchy. It is simply me working alongside autonomous coding agents and reasoning models doing their best to fulfill an instruction. 
+When things fail in that setup, I think of myself as embodying the oldest jokes in IT support: a PEBKAC error. Problem Exists Between Keyboard And Chair. The gap between what is in my mind and the result on the screen lies only in the clarity of how I communicate intent, structured constraints, and specified failure.
 
-When things fail in that setup, I am left with one of the oldest jokes in IT support: a PEBKAC error. Problem Exists Between Keyboard And Chair. The gap between what is in my mind and the result on the screen lies only in my ability to articulate intent, structure constraints, and design feedback loops. When the output misses the mark, I have nothing to blame besides my own clarity: communicating what good looks like, and specifying what failure looks like.
-
-Through this, I have found the unexpected delight of discovering that I am wrong. Frequently.
-
-Not to say that I enjoy being wrong. I love being right. I work hard to stay informed so that I can stay right. Still, moments of being wrong are inevitable stops on the way to insight. There is no better place to be wrong than where the cost is lowest and the learning is highest.
-
-In this wild west of modern AI, where tooling, models, and conventions shift daily, my misconceptions are handed back to me every few minutes. The tax on being wrong is mercifully low.
+Through this, I’ve found an unexpected delight in being wrong. Frequently. Moments of being wrong are inevitable stops on the way to insight. I work hard to be right, but when AI tooling shifts daily and good practices are months old GitHub repos, my misconceptions are handed back to me as quickly as they can be corrected. When the tax on being wrong is that low, every mistake is cheap tuition.
 
 ## The Giving of Orders and the Receiving of Results
 
 What once took months of toil to learn (and could easily be rendered obsolete by a new version, or abandoned after realizing it was too complicated to maintain) now takes thirty minutes. I can write a clear spec, reuse or write a few tests, and see quickly whether an idea holds water. A technique like test-driven development becomes a vehicle for shipping human intent to a machine.
 
-This year offers a fitting historical marker: 2026 is the centenary of Mary Parker Follett’s 1926 essay *The Giving of Orders*. It was a rare, early critique of command-and-control management, arguing that productive work should not derive from "power-over," but from "power-with," grounded in the objective facts of the work itself.
+This year offers a fitting historical marker: 2026 is the centenary of Mary Parker Follett’s 1926 essay _The Giving of Orders_. It was a rare, early critique of command-and-control management, arguing that productive work should not derive from "power-over," but from "power-with," grounded in the objective facts of the work itself.
 
 When working with coding agents, "power-over" is not even an option. They are not people. I can yell and type in all caps, but they have no feelings to injure and no mouths to feed at home that I could threaten by docking pay. Coercion does not work on software that already does its best to fulfill a prompt. To fix a broken result, I have to default to a "power-with" model: aligning on objective facts, understanding how the model parses instructions, and steering the work toward truth.
 
@@ -79,7 +74,7 @@ In the moment, it was easy to dismiss his reaction with cynicism. But sitting at
 
 We were both a little right and a little wrong in that room. My mistake was dismissing the committee as a mere rubber stamp, missing that they were the carriers of hard-won institutional context. His mistake was assuming that writing down the rules was a one-time, irreversible act.
 
-When I asked him for his criteria upfront, I was not asking him to carve stone tablets and walk away forever. I was asking him to *ship his governance*. I wanted him to package up the majority of checks he was looking for into a product our team could actually consume, test against, and reflect back to him. To him, governance was a static monument. He had not yet seen it as a living product.
+When I asked him for his criteria upfront, I was not asking him to carve stone tablets and walk away forever. I was asking him to _ship his governance_. I wanted him to package up the majority of checks he was looking for into a product our team could actually consume, test against, and reflect back to him. To him, governance was a static monument. He had not yet seen it as a living product.
 
 Like any other product, once you ship version 1.0 of your guardrails into the real world, you get to see where teams work around it, where edge cases slip through, and where the rules need to evolve. Shipping the rules does not end the conversation; it gives you an objective baseline to learn from.
 
